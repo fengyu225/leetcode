@@ -29,13 +29,13 @@ int eval(char* s[], int size){
                     printf("Incorrect exp\n");
                     return -1;
                 }
-                int left = atoi(stack.top());
-                stack.pop();
                 int right = atoi(stack.top());
+                stack.pop();
+                int left = atoi(stack.top());
                 stack.pop();
                 char v[10];
                 int eval_i = eval_op(left,right,s[i]);
-                itoa(eval_i, v, 10);
+                sprintf(v, "%d", eval_i);
                 stack.push(v);
         }
         else
