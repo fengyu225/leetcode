@@ -20,12 +20,11 @@ void in_order(struct node* root){
             s.push(t->left);
             continue;
         }
-        printf("%d ", t->val);
         while(!s.empty() && !s.top()->right){
             printf("%d ", s.top()->val);
             s.pop();
         }
-        if(s.top()->right){
+        if(!s.empty() && s.top()->right){
             printf("%d ", s.top()->val);
             t=s.top()->right;
             s.pop();
