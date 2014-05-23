@@ -39,6 +39,18 @@ bool in_dict(char* s, struct node* root){
     return true;
 }
 
+bool in_dict(char* s, char* e, struct node* root){
+    if(s>e)
+        return false;
+    char* temp = (char*)malloc(sizeof(char)*(e-s+2));
+    char* o = temp;
+    for(char* c=s;c<=e;c++,temp++) *temp=*c;
+    *temp='\0';
+    bool r = in_dict(o,root);
+    free(o);
+    return r;
+}
+
 bool word_break(char* s, struct node* root){
     if(in_dict(s,root)) return true;
     for(int i=1; i<strlen(s); i++){
@@ -52,17 +64,33 @@ bool word_break(char* s, struct node* root){
     return false;
 }
 
+bool word_break_dp(char* s, struct node* root){
+    bool d[100] = {false};
+    d[0] = true;
+    d[1] = in_dict(s,s,root)?true:false;
+    for(int i=2; i<=strlen(s); i++){
+        bool r = false;
+        for(int j=1; j<i; j++)
+            if(d[j] && in_dict(s+j, s+i-1, root)){
+                r = true;
+                break;
+            }
+        d[i] = r || in_dict(s, s+i-1, root);
+    }
+    return d[strlen(s)];
+}
+
 int main(){
     struct node root;
     root.c = ' ';
     add_word("leet", &root);
     add_word("code", &root);
     bool r;
-    r = word_break("leetcode", &root);
+    r = word_break_dp("leetcode", &root);
     printf("%s\n", r?"true":"false"); 
-    r = word_break("leetode", &root);
+    r = word_break_dp("leetode", &root);
     printf("%s\n", r?"true":"false"); 
-    r = word_break("leetleetcode", &root);
+    r = word_break_dp("leetleetcode", &root);
     printf("%s\n", r?"true":"false"); 
     return 0;
 }
