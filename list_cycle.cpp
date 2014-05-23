@@ -22,9 +22,9 @@ struct node* cycle(struct node* root){
     struct node* slow = root;
     struct node* fast = root;
     while(1){
+        if(!fast) return NULL;
         fast = fast->next;
-        if(!fast)
-            return NULL;
+        if(!fast) return NULL;
         fast = fast->next;
         if(fast == slow)
             return slow;
