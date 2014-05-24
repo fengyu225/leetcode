@@ -16,7 +16,16 @@
 using namespace std;
 
 int canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
-    return 0;
+    int sum=0, total=0, start=-1;
+    for(int i=0; i<gas.size(); i++){
+        sum += gas[i]-cost[i];
+        total += gas[i] - cost[i];
+        if(sum<0){
+            start = i;
+            sum = 0;
+        }
+    }
+    return total>=0?start+1:-1;
 }
 
 int main(){
@@ -24,6 +33,6 @@ int main(){
     int cost_arr[] = {1, 1, 1}; 
     vector<int> gas(gas_arr,gas_arr+sizeof(gas_arr)/sizeof(gas_arr[0]));
     vector<int> cost(cost_arr,cost_arr+sizeof(cost_arr)/sizeof(cost_arr[0]));
-    printf("%d %d\n", gas.size(), cost.size());
+    printf("%d\n", canCompleteCircuit(gas,cost));
     return 0;
 }
