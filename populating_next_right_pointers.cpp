@@ -21,10 +21,15 @@ void connect(TreeLinkNode* root){
                 curr = prev->left?prev->left:prev->right;
                 curr_head = curr;
             }
-            else
+            else{
                 curr->next = prev->left?prev->left:prev->right;
+                curr = curr->next;
+            }
+            if(prev->left && prev->right && curr == prev->left){
+                curr->next = prev->right;
+                curr = curr->next;
+            }
             prev = prev->next;
-            printf("curr_head: %d, curr: %d\n", curr_head->val, curr->val);
         }
         else{
             if(!curr_head)
