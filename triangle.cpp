@@ -5,6 +5,7 @@
 using namespace std;
 
 int minimumTotal(vector<vector<int> >& triangle){
+
     return 0; 
 }
 
@@ -17,5 +18,11 @@ int main(){
     vector<int> s2(arr2,arr2+sizeof(arr2)/sizeof(int));
     int arr3[] = {4, 1, 8, 3};
     vector<int> s3(arr3,arr3+sizeof(arr3)/sizeof(int));
+    vector<vector<it> > triangle;
+    triangle.push_back(arr0);
+    triangle.push_back(arr1);
+    triangle.push_back(arr2);
+    triangle.push_back(arr3);
+    printf("%d\n", minimumTotal(triangle));
     return 0;
 }

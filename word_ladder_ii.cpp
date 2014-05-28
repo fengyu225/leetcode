@@ -55,12 +55,6 @@ vector<vector<string> > findLadders(string start, string end, unordered_set<stri
     vector<vector<string> > res;
     vector<string> path;
     if(!str_prev.empty()){
-//        for(unordered_map<string, vector<string> >::iterator iter = str_prev.begin(); iter != str_prev.end(); iter++){
-//            printf("%s: ", (iter->first).c_str());
-//            for(int i=0; i<iter->second.size(); i++)
-//                printf("%s ", iter->second[i].c_str());
-//            printf("\n");
-//        }
         path.push_back(end);
         buildResult(str_prev, path, end, start, res);
         for(int i=0; i<res.size(); i++)
