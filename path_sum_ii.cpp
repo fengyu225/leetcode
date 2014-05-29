@@ -13,7 +13,23 @@ struct TreeNode {
 };
 
 void dfs(TreeNode* root, int sum, vector<int>& path, vector<vector<int> >& result){
-
+    if(!root)
+        return;
+//    printf("node: %d, sum=%d\n", root->val,sum);
+    if(!root->left && !root->right){
+        if(root->val == sum){
+            path.push_back(root->val);
+            result.push_back(path);
+            path.pop_back();
+        }
+        return;
+    }
+    path.push_back(root->val);
+    if(root->left)
+        dfs(root->left, sum-root->val, path, result);
+    if(root->right)
+        dfs(root->right, sum-root->val, path, result);
+    path.pop_back();
 }
 
 vector<vector<int> > pathSum(TreeNode* root, int sum){
@@ -35,7 +51,7 @@ int main(){
     n2.left = &n3;
     n2.right = &n4;
     n5.right = &n6;
-    vector<vector<int> > r = pathSum(&n1, 1);
+    vector<vector<int> > r = pathSum(&n1, 7);
     for(int i=0; i<r.size(); i++){
         for(int j=0; j<r[i].size(); j++)
             printf("%d ", r[i][j]);
