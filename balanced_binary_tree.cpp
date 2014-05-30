@@ -1,6 +1,7 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include<limits.h>
+#include<stdbool.h>
 
 struct TreeNode {
     int val;
@@ -9,17 +10,18 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-int minDepth(TreeNode *root) {
+int traverse(TreeNode* root){
     if(!root)
         return 0;
-    int l = INT_MAX;
-    int r = INT_MAX;
-    if(root->left)
-        l = minDepth(root->left);
-    if(root->right)
-        r = minDepth(root->right);
-    if(l == INT_MAX && r==INT_MAX) return 1;
-    return 1+(l<r?l:r);
+    int l = traverse(root->left);
+    int r = traverse(root->right);
+    if(l<0 || r<0 || l-r>1 || r-l>1)
+        return -1;
+    return l>r?l+1:r+1;
+}
+
+bool isBalanced(TreeNode *root) {
+    return traverse(root)>=0?true:false;
 }
 
 int main(){
@@ -30,10 +32,10 @@ int main(){
     TreeNode n5(5);
     TreeNode n6(1);
     n1.left = &n2;
-    n1.right = &n5;
+//    n1.right = &n5;
     n2.left = &n3;
     n2.right = &n4;
     n5.right = &n6;
-    printf("%d\n", minDepth(&n1));
+    printf("%d\n", isBalanced(&n1));
     return 0;
 }
