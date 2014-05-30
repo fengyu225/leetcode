@@ -62,5 +62,6 @@ int main(){
     l7.next = &l8;
     TreeNode* root = sortedListToBST(&l0);
     pre_order(root);
+    printf("\n");
     return 0;
 }
