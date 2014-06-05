@@ -65,7 +65,7 @@ int main(){
 //    printf("%s\n", isMatch("aaa","aa")?"true":"false");
 //    printf("%s\n", isMatch("aa", "*")?"true":"false");
 //    printf("%s\n", isMatch("aa", "a*")?"true":"false");
-    printf("%s\n", isMatch("cdadadabe", "?*a*?")?"true":"false");
+    printf("%s\n", isMatch("cdadadabe", "?****a*?")?"true":"false");
 //    printf("%s\n", isMatch("aab", "c*a*b")?"true":"false");
     return 0;
 }
