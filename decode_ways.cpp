@@ -14,24 +14,34 @@ int numDecodings(string s){
     int arr[s.size()+1];
     arr[0] = 0;
     arr[1] = s[0] == '0'?0:1;
-    if(s.size() == 1) return arr[1];
-    arr[2] = 0;
-    if((s[0] == 0 && s[1]!='0') || s[0]>'2' || s[0]=='2' && s[1]>'6') arr[2]+=1;
-    if(valid(s.substr(s,2))) arr[2]+=1;
-    for(int i=2; i<s.size(); i++){
-        if(s[i] == '0'){
-            arr[i+1]=arr[i];
+    for(int i=1; i<s.size(); i++){
+        if(valid(s.substr(i-1,2))){
+            int y = i==1?1:arr[i-1];
+            int x = s[i] == '0'?0:arr[i];
+            arr[i+1] = x+y;
             continue;
         }
-        int b,a=(s[i-1] == '0' && arr[i] == 0)?1:arr[i];
-        b = (i>0 && ((s[i-1] == '2' && s[i]>='0' && s[i]<='6') || s[i-1] == '1'))?arr[i-1]:0;
-        arr[i+1] = a+b;
+        if(s[i-1] == '0'){
+            if(s[i] == '0')
+                arr[i+1]=0;
+            else
+                arr[i+1] = arr[i];
+            continue;
+        }
+        int t = s[i]=='0'?0:arr[i];
+        arr[i+1] = arr[i]==0?0:t;
     }
     return arr[s.size()];
 }
 
 int main(){
-    string s0("1226");
+    string s0("01");
     printf("%d\n", numDecodings(s0));
+    string s1("00");
+    printf("%d\n", numDecodings(s1));
+    string s2("10");
+    printf("%d\n", numDecodings(s2));
+    string s3("27");
+    printf("%d\n", numDecodings(s3));
     return 0;
 }
