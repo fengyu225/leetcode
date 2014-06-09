@@ -9,7 +9,7 @@ int divide(int divident, int divisor){
     unsigned int u_divisor = divisor<0?-1*divisor:divisor;
     if(u_divident<u_divisor)
         return 0;
-    int ans = 0;
+    unsigned int ans = 0;
     for(int i=31; i>=0; i--){
         if((u_divident>>i)>=u_divisor){
             ans+=(1<<i);
