@@ -3,24 +3,26 @@
 vector<int> findSubstring(string S, vector<string>& L){
     vector<int> res;
     if(L.size()==0 || S.size()<L[0].size()*L.size()) return res;
-    unordered_map<string, int> dict;
-    unordered_map<string, int> temp;
+    map<string, int> dict;
+    map<string, int> temp;
     int l_w_size = L[0].size();
     int l_size = L.size();
-    for(int i=0; i<L.size(); i++)
-        if(dict.find(L[i])==dict.end()) dict[L[i]]=1;
-        else dict[L[i]]++;
+    for(int i=0; i<L.size(); i++) dict[L[i]]++;
     for(int x=0; x<L.size(); x++) temp[L[x]]=0;
     for(int i=0; i<=S.size()-l_w_size*l_size; i++){
         int j=i;
-        while(j-i<l_size*l_w_size){
-            if(dict.find(S.substr(j,l_w_size)) == dict.end() || temp[S.substr(j,l_w_size)]>dict[S.substr(j,l_w_size)])
+        temp.clear();
+        bool flag = true;
+        while(j-i<=l_w_size*(l_size-1)){
+            string t_str = S.substr(j,l_w_size);
+            if(dict.find(t_str) == dict.end() || temp[t_str]>=dict[t_str]){
+                flag = false;
                 break;
-            temp[S.substr(j,l_w_size)] += 1;
+            }
+            temp[t_str] += 1;
             j+=l_w_size;
         }
-        for(int x=0; x<L.size(); x++) temp[L[x]]=0;
-        if(j-i<l_size*l_w_size)
+        if(!flag)
             continue;
         res.push_back(i);
     }
