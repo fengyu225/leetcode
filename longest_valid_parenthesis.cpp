@@ -1,15 +1,21 @@
 #include "header.h"
 
 int longestValidParentheses(string s) {
-    if(s.size()<=1 || s.size()%2==1) return 0;
-    int m[s.size()][s.size()+1];
-    for(int i=0; i<s.size(); i++){
-        m[i][0] = 0;
-        m[i][1] = 0;
+    if(s.size()<=1) return 0;
+    int arr[s.size()];
+    int max=0;
+    for(int i=0;i<s.size();i++) arr[i]=0;
+    for(int i=s.size()-2;i>=0;i--){
+        if(s[i] == ')') continue;
+        int j=i+arr[i+1]+1;
+        if(j<s.size() && s[j]==')'){
+            arr[i]=arr[i+1]+2;
+            int k=(j+1<s.size())?arr[j+1]:0;
+            arr[i]+=k;
+            max=max<arr[i]?arr[i]:max;
+        }
     }
-    for(int i=0; i+1<s.size(); i++) m[i][2]=s[i]=='('&&s[i+1]==')'?1:0;
-    for(int i=0; i
-    return m[0][s.size()];
+    return max;
 }
 
 int main(){
