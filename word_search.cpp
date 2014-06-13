@@ -18,7 +18,6 @@ bool exist(vector<vector<char> > &board, string word) {
     int move[4][2] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
     while(1){
         if(q_arr[curr].empty()) break;
-        while(!q_arr[(curr+1)%2].empty()) q_arr[(curr+1)%2].pop();
         pos++;
         if(pos == word.size()) break;
         while(!q_arr[curr].empty()){
@@ -36,6 +35,7 @@ bool exist(vector<vector<char> > &board, string word) {
                     }
                 }
             }
+            board[t.first][t.second] = '#';
         }
         curr = (curr+1)%2;
     }
