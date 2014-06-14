@@ -1,7 +1,6 @@
 #include "header.h"
 
 bool dfs(vector<vector<char> >& board, string word, int pos, int x, int y){
-    //printf("pos=%d, x=%d, y=%d\n", pos, x, y);
     if(pos == word.size()) return true;
     int move[4][2] = {{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
     for(int i=0; i<4; i++){
@@ -24,8 +23,6 @@ bool exist(vector<vector<char> > &board, string word) {
     if(word.size() == 0) return false;
     for(int i=0; i<board.size(); i++)
         for(int j=0; j<board[i].size(); j++){
-//            if(board[i][j] == word[0])
-                //printf("case: (%d,%d)\n", i, j);
             if(board[i][j] == word[0]){
                 char temp_c = word[0];
                 board[i][j] = '#';
