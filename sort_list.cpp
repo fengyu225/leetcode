@@ -15,6 +15,7 @@ ListNode *sortList(ListNode *head) {
         fast = fast->next;
         if(!fast) break;
         fast = fast->next;
+        if(!fast) break;
         slow = slow->next;
     }
     ListNode* r_begin = slow->next;
@@ -25,7 +26,7 @@ ListNode *sortList(ListNode *head) {
     ListNode* curr=NULL;
     ListNode* temp=NULL;
     while(l && r){
-        if(l->val>r->val){
+        if(l->val<r->val){
             temp = l;
             l = l->next;
         }
@@ -33,7 +34,11 @@ ListNode *sortList(ListNode *head) {
             temp = r;
             r = r->next;
         }
-        if(curr) curr->next = temp;
+        temp->next = NULL;
+        if(curr){
+            curr->next = temp;
+            curr = curr->next;
+        }
         else curr=temp;
         result = result==NULL?temp:result;
     }
