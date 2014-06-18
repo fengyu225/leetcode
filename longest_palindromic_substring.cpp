@@ -26,6 +26,42 @@ string longestPalindrome(string s) {
     return s.substr(begin,max);
 }
 
+bool is_palindromic(string& s, int i, int j){
+    while(i<j){
+        if(s[i] == s[j]){
+            i++;
+            j--;
+        }
+        else
+            return false;
+    }
+    return true;
+}
+
+string longestPalindrome(string s) {
+    int max = 0;
+    int begin = 0;
+    for(int i=0; i<s.size(); i++){
+        for(int k=0;i-k>=0 && i+k<s.size();k++){
+            if(is_palindromic(s,i-k,i+k)){
+                if(max<2*k+1){
+                    begin = i-k;
+                    max = 2*k+1;
+                }
+            }
+        }
+        for(int k=0;i-k>=0 && i+1+k<s.size();k++){
+            if(is_palindromic(s,i-k,i+1+k)){
+                if(max<2*k+2){
+                    begin = i-k;
+                    max = 2*k+2;
+                }
+            }
+        }
+    }
+    return s.substr(begin,max);
+}
+
 int main(){
     string s0 = longestPalindrome("abacdfgdcaba");
     printf("%s\n", s0.c_str());
