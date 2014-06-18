@@ -18,6 +18,29 @@ int longestValidParentheses(string s) {
     return max;
 }
 
+int longestValidParentheses(string s) {
+    stack<int> st;
+    int max = 0;
+    int last = -1;
+    if(s.size()<=1) return 0;
+    for(int i=0; i<s.size(); i++){
+        if(s[i] == '(')
+            st.push(i);
+        else{
+            if(st.empty()){
+                last = i;
+                continue;
+            }
+            st.pop();
+            if(st.empty())
+                max = i-last>max?i-last:max;
+            else
+                max = i-st.top()>max?i-st.top():max;
+        }
+    }
+    return max;
+}
+
 int main(){
     string s0(")()())");
     printf("%d\n", longestValidParentheses(s0));
