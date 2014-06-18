@@ -26,41 +26,33 @@ string longestPalindrome(string s) {
     return s.substr(begin,max);
 }
 
-bool is_palindromic(string& s, int i, int j){
-    while(i<j){
-        if(s[i] == s[j]){
-            i++;
-            j--;
-        }
-        else
-            return false;
-    }
-    return true;
+
+string expandAroundCenter(string s, int c1, int c2) {
+  int l = c1, r = c2;
+  int n = s.length();
+  while (l >= 0 && r <= n-1 && s[l] == s[r]) {
+    l--;
+    r++;
+  }
+  return s.substr(l+1, r-l-1);
+}
+ 
+string longestPalindrome(string s) {
+  int n = s.length();
+  if (n == 0) return "";
+  string longest = s.substr(0, 1);  // a single char itself is a palindrome
+  for (int i = 0; i < n-1; i++) {
+    string p1 = expandAroundCenter(s, i, i);
+    if (p1.length() > longest.length())
+      longest = p1;
+ 
+    string p2 = expandAroundCenter(s, i, i+1);
+    if (p2.length() > longest.length())
+      longest = p2;
+  }
+  return longest;
 }
 
-string longestPalindrome(string s) {
-    int max = 0;
-    int begin = 0;
-    for(int i=0; i<s.size(); i++){
-        for(int k=0;i-k>=0 && i+k<s.size();k++){
-            if(is_palindromic(s,i-k,i+k)){
-                if(max<2*k+1){
-                    begin = i-k;
-                    max = 2*k+1;
-                }
-            }
-        }
-        for(int k=0;i-k>=0 && i+1+k<s.size();k++){
-            if(is_palindromic(s,i-k,i+1+k)){
-                if(max<2*k+2){
-                    begin = i-k;
-                    max = 2*k+2;
-                }
-            }
-        }
-    }
-    return s.substr(begin,max);
-}
 
 int main(){
     string s0 = longestPalindrome("abacdfgdcaba");
