@@ -6,8 +6,24 @@ struct UndirectedGraphNode {
     UndirectedGraphNode(int x) : label(x) {};
 };
 
+UndirectedGraphNode* dfs(UndirectedGraphNode* root, unordered_map<UndirectedGraphNode*,UndirectedGraphNode*>& map){
+    UndirectedGraphNode* root_c = new UndirectedGraphNode(root->label);
+    map[root] = root_c;
+    for(int i=0;i<root->neighbors.size();i++){
+        if(map.find(root->neighbors[i]) == map.end()){
+            root_c->neighbors.push_back(dfs(root->neighbors[i],map));
+        }
+        else{
+            root_c->neighbors.push_back(map[root->neighbors[i]]);
+        }
+    }
+    return root_c;
+}
+
 UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
-    return node;
+    if(!node) return NULL;
+    unordered_map<UndirectedGraphNode*,UndirectedGraphNode*> map;
+    return dfs(node,map);
 }
 
 int main(){
