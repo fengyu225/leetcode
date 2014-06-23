@@ -41,7 +41,7 @@ int main(){
         curr = curr->next;
     }
     printf("\n");
-    ListNode* res = rotateRight(&l1,2);
+    ListNode* res = rotateRight(&l1,1);
     while(res){
         printf("%d ", res->val);
         res = res->next;
