@@ -12,7 +12,17 @@ int sqrt(int x){
     return l;
 }
 
+float sqrt_f(int x, float err){
+    float i = (float)x;
+    do{
+        i = 0.5*(i+(float)x/i);
+    }while((float)x-i*i>err || (float)x-i*i<(float)(-1)*err);
+    return i;
+}
+
 int main(){
+    printf("%.10f\n", sqrt_f(4,0.00000000001f));
+    printf("%.10f\n", sqrt_f(5,0.00000000001f));
     printf("%d\n", sqrt(5));
     printf("%d\n", sqrt(0));
     printf("%d\n", sqrt(1));
