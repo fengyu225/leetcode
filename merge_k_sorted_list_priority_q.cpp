@@ -9,6 +9,7 @@ struct ListNode {
 class comparison{
     public:
         bool operator() (ListNode* l, ListNode* r){
+            //r is new element, r has higher priority iff this function returns true
             if(!l) return true;
             if(!r) return false;
             return l->val>=r->val;
