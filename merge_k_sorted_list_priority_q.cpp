@@ -6,44 +6,36 @@ struct ListNode {
     ListNode(int x) : val(x), next(NULL) {}
 };
 
-ListNode* merge_lists(vector<ListNode*>& lists, int l, int r){
-    if(l>r) return NULL;
-    if(l==r) return lists[l];
-    int m = (l+r)/2;
-    ListNode* l_head = merge_lists(lists,l,m);
-    ListNode* r_head = merge_lists(lists,m+1,r);
-    ListNode* result = NULL;
-    ListNode* curr = NULL;
-    while(l_head && r_head){
-        ListNode* temp;
-        if(l_head->val<r_head->val){
-            temp = l_head;
-            l_head = l_head->next;
+class comparison{
+    public:
+        bool operator() (ListNode* l, ListNode* r){
+            if(!l) return true;
+            if(!r) return false;
+            return l->val>=r->val;
         }
-        else{
-            temp = r_head;
-            r_head = r_head->next;
-        }
-        if(!result) result = temp;
-        if(curr){
-            curr->next = temp;
-            curr = curr->next;
-        }
-        else
-            curr = temp;
-    }
-    ListNode* rest = l_head==NULL?r_head:l_head;
-    if(rest){
-        if(curr)
-            curr->next = rest;
-        else
-            result = rest;
-    }
-    return result;
-}
+};
+
 
 ListNode *mergeKLists(vector<ListNode *> &lists) {
-    return merge_lists(lists,0,lists.size()-1); 
+    priority_queue<ListNode*, vector<ListNode*>, comparison> p_q;
+    for(int i=0; i<lists.size(); i++)
+        p_q.push(lists[i]);
+    ListNode* result = NULL;
+    ListNode* c = NULL;
+    while(!p_q.empty() && p_q.top()){
+        ListNode* curr = p_q.top();
+        p_q.pop();
+        p_q.push(curr->next);
+        if(!result){
+            result = curr;
+            c = curr;
+        }
+        else{
+            c->next = curr;
+            c = curr;
+        }
+    }
+    return result;
 }
 
 ListNode* construct_list(int arr[], int n){
@@ -60,14 +52,14 @@ ListNode* construct_list(int arr[], int n){
 int main(){
     int arr0[] = {};
     int arr1[] = {1};
-//    int arr2[] = {2,5,8,10};
+    int arr2[] = {2,5,8,10};
     vector<ListNode*> lists;
     ListNode* head0 = construct_list(arr0,sizeof(arr0)/sizeof(arr0[0]));
     ListNode* head1 = construct_list(arr1,sizeof(arr1)/sizeof(arr1[1]));
-//    ListNode* head2 = construct_list(arr2,sizeof(arr2)/sizeof(arr2[2]));
+    ListNode* head2 = construct_list(arr2,sizeof(arr2)/sizeof(arr2[2]));
     lists.push_back(head0);
     lists.push_back(head1);
-//    lists.push_back(head2);
+    lists.push_back(head2);
     ListNode* res = mergeKLists(lists);
     while(res){
         printf("%d ", res->val);
