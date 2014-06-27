@@ -1,62 +1,42 @@
-#include<stdlib.h>
-#include<stdio.h>
-#include<stdbool.h>
+#include "header.h"
 
-struct node {
-    int val;
-    struct node* next;
-    struct node* rand;
+struct RandomListNode {
+    int label;
+    RandomListNode *next, *random;
+    RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
 };
 
-void print_list(struct node* root){
+RandomListNode *copyRandomList(RandomListNode *head) {
+    return head;
+}
+
+void print_list(RandomListNode* root){
     while(root){
-        printf("%d ", root->val);
+        printf("%d ", root->label);
         root = root->next;
     }
     printf("\n");
 }
 
-struct node* copy(struct node* n){
-    struct node* r = (struct node*)malloc(sizeof(struct node));
-    r->val = n->val;
-    r->next = n->next;
-    r->rand = n->rand;
-    return r;
-}
-
-struct node* copy_list(struct node* root){
-    struct node* curr = root;
-    while(curr){
-        struct node* t = copy(curr);
-        curr->rand = t;
-        curr = curr->next;
-    }
-    curr = root;
-    struct node* r = root->rand;
-    while(curr->next){
-        curr->rand->next = curr->next->rand;
-        curr->rand = NULL;
-        curr = curr->next;
-    }
-    curr->rand->next = NULL;
-    curr->rand = NULL;
-    return r;
-}
-
 int main(){
-    struct node n0 = {.val=0,.next=NULL,.rand=NULL};
-    struct node n1 = {.val=1,.next=NULL,.rand=NULL};
-    struct node n2 = {.val=2,.next=NULL,.rand=NULL};
-    struct node n3 = {.val=3,.next=NULL,.rand=NULL};
-    struct node n4 = {.val=4,.next=NULL,.rand=NULL};
-    struct node n5 = {.val=5,.next=NULL,.rand=NULL};
+    RandomListNode n0(0);
+    RandomListNode n1(1);
+    RandomListNode n2(2);
+    RandomListNode n3(3);
+    RandomListNode n4(4);
+    RandomListNode n5(5);
     n0.next=&n1;
     n1.next=&n2;
     n2.next=&n3;
     n3.next=&n4;
     n4.next=&n5;
+    n0.random=&n3;
+    n1.random=&n1;
+    n2.random=&n4;
+    n3.random=&n5;
+    n4.random=&n2;
     print_list(&n0);
-    struct node* r = copy_list(&n0);
+    RandomListNode* r = copyRandomList(&n0);
     print_list(r);
     return 0;
 }
