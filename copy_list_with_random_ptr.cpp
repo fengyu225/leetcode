@@ -6,12 +6,6 @@ struct RandomListNode {
     RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
 };
 
-RandomListNode *copyRandomList(RandomListNode *head) {
-    if(!head) return NULL;
-
-    return head;
-}
-
 void print_list(RandomListNode* root){
     while(root){
         printf("%d ", root->label);
@@ -19,6 +13,39 @@ void print_list(RandomListNode* root){
     }
     printf("\n");
 }
+
+
+RandomListNode *copyRandomList(RandomListNode *head) {
+    if(!head) return NULL;
+    RandomListNode* result;
+    RandomListNode* curr = head;
+    while(curr){
+        RandomListNode* cp = new RandomListNode(curr->label);
+        cp->next = curr->next;
+        curr->next = cp;
+        curr = cp->next;
+    }
+    curr = head;
+    result = head->next;
+    while(curr){
+        if(curr->random)
+            curr->next->random = curr->random->next;
+        curr = curr->next->next;
+    }
+    curr = head;
+    while(curr){
+        RandomListNode* cp = curr->next;
+        curr->next = cp->next;
+        if(!cp->next){
+            cp->next = NULL;
+        }
+        else
+            cp->next = cp->next->next;
+        curr = curr->next;
+    }
+    return result;
+}
+
 
 int main(){
     RandomListNode n0(0);

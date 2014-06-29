@@ -15,15 +15,7 @@ ListNode* merge_lists(vector<ListNode*>& lists, int l, int r){
     ListNode* result = NULL;
     ListNode* curr = NULL;
     while(l_head && r_head){
-        ListNode* temp;
-        if(l_head->val<r_head->val){
-            temp = l_head;
-            l_head = l_head->next;
-        }
-        else{
-            temp = r_head;
-            r_head = r_head->next;
-        }
+        ListNode* temp = l_head->val<r_head->val?l_head:r_head;
         if(!result) result = temp;
         if(curr){
             curr->next = temp;
@@ -31,14 +23,13 @@ ListNode* merge_lists(vector<ListNode*>& lists, int l, int r){
         }
         else
             curr = temp;
+        temp = temp->next;
     }
     ListNode* rest = l_head==NULL?r_head:l_head;
-    if(rest){
-        if(curr)
-            curr->next = rest;
-        else
-            result = rest;
-    }
+    if(curr)
+        curr->next = rest;
+    else
+        result = rest;
     return result;
 }
 
@@ -58,8 +49,8 @@ ListNode* construct_list(int arr[], int n){
 }
 
 int main(){
-    int arr0[] = {};
-    int arr1[] = {1};
+    int arr0[] = {1};
+    int arr1[] = {0};
 //    int arr2[] = {2,5,8,10};
     vector<ListNode*> lists;
     ListNode* head0 = construct_list(arr0,sizeof(arr0)/sizeof(arr0[0]));
