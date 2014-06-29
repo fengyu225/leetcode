@@ -7,6 +7,8 @@ struct RandomListNode {
 };
 
 RandomListNode *copyRandomList(RandomListNode *head) {
+    if(!head) return NULL;
+
     return head;
 }
 
