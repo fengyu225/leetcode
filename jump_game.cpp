@@ -1,6 +1,7 @@
 #include "header.h"
 
 int jump(int A[], int n){
+    if(n==1) return 0;
     return 0;
 }
 
