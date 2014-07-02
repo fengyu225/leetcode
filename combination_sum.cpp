@@ -1,7 +1,24 @@
 #include "header.h"
 
-vector<vector<int> > combinationSum(vector<int> &candidates, int target) {
+void dfs(vector<int>& candidates, int sum, int target, vector<vector<int> >& res, vector<int>& temp, int curr_idx){
+    if(sum>target) return;
+    if(sum == target){
+        res.push_back(temp);
+        return;
+    }
+    for(int i=curr_idx; i<candidates.size(); i++){
+        temp.push_back(candidates[i]);
+        dfs(candidates, sum+candidates[i], target, res, temp, i);
+        temp.pop_back();
+    }
+}
 
+vector<vector<int> > combinationSum(vector<int> &candidates, int target) {
+    vector<vector<int> > res;
+    std::sort(candidates.begin(), candidates.end());
+    vector<int> temp;
+    dfs(candidates, 0, target, res, temp, 0);
+    return res;
 }
 
 int main(){
