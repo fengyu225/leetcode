@@ -1,67 +1,67 @@
 #include "header.h"
 
-void swap(vector<int>& num, int a, int b){
-    int x = num[a];
-    num[a] = num[b];
-    num[b] = x;
-}
-
-void perm(vector<int>& num, int curr, vector<vector<int> >& res){
-    if(curr == num.size()){
-        res.push_back(num);
-        return;
-    }
-    for(int i=curr; i<num.size(); i++){
-        if(i!=curr && num[i] == num[i-1] || i!=curr && num[i] == num[curr]) continue;
-        swap(num,curr,i);
-        perm(num,curr+1,res);
-        swap(num,curr,i);
-    }
-}
-
-vector<vector<int> > permuteUnique(vector<int> &num){
-    vector<vector<int> > res;
-    std::sort(num.begin(), num.end());
-    perm(num,0,res);
-    return res;
-}
-
-//bool noswap(int k, int i, const vector<int> num){
-//    for (int j=k;j<i;j++){
-//        if (num[j]==num[i]){
-//            return true;
-//        }
-//    }
-//    return false;
+//void swap(vector<int>& num, int a, int b){
+//    int x = num[a];
+//    num[a] = num[b];
+//    num[b] = x;
 //}
 //
-//void perm(vector<int> num,int k,int n, vector<vector<int> > &res){
-//    if (k==n){
+//void perm(vector<int>& num, int curr, vector<vector<int> >& res){
+//    if(curr == num.size()){
 //        res.push_back(num);
-//    }else{
-//        for (int i=k;i<=n;i++){
-//             
-//            if (noswap(k,i,num)){continue;}
-//             
-//            int tmp = num[k];
-//            num[k]=num[i];
-//            num[i]=tmp;
-//             
-//            perm(num,k+1,n,res);
-//             
-//            tmp = num[k];
-//            num[k]=num[i];
-//            num[i]=tmp;
-//        }
+//        return;
+//    }
+//    for(int i=curr; i<num.size(); i++){
+//        if(i!=curr && num[i] == num[i-1] || i!=curr && num[i] == num[curr]) continue;
+//        swap(num,curr,i);
+//        perm(num,curr+1,res);
+//        swap(num,curr,i);
 //    }
 //}
-//vector<vector<int> > permuteUnique(vector<int> &num) {
-//    // Start typing your C/C++ solution below
-//    // DO NOT write int main() function
+//
+//vector<vector<int> > permuteUnique(vector<int> &num){
 //    vector<vector<int> > res;
-//    perm(num,0,(num.size()-1),res);
+//    std::sort(num.begin(), num.end());
+//    perm(num,0,res);
 //    return res;
 //}
+
+bool noswap(int k, int i, const vector<int> num){
+    for (int j=k;j<i;j++){
+        if (num[j]==num[i]){
+            return true;
+        }
+    }
+    return false;
+}
+
+void perm(vector<int> num,int k,int n, vector<vector<int> > &res){
+    if (k==n){
+        res.push_back(num);
+    }else{
+        for (int i=k;i<=n;i++){
+             
+            if (noswap(k,i,num)){continue;}
+             
+            int tmp = num[k];
+            num[k]=num[i];
+            num[i]=tmp;
+             
+            perm(num,k+1,n,res);
+             
+            tmp = num[k];
+            num[k]=num[i];
+            num[i]=tmp;
+        }
+    }
+}
+vector<vector<int> > permuteUnique(vector<int> &num) {
+    // Start typing your C/C++ solution below
+    // DO NOT write int main() function
+    vector<vector<int> > res;
+    perm(num,0,(num.size()-1),res);
+    return res;
+}
 
 int main(){
     //int arr[] = {1, 1, 2};
