@@ -1,61 +1,38 @@
-#include<stdlib.h>
-#include<stdio.h>
-#include<vector>
-#include<stdbool.h>
-#include<string>
+#include "header.h"
 
-using namespace std;
-
-//void dfs(string s, int start, vector< vector<string> > &result, vector<string> &temp, int *is_palendrome[]){
-//    if(start == s.size()){
-//        result.push_back(temp);
-//        return ;
-//    }
-//    for(int i=start; i<s.size(); i++){
-//        printf("start: %d, i: %d, is_palendrome[start][i]: %d\n", start, i, is_palendrome[start][i]);
-//        if(is_palendrome[start][i]){
-//            temp.push_back(s.substr(start,i+1));
-//            dfs(s, i+1, result, temp, is_palendrome);
-//            temp.pop_back();
-//        }
-//    }
-//}
-//
-//
-
-bool is_palendrome(string s, int start, int i){
-    while(start<i){
-        if(s[start] == s[i]){
-            start++;
-            i--;
-        }
-        else
-            return false;
+bool is_valid_p(string s){
+    int l = 0;
+    int r = s.size()-1;
+    while(l<r){
+        if(s[l] != s[r]) return false;
+        l++;
+        r--;
     }
     return true;
 }
 
-void dfs(string s, int start, vector< vector<string> > &result, vector<string> &temp){
-    if(start == s.size()){
-        result.push_back(temp);
+void solve(string s, int curr, vector<string>& v, vector<vector<string> >& res){
+    if(curr == s.size()){
+        res.push_back(v);
         return ;
     }
-    for(int i=start; i<s.size(); i++){
-        if(is_palendrome(s, start, i)){
-            temp.push_back(s.substr(start,i+1));
-            printf("is_palendrome(s,%d,%d): %d, %s\n", start,i,is_palendrome(s, start, i),s.substr(start,i+1).c_str());
-            dfs(s, i+1, result, temp);
-            temp.pop_back();
+    for(int i=curr; i<s.size(); i++){
+        string x = s.substr(curr,i-curr+1);
+        if(is_valid_p(x)){
+            v.push_back(x);
+            solve(s,i+1,v,res);
+            v.pop_back();
         }
     }
 }
 
-vector<vector<string> > partition(string s){
-    vector< vector<string> > result;
-    vector<string> temp;
-    dfs(s, 0, result, temp);
-    return result;
+vector<vector<string> > partition(string s) {
+    vector<vector<string> > res;
+    vector<string> v;
+    solve(s,0,v,res);
+    return res;
 }
+
 
 int main(){
    //string s("aab");
