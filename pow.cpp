@@ -4,9 +4,10 @@ double pow_(double x, int n){
     if(x==0)
         return n==0?1:0;
     if(n==0) return 1;
-    int s = n<0?-1:1;
-    n = abs(n);
-    printf("%d\n", n);
+    if(n<0){
+        if(n==INT_MIN) return 1.0/(pow(x,INT_MAX)*x);
+        return 1.0/pow(x,-n);
+    }
     double res = 1;
     double np = x;
     while(n>0){
@@ -16,10 +17,10 @@ double pow_(double x, int n){
         np *= np;
         n = n>>1;
     }
-    return s>0?res:1.0/res;
+    return res;
 }
 
 int main(){
-    printf("%f\n", pow_(0.5, -2147483648));
+    printf("%f\n", pow_(0.5, 2147483647));
     return 0;
 }
