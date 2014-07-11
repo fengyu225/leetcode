@@ -1,7 +1,22 @@
 #include "header.h"
 
 string count_say(string last){
-
+    string res;
+    int pre=0;
+    int curr=0;
+    while(curr<last.size()){
+        if(last[curr] == last[pre]){
+            curr++;
+            continue;
+        }
+        res += (char)(curr-pre+'0');
+        res += last[pre];
+        pre = curr;
+        curr++;
+    }
+    res += (char)(curr-pre+'0');
+    res += last[pre];
+    return res;
 }
 
 string countAndSay(int n) {
