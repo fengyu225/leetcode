@@ -9,21 +9,21 @@ int find_small(int A[], int n, int target){
         else
             l = m+1;
     }
-    if(l==n-1 && target>A[l] || r<0 || A[l]>target) return -1;
+    if(l==n-1 && target>A[l] || A[l]>target) return -1;
     return l;
 }
 
 int find_large(int A[], int n, int target){
     int l=0,r=n-1;
     while(l<r){
-        int m = (l+r+1)/2;
+        int m = (l+r)/2;
         if(target>=A[m])
             l = m+1;
         else
             r = m-1;
     }
-    if(l==n-1 && target>A[l] || r<0 || A[l]<target) return -1;
-    return l-1;
+    if(l==1 && target!=A[0] || A[l]>target) return -1;
+    return l;
 }
 
 vector<int> searchRange(int A[], int n, int target) {
