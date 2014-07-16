@@ -6,9 +6,7 @@ int removeDuplicates(int A[], int n) {
     int count=1;
     while(curr<n){
         if(A[curr] == A[pre] && count<2){
-            pre++;
-            A[pre] = A[curr];
-            curr++;
+            A[++pre] = A[curr++];
             count++;
             continue;
         }
