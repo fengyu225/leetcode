@@ -1,6 +1,31 @@
 #include "header.h"
 
+bool search(vector<int> v, int target){
+    int l=0,r=v.size()-1;
+    while(l<=r){
+        int m=(l+r)/2;
+        if(v[m] == target) return true;
+        if(v[m]<target)
+            l=m+1;
+        else
+            r=m-1;
+    }
+    return false;
+}
+
 bool searchMatrix(vector<vector<int> > &matrix, int target) {
+    if(matrix.size() == 0) return false;
+    if(target<matrix[0][0] || target>matrix[matrix.size()-1][matrix[0].size()-1]) return false;
+    int l=0,r=matrix.size()-1;
+    while(l<=r){
+        int m=(l+r)/2;
+        if(target<matrix[m][0])
+            r=m-1;
+        else if(target>matrix[m][matrix[0].size()-1])
+            l=m+1;
+        else
+            return search(matrix[m], target);
+    }
     return false;
 }
 
