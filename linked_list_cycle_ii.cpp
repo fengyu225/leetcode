@@ -35,9 +35,9 @@ ListNode *detectCycle(ListNode *head) {
         slow = slow->next;
         fast = fast->next;
         if(fast) fast = fast->next;
+        else return NULL;
         if(slow == fast) break;
     }
-    if(!fast) return NULL;
     slow = head;
     while(slow != fast){
         slow = slow->next;
