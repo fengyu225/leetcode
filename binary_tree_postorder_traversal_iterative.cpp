@@ -1,47 +1,46 @@
-#include<stdlib.h>
-#include<stdio.h>
-#include<stack>
+#include "header.h"
 
-using namespace std;
-
-struct node{
+struct TreeNode {
     int val;
-    struct node* left;
-    struct node* right;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-
-void post_order(struct node* root){
-    stack<struct node*> s;
-    stack<struct node*> s_t;
+vector<int> postorderTraversal(TreeNode *root) {
+    vector<int> res;
+    if(!root) return res;
+    stack<TreeNode*> s;
+    stack<TreeNode*> s_t;
     s.push(root);
     while(!s.empty()){
-        struct node* t = s.top();
+        TreeNode* t = s.top();
         s_t.push(t);
         s.pop();
         if(t->left){
             s.push(t->left);
-            continue;
         }
         if(t->right){
             s.push(t->right);
-            continue;
         }
     }
     while(!s_t.empty()){
-        printf("%d ", s_t.top()->val);
+        res.push_back(s_t.top()->val);
         s_t.pop();
     }
-    printf("\n");
+    return res;
 }
 
 
 int main(){
-    struct node one={.val=1,.left=NULL,.right=NULL};
-    struct node two={.val=2,.left=NULL,.right=NULL};
-    struct node three={.val=3,.left=NULL,.right=NULL};
-    one.right=&two;
-    two.left=&three;
-    post_order(&one);
+    TreeNode one(1);
+    TreeNode two(2);
+    TreeNode three(3);
+    three.left = &one;
+    three.right = &two;
+    vector<int> res = postorderTraversal(&three);
+    for(int i=0; i<res.size(); i++)
+        printf("%d ", res[i]);
+    printf("\n");
     return 0;
 }
