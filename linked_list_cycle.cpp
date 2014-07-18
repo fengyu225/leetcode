@@ -26,32 +26,24 @@ ListNode* create_list(int arr[], int n, int s){
     return result;
 }
 
-ListNode *detectCycle(ListNode *head) {
-    if(!head || !head->next) return NULL;
-    if(head->next == head) return head;
+bool hasCycle(ListNode *head) {
+    if(!head) return false;
     ListNode* slow = head;
     ListNode* fast = head;
-    while(slow && fast){
+    while(fast){
         slow = slow->next;
         fast = fast->next;
-        if(fast) fast = fast->next;
-        else return NULL;
-        if(slow == fast) break;
-    }
-    slow = head;
-    while(slow != fast){
-        slow = slow->next;
+        if(!fast) return false;
         fast = fast->next;
+        if(slow == fast) return true;
     }
-    return fast;
+    return false;
 }
-
 
 int main(){
     int arr[] = {0, 1, 2, 3};
     ListNode* l = create_list(arr, sizeof(arr)/sizeof(arr[0]), 0);
-    ListNode* r = detectCycle(l);
-    if(r)
-        printf("%d\n", r->val);
+    bool r = hasCycle(l);
+    printf("%s\n", r?"true":"false");
     return 0;
 }
