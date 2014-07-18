@@ -3,9 +3,8 @@
 void gen_p(vector<string>& res, int curr_l_num, int curr_num_pair, int n, string s){
     if(curr_l_num>n-curr_num_pair) return;
     if(curr_l_num+curr_num_pair == n){
-        string temp = s;
-        for(int i=0; i<curr_l_num; i++) temp+=")";
-        res.push_back(temp);
+        for(int i=0; i<curr_l_num; i++) s+=")";
+        res.push_back(s);
         return ;
     }
     if(curr_l_num>=1){
@@ -26,7 +25,7 @@ vector<string> generateParenthesis(int n) {
 }
 
 int main(){
-    vector<string> res = generateParenthesis(1);
+    vector<string> res = generateParenthesis(10);
     for(int i=0; i<res.size(); i++)
         printf("%s\n", res[i].c_str());
     return 0;
