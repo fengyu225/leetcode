@@ -1,52 +1,32 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include<stdbool.h>
-#include<string.h>
-#include<stack>
+#include "header.h"
 
-using namespace std;
-
-bool is_op(char* s){
-    return strcmp(s,"+")==0 || strcmp(s,"-")==0 || strcmp(s,"*")==0 || strcmp(s,"/")==0;
-}
-
-int eval_op(int l, int r, char* s){
-    if(strcmp(s,"+")==0)
-        return l+r;
-    if(strcmp(s,"-")==0)
-        return l-r;
-    if(strcmp(s,"*")==0)
-        return l*r;
-    if(strcmp(s,"/")==0)
-        return l/r;
-}
-
-int eval(char* s[], int size){
-    stack<char*> stack;
-    for(int i=0; i<size; i++){
-        if(is_op(s[i])){
-                if(stack.size()<2){
-                    printf("Incorrect exp\n");
-                    return -1;
-                }
-                int right = atoi(stack.top());
-                stack.pop();
-                int left = atoi(stack.top());
-                stack.pop();
-                char v[10];
-                int eval_i = eval_op(left,right,s[i]);
-                sprintf(v, "%d", eval_i);
-                stack.push(v);
+int evalRPN(vector<string> &tokens) {
+    int res;
+    stack<int> s;
+    for(auto t:tokens){
+        if(!(t=="+" || t=="-" || t=="*" || t=="/")){
+            s.push(std::stoi(t));
+            continue;
         }
+        int r =  s.top();
+        s.pop();
+        int l = s.top();
+        s.pop();
+        if(t=="+")
+            s.push(r+l);
+        else if(t=="-")
+            s.push(l-r);
+        else if(t=="*")
+            s.push(l*r);
         else
-            stack.push(s[i]);
+            s.push(l/r);
     }
-    return atoi(stack.top());
+    return s.top();
 }
 
 int main(){
-    char* s[] = {"4", "13", "5", "/", "+"};
-    int result = eval(s,sizeof(s)/sizeof(s[0]));
-    printf("%d\n", result);
+    //vector<string> tokens = {"2", "1", "+", "3", "*"};
+    vector<string> tokens = {"-1","1","*","-1","+"};
+    cout<<evalRPN(tokens)<<endl;
     return 0;
 }

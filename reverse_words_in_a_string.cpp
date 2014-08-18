@@ -1,36 +1,30 @@
 #include "header.h"
 
-void reverse(string& s, int i, int j){
-    while(i<j){
-        char temp = s[i];
-        s[i] = s[j];
-        s[j] = temp;
-        i++;
-        j--;
-    }
-}
-
 void reverseWords(string &s) {
-    if(s.size() < 2) return;
-    reverse(s,0,s.size()-1);
-    int start = 0,end=0;
-    while(start<s.size() && s[start] == ' ') start++;
-    end = start;
-    while(end<=s.size()){
-        if(end<s.size() && s[end]!=' '){
-            end++;
-            continue;
+    string word; //tmp string to store each word
+    string res; // result string
+    int i=0;
+    while (i<s.size()){
+        if (char(s[i])==' ' && word.empty()){i++;continue;} //multiple spaces
+        if (char(s[i])==' ' && !word.empty()){ //first space after a word
+            res = word+" "+ res; //store the word
+            word=""; //reset the word
+            i++; continue;
         }
-        reverse(s,start,end-1);
-        if(end==s.size()) break;
-        start = end;
-        while(start<s.size() && s[start]==' ') start++;
-        end=start;
+        if (char(s[i])!=' '){word=word+char(s[i]);i++; continue;} //non-space chars
     }
+     
+    if (!word.empty()){ //last word
+        s = word+" "+res;
+    }else{
+        s = res;
+    }
+    s = s.substr(0,s.size()-1); //eliminate the last space
 }
 
 int main(){
     string s("   the sky is blue ");
+    //string s(" ");
     reverseWords(s);
     cout<<s<<endl;
     return 0;
