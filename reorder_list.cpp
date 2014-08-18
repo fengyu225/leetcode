@@ -1,77 +1,60 @@
-#include<stdlib.h>
-#include<stdio.h>
+#include "header.h"
 
-struct node {
+struct ListNode {
     int val;
-    struct node* next;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
 };
 
-
-void print_list(struct node* root){
-    while(root){
-        printf("%d ", root->val);
-        root = root->next;
+ListNode* reverse(ListNode* head){
+    ListNode* curr = head;
+    ListNode* next = curr->next;
+    curr->next = NULL;
+    while(next){
+        ListNode* temp = next->next;
+        next->next = curr;
+        curr = next;
+        next = temp;
     }
-    printf("\n");
+    return curr;
 }
 
-struct node* reverse(struct node* root){
-    if(!root)
-        return NULL;
-    struct node* curr;
-    struct node* before = root;
-    curr = root->next;
-    before->next = NULL;
-    while(curr){
-        struct node* temp = curr->next;
-        curr->next = before;
-        before = curr;
-        curr = temp;
-    }
-    return before;
-}
-
-
-void reorder(struct node* root){
-    struct node* slow = root;
-    struct node* fast = slow;
-    while(fast){
+void reorderList(ListNode *head) {
+    if(!head || !head->next) return;
+    ListNode* slow = head, *fast = head->next;
+    do{
         fast = fast->next;
-        if(!fast)
-            break;
+        if(!fast) break;
         fast = fast->next;
         slow = slow->next;
-    }
-    struct node* second_root = reverse(slow->next);
+    }while(slow && fast);
+    ListNode* second = slow->next;
     slow->next = NULL;
-    struct node* curr = second_root;
-    struct node* before = root;
-    while(curr){
-        struct node* before_next = before->next;
-        struct node* curr_next = curr->next;
-        before->next = curr;
-        curr->next = before_next;
-        before = before_next;
-        curr = curr_next;
+    ListNode* temp = reverse(second);
+    while(temp){
+        ListNode* next = head->next;
+        ListNode* second_next = temp->next;
+        head->next = temp;
+        temp->next = next;
+        head = next;
+        temp = second_next;
     }
 }
-
 
 int main(){
-    struct node n0 = {.val=0,.next=NULL};
-    struct node n1 = {.val=1,.next=NULL};
-    struct node n2 = {.val=2,.next=NULL};
-    struct node n3 = {.val=3,.next=NULL};
-    struct node n4 = {.val=4,.next=NULL};
-    struct node n5 = {.val=5,.next=NULL};
-    n0.next=&n1;
-    n1.next=&n2;
-    n2.next=&n3;
-    n3.next=&n4;
-    n4.next=&n5;
-    //struct node* result = reverse(&n0);
-    reorder(&n0);
-    print_list(&n0);
+    ListNode l1(1);
+    ListNode l2(2);
+    ListNode l3(3);
+    ListNode l4(4);
+    l1.next = &l2;
+    l2.next = &l3;
+    l3.next = &l4;
+    reorderList(&l1);
+    ListNode* curr = &l1;
+    while(curr){
+        cout<<curr->val<<" ";
+        curr = curr->next;
+    }
+    cout<<endl;
     return 0;
 }
-
