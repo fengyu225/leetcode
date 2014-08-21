@@ -16,7 +16,11 @@ int largestRectangleArea(vector<int> &h) {
           else {   
                int tmp = S.top();  
                S.pop();  
+               cout<<"i: "<<i<<endl;
+               cout<<"S.empty: "<<S.empty()<<" ";
+               if(!S.empty()) cout<<"S.top: "<<S.top()<<" ";
                 sum = max(sum, h[tmp]*(S.empty()? i : i-S.top()-1));  
+                cout<<"sum: "<<sum<<endl;
                 i--;  
            }
      }
@@ -24,7 +28,7 @@ int largestRectangleArea(vector<int> &h) {
 }  
 
 int main(){
-    int height[] = {2, 1, 5, 6, 2, 3};
+    int height[] = {6, 2, 5, 4, 5, 1, 6};
     vector<int> h_v(height,height+sizeof(height)/sizeof(height[0]));
     printf("%d\n", largestRectangleArea(h_v));
     return 0;
