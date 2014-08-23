@@ -67,7 +67,8 @@ int main(){
     //int arr[] = {1, 1, 2};
     //int arr[] = {1, 2, 3};
 //    int arr[] = {1, 2, 1, 2};
-    int arr[] = {-1,2,0,-1,1,0,1};
+    //int arr[] = {-1,2,0,-1,1,0,1};
+    int arr[] = {1, 1, 2, 3, 3};
     vector<int> num(arr,arr+sizeof(arr)/sizeof(arr[0]));
     vector<vector<int> > res = permuteUnique(num);
     for(int i=0; i<res.size(); i++){
