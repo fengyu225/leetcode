@@ -1,5 +1,14 @@
 #include "header.h"
 
+/*
+
+P   A   H   N
+A P L S I I G
+Y   I   R
+
+And then read line by line: "PAHNAPLSIIGYIR"
+*/
+
 string convert(string s, int nRows){
     if(s.length()==0 || nRows <=0)  
         return "";  
