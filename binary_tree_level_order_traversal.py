@@ -14,12 +14,12 @@ class Solution:
         if root is None:
             return res
         q = [[],[]]
-        temp = [root.val]
+        temp = []
         curr = 0
         q[curr].append(root)
         while len(q[curr%2])>0:
-            n = q[curr%2][0]
-            q[curr%2] = q[curr%2][1:]
+            n = q[curr%2].pop(0)
+            temp.append(n.val)
             if n.left is not None:
                 q[(curr+1)%2].append(n.left)
             if n.right is not None:
