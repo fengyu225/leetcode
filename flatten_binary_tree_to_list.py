@@ -30,7 +30,6 @@ class Solution:
         new_tail.left = None
         return new_head,new_tail
 
-
     # @param root, a tree node
     # @return nothing, do it in place
     def flatten(self, root):
