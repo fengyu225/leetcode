@@ -7,37 +7,41 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-int get_max(vector<int>& v){
-    int res = v[0];
-    for(auto e : v)
-        res = std::max(res,e);
+int get_max(vector<int>& vec){
+    if(vec.size() == 0) return INT_MIN;
+    int res = vec[0];
+    for(int i=1; i<vec.size(); i++)
+        res = std::max(vec[i], res);
     return res;
 }
 
-int max_sum(TreeNode* curr, int& max){
-    if(!curr)
-        return 0;
+void max_path_sum(TreeNode* root, int& path_max, int& longest){
+    if(!root){
+        longest = 0;
+        return;
+    }
     int l_max = INT_MIN;
-    int l = max_sum(curr->left,l_max);
     int r_max = INT_MIN;
-    int r = max_sum(curr->right,r_max);
-    int m = std::max(l_max,r_max);
-    int p = std::max(l,r);
-    if(p>0)
-        p = p+curr->val;
-    else
-        p = curr->val;
-    vector<int> v = {l_max,r_max,curr->val,curr->val+l,curr->val+r,curr->val+l+r};
-    max = get_max(v);
-    return p;
+    int ll,rl;
+    max_path_sum(root->left,l_max,ll);
+    max_path_sum(root->right,r_max,rl);
+    longest = std::max(root->val,std::max(ll,rl)+root->val);
+    vector<int> temp;
+    temp.push_back(l_max);
+    temp.push_back(r_max);
+    temp.push_back(std::max(root->val,ll+root->val));
+    temp.push_back(std::max(root->val,rl+root->val));
+    temp.push_back(ll+rl+root->val);
+    path_max = get_max(temp);
 }
 
 int maxPathSum(TreeNode* t1){
-    int max = 0;
-    max_sum(t1,max);
-    return max;
+    if(!t1) return INT_MIN;
+    int path_max = INT_MIN; 
+    int longest = INT_MIN;
+    max_path_sum(t1,path_max,longest);
+    return path_max;
 }
-
 int main(){
 //    TreeNode t1(1);
 //    TreeNode t2(-2);

@@ -1,48 +1,33 @@
-#include "header.h"
-
-void dfs(string& s, int curr, vector<int>& end_idx, vector<string>& res, unordered_set<string>& dict, vector<vector<bool> >& mp){
-    if(curr>=s.size()){
-        string x = s;
-        for(int i=0; i<end_idx.size()-1; i++){
-            x.insert(end_idx[i]+i, " ");
-        }
-        res.push_back(x);
-        return;
-    }
-    for(int i=0; i<mp[curr].size(); i++){
-        if(mp[curr][i] == true){
-            end_idx.push_back(i+1);
-            dfs(s,i+1,end_idx,res,dict,mp);
-            end_idx.pop_back();
-        }
-    }
+#include<stdio.h>
+ 
+// A utility function that returns maximum of two integers
+int max(int a, int b) { return (a > b)? a : b; }
+ 
+// Returns the maximum value that can be put in a knapsack of capacity W
+int knapSack(int W, int wt[], int val[], int n)
+{
+   // Base Case
+   if (n == 0 || W == 0)
+       return 0;
+ 
+   // If weight of the nth item is more than Knapsack capacity W, then
+   // this item cannot be included in the optimal solution
+   if (wt[n-1] > W)
+       return knapSack(W, wt, val, n-1);
+ 
+   // Return the maximum of two cases: (1) nth item included (2) not included
+   else return max( val[n-1] + knapSack(W-wt[n-1], wt, val, n-1),
+                    knapSack(W, wt, val, n-1)
+                  );
 }
-
-vector<string> wordBreak(string s, unordered_set<string> &dict) {
-    vector<string> res;
-    vector<vector<bool> > mp(s.size(), vector<bool>(s.size(), false));
-    for(int i=0; i<s.size(); i++)
-        for(int j=i; j<s.size(); j++)
-            if(dict.find(s.substr(i,j-i+1)) != dict.end())
-                mp[i][j] = true;
-    bool flag = false;
-    for(int i=0; i<s.size(); i++)
-        if(mp[i][s.size()-1]){
-            flag = true;
-            break;
-        }
-    if(!flag) return res;
-    vector<int> end_idx;
-    dfs(s,0,end_idx,res,dict,mp);
-    return res;
-}
-
-int main(){
-    vector<string> res;
-    unordered_set<string> dict({"cat", "cats", "and", "sand", "dog"});
-    string s("catsanddog");
-    res = wordBreak(s,dict);
-    for(int i=0; i<res.size(); i++)
-        std::cout<<res[i]<<std::endl;
+ 
+// Driver program to test above function
+int main()
+{
+    int val[] = {60, 100, 120};
+    int wt[] = {10, 20, 30};
+    int  W = 50;
+    int n = sizeof(val)/sizeof(val[0]);
+    printf("%d", knapSack(W, wt, val, n));
     return 0;
 }

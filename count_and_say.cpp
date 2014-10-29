@@ -1,35 +1,46 @@
+/*
+ The count-and-say sequence is the sequence of integers beginning as follows:
+1, 11, 21, 1211, 111221, ...
+
+1 is read off as "one 1" or 11.
+11 is read off as "two 1s" or 21.
+21 is read off as "one 2, then one 1" or 1211.
+
+Given an integer n, generate the nth sequence.
+
+Note: The sequence of integers will be represented as a string. 
+
+*/
+
 #include "header.h"
 
-using std::to_string;
-
 string count(string s){
-    int c=0;
-    int l=0,r=0;
     string res;
-    while(r<s.size()){
-        if(s[l] == s[r]){
-            c++;
-            r++;
+    int begin = 0, curr = 0;
+    while(curr<s.size()){
+        if(s[curr] == s[begin]){
+            curr++;
             continue;
         }
-        res = res+to_string(c)+s.substr(l,1);
-        l = r;
-        c=0;
+        res += to_string(curr-begin);
+        res += s[begin];
+        begin = curr;
     }
-    res = res+to_string(c)+s.substr(l,1);
+    res += to_string(curr-begin);
+    res += s[begin];
     return res;
 }
 
 string countAndSay(int n) {
-    if(n==1) return "1";
-    string last("1");
-    for(int i=2; i<=n; i++)
-        last = count(last);
-    return last;
+    string curr = "1";
+    for(int i=1; i<n; i++){
+        curr = count(curr);
+    }
+    return curr;
 }
 
 int main(){
     string res = countAndSay(5);
-    printf("%s\n", res.c_str());
+    cout<<res<<endl;
     return 0;
 }
