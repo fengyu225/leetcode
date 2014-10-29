@@ -1,26 +1,31 @@
 #include "header.h"
 
 bool isScramble(string s1, string s2){
-    if(s1==s2) return true;
     if(s1.size() != s2.size()) return false;
-    int len = s1.size();
-    bool arr[len+1][len][len];
-    memset(arr,0,sizeof(arr));
-    for(int i=0; i<len; i++)
-        for(int j=0; j<len; j++)
-            arr[1][i][j] = s1[i]==s2[j]?true:false;
-    for(int i=2; i<=len; i++){
-        for(int j=0; j+i<=len; j++){
-            for(int k=0; k+i<=len; k++){
-                for(int p=1;p<i;p++){
-                    arr[i][j][k] |= 
-                        arr[p][j][k] && arr[i-p][j+p][k+p] ||
-                        arr[p][j][k+i-p] && arr[i-p][j+p][k];
+    if(s1 == s2) return true;
+    int sz = s1.size();
+    bool arr[sz+1][sz][sz];
+    for(int i=0; i<sz; i++)
+        for(int j=0; j<sz; j++)
+            arr[1][i][j] = s1[i]==s2[j];
+    for(int i=2;i<=sz;i++){
+        for(int j=0; j+i-1<sz; j++){
+            for(int k=0;k+i-1<sz;k++){
+                bool flag = false;
+                for(int x = 1;x<i;x++){
+                    if(
+                            arr[x][j][k] && arr[i-x][j+x][k+x] || 
+                            arr[x][j][k+i-x] && arr[i-x][j+x][k]
+                      ){
+                        flag =true;
+                        break;
+                    }
                 }
+                arr[i][j][k] = flag;
             }
         }
     }
-    return arr[len][0][0];
+    return arr[sz][0][0];
 }
 
 int main(){

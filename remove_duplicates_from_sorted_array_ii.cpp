@@ -1,27 +1,24 @@
 #include "header.h"
 
 int removeDuplicates(int A[], int n) {
-    if(n==0 || n==1 || n==2) return n;
-    int pre = 0, curr = 1, count=1;
-    while(curr<n){
-        if(A[pre] == A[curr] && count>=2){
-            count++;
-            curr++;
+    if(n == 0 || n==1) return n;
+    int tail = 0, curr = 1, seen_times = 1;
+    for(;curr<n;curr++){
+        if(A[curr] == A[tail] && seen_times >=2)
             continue;
-        }
-        if(A[pre] == A[curr])
-            count++;
+        if(A[curr] == A[tail])
+            seen_times++;
         else
-            count = 1;
-        A[pre+1] = A[curr];
-        pre++;curr++;
+            seen_times = 1;
+        A[++tail] = A[curr];
     }
-    return pre+1;
+    return tail+1;
 }
 
 int main(){
     //int A[] = {1, 1, 1, 2, 2, 3};
-    int A[] = {1, 1, 1, 1, 3, 3, 3};
+    //int A[] = {1, 1, 1, 1, 3, 3};
+    int A[] = {0, 0, 0, 1, 2, 2, 4, 4};
     int res = removeDuplicates(A,sizeof(A)/sizeof(A[0]));
     for(int i=0; i<res; i++)
         printf("%d ", A[i]);

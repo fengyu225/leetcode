@@ -1,33 +1,31 @@
 #include "header.h"
 
 int find_small(int A[], int n, int target){
-    int l=0, r=n-1;
+    int l = 0, r=n-1;
     while(l<r){
         int m = (l+r)/2;
-        if(target<A[m])
-            r = m-1;
-        else if(target==A[m])
+        if(A[m] == target)
             r = m;
-        else
+        else if(A[m]<target)
             l = m+1;
+        else
+            r = m-1;
     }
-    if(l>r || A[l]!=target) return -1;
-    return l;
+    return A[l] == target?l:-1;
 }
 
 int find_large(int A[], int n, int target){
-    int l=0,r=n-1;
+    int l = 0, r = n-1;
     while(l<r){
         int m = (l+r+1)/2;
-        if(target>A[m])
-            l = m+1;
-        else if(target==A[m])
+        if(A[m] == target)
             l = m;
+        else if(A[m]<target)
+            l = m+1;
         else
             r = m-1;
     }
-    if(l>r || A[l]!=target) return -1;
-    return l;
+    return A[l] == target?l:-1;
 }
 
 vector<int> searchRange(int A[], int n, int target) {

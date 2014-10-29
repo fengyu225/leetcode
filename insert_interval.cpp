@@ -9,9 +9,9 @@ struct Interval {
 
 vector<Interval> insert(vector<Interval> &intervals, Interval newInterval) {
     vector<Interval> res;
-    int r=0;
+    int r = 0;
     while(r<intervals.size() && newInterval.start>intervals[r].end) r++;
-    if(r==intervals.size()){
+    if(r == intervals.size()){
         intervals.push_back(newInterval);
         return intervals;
     }
@@ -19,7 +19,7 @@ vector<Interval> insert(vector<Interval> &intervals, Interval newInterval) {
     while(r+1<intervals.size()){
         if(intervals[r+1].start>intervals[r].end) break;
         intervals[r].start = std::min(intervals[r].start,intervals[r+1].start);
-        intervals[r].end = std::max(intervals[r].end,intervals[r+1].end);
+        intervals[r].end = std::max(intervals[r].end, intervals[r+1].end);
         intervals.erase(intervals.begin()+r+1);
     }
     return intervals;

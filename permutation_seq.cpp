@@ -17,27 +17,27 @@ Note: Given n will be between 1 and 9 inclusive.
 
 #include "header.h"
 
-void get_perm(int n, int k, int curr, vector<char>& chars, string& curr_s){
+void get_perm(int n, int k, int curr, vector<char>& chars, string& res){
     if(curr == n){
-        curr_s += chars[0];
+        res += chars[0];
         return;
     }
-    int len = 1;
-    for(int i=1; i<=n-curr;i++)
-        len *= i;
-    int x = (k-1)/len;
-    curr_s += chars[x];
-    chars.erase(chars.begin()+x);
-    get_perm(n,k-len*x,curr+1,chars,curr_s);
+    int p = 1;
+    for(int i=1; i<=n-curr; i++)
+        p *= i;
+    int pos = (k-1)/p;
+    res += chars[pos];
+    chars.erase(chars.begin()+pos);
+    get_perm(n,k-pos*p,curr+1,chars,res);
 }
 
 string getPermutation(int n, int k) {
     vector<char> chars;
+    string res;
     for(int i=1; i<=n; i++)
-        chars.push_back((char)(i+'0'));
-    string s="";
-    get_perm(n,k,1,chars,s);
-    return s;
+        chars.push_back(i+'0');
+    get_perm(n,k,1,chars,res);
+    return res;
 }
 
 int main(){

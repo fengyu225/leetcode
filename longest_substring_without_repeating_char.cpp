@@ -1,23 +1,23 @@
 #include "header.h"
 
 int lengthOfLongestSubstring(string s) {
+    int res = 0;
     if(s.size()<2) return s.size();
-    int arr[256] = {0};
-    int l=0,r=0;
-    int max_len=-1;
-    while(r<s.size()){
-        if(arr[s[r]] == 0){
-            max_len = std::max(max_len,r-l+1);
-            arr[s[r]]++;
+    int sz = s.size();
+    int l = 0, r = 0;
+    unordered_set<char> set;
+    while(r<sz){
+        if(set.find(s[r]) == set.end()){
+            set.insert(s[r]);
+            res = std::max(res,r-l+1);
             r++;
             continue;
         }
         do{
-            arr[s[l]]--;
-            l++;
-        }while(l<r && s[l] != s[r]);
+            set.erase(s[l]);
+        }while(s[l++] != s[r]);
     }
-    return max_len;
+    return res;
 }
 
 int main(){

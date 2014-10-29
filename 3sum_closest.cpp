@@ -9,22 +9,22 @@
 #include "header.h"
 
 int threeSumClosest(vector<int> &num, int target) {
-    if(num.size()<3) return 0;
-    sort(num.begin(), num.end());
-    int diff=INT_MAX,res=INT_MAX;
-    for(int i=0; i<num.size(); i++){
-        int j=i+1,k=num.size()-1;
-        while(j<k){
-            int sum = num[i]+num[j]+num[k];
-            if(sum == target) return sum;
-            if(abs(sum-target)<diff){
-                diff = abs(sum-target);
-                res = sum;
+    if(num.size() == 0) return INT_MIN;
+    int res = INT_MAX, diff = INT_MAX;
+    std::sort(num.begin(), num.end());
+    for(int i=0; i+2<num.size(); i++){
+        int l=i+1,r=num.size()-1;
+        while(l<r){
+            int s = num[i]+num[l]+num[r];
+            if(s == target) return s;
+            if(abs(s-target)<diff){
+                diff = abs(s-target);
+                res = s;
             }
-            if(sum<target)
-                j++;
+            if(num[l]+num[r]<target-num[i])
+                l++;
             else
-                k--;
+                r--;
         }
     }
     return res;

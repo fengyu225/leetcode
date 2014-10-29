@@ -1,13 +1,36 @@
 #include "header.h"
 
+void swap(vector<int>& num, int i, int j){
+    int x = num[i];
+    num[i] = num[j];
+    num[j] = x;
+}
+
+bool noswap(vector<int>& num, int i, int j){
+    for(int x=i; x<j; x++)
+        if(num[x] == num[j])
+            return true;
+    return false;
+}
+
 void perm(vector<int> num,int k,int n, vector<vector<int> > &res){
+    if(k == n){
+        res.push_back(num);
+        return;
+    }
+    for(int i=k; i<=n; i++){
+        if(noswap(num,k,i)) continue;
+        swap(num,i,k);
+        perm(num,k+1,n,res);
+        swap(num,i,k);
+    }
 }
 
 vector<vector<int> > permuteUnique(vector<int> &num) {
     // Start typing your C/C++ solution below
     // DO NOT write int main() function
     vector<vector<int> > res;
-    perm(num,0,(num.size()-1),res);
+    perm(num,0,num.size()-1,res);
     return res;
 }
 

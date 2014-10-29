@@ -2,12 +2,12 @@
 
 int sqrt(int x){
     if(x==0 || x==1) return x;
-    int l=0, r=x;
-    while(l+1<r){
-        int m=(l+r)/2;
+    int l=1, r=x;
+    while(l<r){
+        int m = (l+r+1)/2;
         if(m == x/m) return m;
-        if(m>x/m) r=m;
-        else l=m;
+        if(m<x/m) l=m;
+        else r=m-1;
     }
     return l;
 }

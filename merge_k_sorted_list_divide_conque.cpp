@@ -6,33 +6,47 @@ struct ListNode {
     ListNode(int x) : val(x), next(NULL) {}
 };
 
-class comp{
-    public:
-        bool operator () (ListNode* a, ListNode* b){
-            if(!a)
-                return true;
-            if(!b) return false;
-            return b->val<a->val;
-        }
-};
-
-ListNode *mergeKLists(vector<ListNode *> &lists) {
-    priority_queue<ListNode*, vector<ListNode*>, comp> q;
-    for(int i=0; i<lists.size(); i++) q.push(lists[i]);
+ListNode* merge_two(ListNode* a, ListNode* b){
     ListNode* res = NULL;
     ListNode* curr = NULL;
-    while(!q.empty() && q.top()){
-        ListNode* x = q.top();
-        q.pop();
-        q.push(x->next);
-        if(res){
+    while(a && b){
+        ListNode* x = NULL;
+        if(a->val<b->val){
+            x = a;
+            a = a->next;
+        }
+        else{
+            x = b;
+            b = b->next;
+        }
+        if(!res)
+            res = curr = x;
+        else{
             curr->next = x;
             curr = x;
         }
-        else
-            res = curr = x;
     }
-    return res;
+    if(!res)
+        return a?a:b;
+    else{
+        curr->next = a?a:b;
+        return res;
+    }
+}
+
+ListNode* merge_lists(vector<ListNode*>& lists, int l, int r){
+    if(l>r) return NULL;
+    if(l == r) return lists[l];
+    int m = (l+r)/2;
+    ListNode* l_res = merge_lists(lists,l,m);
+    ListNode* r_res = merge_lists(lists,m+1,r);
+    return merge_two(l_res,r_res);
+}
+
+ListNode *mergeKLists(vector<ListNode *> &lists) {
+    if(lists.size()<1) return NULL;
+    if(lists.size() == 1) return lists[0];
+    return merge_lists(lists, 0, lists.size()-1);    
 }
 
 ListNode* construct_list(int arr[], int n){

@@ -21,35 +21,23 @@ ListNode* create_list(int arr[], int n){
     return result;
 }
 
-ListNode *deleteDuplicates(ListNode *head){
-    if(!head) return NULL;
-    ListNode* res = NULL;
-    ListNode* tail = NULL;
+ListNode *deleteDuplicates(ListNode *head) {
+    if(!head || !head->next) return head;
+    ListNode* res = head;
+    ListNode* tail = head;
     ListNode* curr = head;
     ListNode* next = curr->next;
     while(next){
-        if(curr->val == next->val){
+        if(tail->val == next->val){
             next = next->next;
             continue;
         }
-        if(curr->next == next){
-            if(res){
-                tail->next = curr;
-                tail = curr;
-            }
-            else
-                res = tail = curr;
-            tail->next = NULL;
-        }
-        curr = next;
+        tail->next = next;
+        tail = next;
         next = next->next;
+        tail->next = NULL;
     }
-    if(!curr->next){
-        if(res)
-            tail->next = curr;
-        else
-            res = curr;
-    }
+    tail->next = NULL;
     return res;
 }
 

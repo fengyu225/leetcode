@@ -1,20 +1,21 @@
 #include "header.h"
 
-vector<vector<int> > subsets(vector<int> &S) {
-    unsigned int sz = S.size();
-    unsigned int c = 1U<<sz;
-    vector<vector<int> > res;
-    for(unsigned int i=0; i<c; i++){
-        int x = i; int temp = 0;
-        vector<int> v;
-        while(x){
-            if(x&1U) v.push_back(S[temp]);
-            x >>=1;
-            temp++;
-        }
-        res.push_back(v);
+void search(vector<int>& S, int curr_idx, vector<int>& curr_subset, vector<vector<int> >& res){
+    if(curr_idx == S.size()){
+        res.push_back(curr_subset);
+        return;
     }
-    return res;
+    curr_subset.push_back(S[curr_idx]);
+    search(S,curr_idx+1,curr_subset,res);
+    curr_subset.pop_back();
+    search(S,curr_idx+1,curr_subset,res);
+}
+
+vector<vector<int> > subsets(vector<int> &S) {
+    vector<vector<int> > res;
+    if(S.size() == 0) return res;
+    vector<int> curr_subset;
+    search(S,0,curr_subset,res);
 }
 
 int main(){

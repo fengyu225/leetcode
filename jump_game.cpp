@@ -1,16 +1,15 @@
 #include "header.h"
 
 bool canJump(int A[], int n) {
-    if(A[0] == 0) return n==1;
-    bool res = false;
-    int start = 0,end=0;
-    while(end<n){
-        int max = end;
-        for(int i=start;i<=end;i++) max = std::max(max,i+A[i]);
-        if(max == end) return false;
-        if(max>=n-1) return true;
-        start = end+1;
-        end = max;
+    if(n == 1) return true;
+    int l=0,r=0;
+    while(r<n-1){
+        int max = r;
+        for(int i=l;i<=r;i++)
+            max = std::max(max,A[i]+i);
+        if(max == r) return false;
+        l = r+1;
+        r = max;
     }
     return true;
 }

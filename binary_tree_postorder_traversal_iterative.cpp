@@ -34,11 +34,13 @@ struct TreeNode {
 
 vector<int> postorderTraversal(TreeNode *root) {
     vector<int> res;
+    if(!root) return res;
+    TreeNode* prev = NULL;
+    TreeNode* curr = root;
     stack<TreeNode*> stack;
     stack.push(root);
-    TreeNode* prev = NULL;
     while(!stack.empty()){
-        TreeNode* curr = stack.top();
+        curr = stack.top();
         if(!prev || prev->left == curr || prev->right == curr){
             if(curr->left)
                 stack.push(curr->left);

@@ -31,7 +31,7 @@ int main(){
 //    printf("%d\n", numDecodings(s2));
 //    string s3("27");
 //    printf("%d\n", numDecodings(s3));
-    string s4("01");
+    string s4("101");
     printf("%d\n", numDecodings(s4));
     return 0;
 }
