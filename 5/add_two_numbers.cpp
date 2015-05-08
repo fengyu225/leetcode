@@ -29,13 +29,8 @@ ListNode* addTwoNumbers(ListNode *l1, ListNode *l2) {
 		if(l2)
 			l2 = l2->next;
 	}
-	if(x){
-		if(curr)
-			curr->next = new ListNode(x);
-		else{
-			res = new ListNode(x);
-		}
-	}
+	if(x)
+		curr->next = new ListNode(x);
 	return res;
 }
 
