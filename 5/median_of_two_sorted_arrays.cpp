@@ -24,10 +24,10 @@ double findMedianSortedArrays(vector<int>& num1, vector<int>& num2){
 }
 
 int main(){
-    int A[] = {2, 3, 4, 5, 6, 7};
-    int B[] = {1};
-//    int A[] = {1,2};
-//    int B[] = {1,2,3};
+//    int A[] = {2, 3, 4, 5, 6, 7};
+//    int B[] = {1};
+    int A[] = {1,2};
+    int B[] = {1,2,3};
 	vector<int> num1(A,A+sizeof(A)/sizeof(A[0]));
 	vector<int> num2(B,B+sizeof(B)/sizeof(B[0]));
     printf("%f\n", findMedianSortedArrays(num1,num2));
