@@ -3,7 +3,7 @@
 int lengthOfLongestSubstring(string s) {
 	if(s.length()<2) return s.length();
 	int sz = s.length();
-	int map[127] = {0};
+	int map[128] = {0};
 	int l = 0, r=1;
 	map[s[l]] = 1;
 	int res = 1;
