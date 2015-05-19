@@ -28,13 +28,24 @@ int romanToInt(string s){
     m['M'] = 1000;
     int res = 0, sz = s.length(), pre=0, curr=1;
     while(curr<sz){
-        if(m[s[curr]]<m[s[pre]])
-            res += 
+        if(m[s[curr]]<=m[s[pre]]){
+            res += m[s[pre]];
+            pre = curr;
+            curr++;
+        }
+        else{
+            res += m[s[curr]]-m[s[pre]];
+            pre = curr+1;
+            curr = pre+1;
+        }
     } 
+    if(pre<curr)
+        res += m[s[pre]];
     return res;
 }
 
 int main(){
     cout<<romanToInt("CXXIII")<<endl;
+    cout<<romanToInt("C")<<endl;
     return 0;
 }
