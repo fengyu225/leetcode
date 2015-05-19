@@ -20,6 +20,22 @@ string longestCommonPrefix(vector<string>& strs) {
     return res;
 }
 
+string lcp(string a, string b){
+    string res;
+    if(a.size() == 0 || b.size() == 0) return res;
+    int a_idx = 0,b_idx = 0;
+    while(a_idx<a.size() && b_idx<b.size()){
+            if(a[a_idx] == b[b_idx]){
+                        res += a[a_idx];
+                        a_idx++;
+                        b_idx++;
+                    }
+            else
+                break;
+        }
+    return res;
+}
+
 int main(){
     string s0("abce");
     string s1("abcd");
