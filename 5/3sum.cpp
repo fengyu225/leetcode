@@ -16,6 +16,30 @@ Note:
 #include "header.h"
 
 vector<vector<int> > threeSum(vector<int>& nums){
+    vector<vector<int> > res;
+    int sz = nums.size();
+    if(sz<3) return res;
+    sort(nums.begin(), nums.end());
+    for(int i=0; i+2<sz; i++){
+        if(i>0 && nums[i] == nums[i-1]) continue;
+        int target = -1*nums[i], l=i+1, r=sz-1;
+        while(l<r){
+            if(nums[l]+nums[r] == target){
+                vector<int> t;
+                t.push_back(nums[i]);
+                t.push_back(nums[l]);
+                t.push_back(nums[r]);
+                res.push_back(t);
+                l++;
+                while(l<sz && l<r && nums[l] == nums[l-1]) l++;
+                r--;
+                while(r>=0 && l<r && nums[r] == nums[r+1]) r--;
+            }
+            else if(nums[l]+nums[r] < target) l++;
+            else r--;
+        }
+    }
+    return res;
 }
 
 int main(){
