@@ -17,6 +17,23 @@ struct ListNode {
 };
 
 ListNode *removeNthFromEnd(ListNode *head, int n) {
+    if(!head) return head;
+    ListNode* curr = head, *next = curr, *pre = NULL;
+    for(int i=0; i<n-1; i++){
+        if(!next) return NULL;
+        next = next->next;
+    }
+    while(next->next){
+        pre = curr;
+        curr = curr->next;
+        next = next->next;
+    }
+    if(pre){
+        ListNode* t = curr->next;
+        pre->next = t;
+    }
+    else
+        head = curr->next;
     return head;
 }
 
@@ -38,7 +55,7 @@ ListNode* create_list(int arr[], int n){
 int main(){
     int arr[] = {1, 2, 3, 4, 5};
     ListNode* r = create_list(arr,sizeof(arr)/sizeof(arr[0]));
-    r = removeNthFromEnd(r,1);
+    r = removeNthFromEnd(r,6);
     while(r){
         printf("%d ", r->val);
         r=r->next;
