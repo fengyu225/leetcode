@@ -38,7 +38,6 @@ ListNode* swapPairs(ListNode *head) {
     while(new_head){
         first = new_head;
         second = new_head->next;
-        ListNode* temp = NULL;
         if(!second){
             new_head = second;
         }
@@ -47,11 +46,9 @@ ListNode* swapPairs(ListNode *head) {
             first->next = NULL;
             second->next = first;
         }
-        temp = first; 
-        temp->next = NULL;
         if(curr_tail)
             curr_tail->next = second?second:first;
-        curr_tail = temp;
+        curr_tail = first;
     } 
     return res;
 }
