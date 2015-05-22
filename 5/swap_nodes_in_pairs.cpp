@@ -34,7 +34,7 @@ ListNode* swapPairs(ListNode *head) {
     //1 2 3 4 5 6 7
     //2 1 4 3 6 5 7
     if(!head || !head->next) return head;
-    ListNode* first=NULL, *second=NULL, *curr=NULL, *res=head->next, *new_head=head;
+    ListNode* first=NULL, *second=NULL, *curr_tail=NULL, *res=head->next, *new_head=head;
     while(new_head){
         first = new_head;
         second = new_head->next;
@@ -49,9 +49,9 @@ ListNode* swapPairs(ListNode *head) {
         }
         temp = first; 
         temp->next = NULL;
-        if(curr)
-            curr->next = second?second:first;
-        curr = temp;
+        if(curr_tail)
+            curr_tail->next = second?second:first;
+        curr_tail = temp;
     } 
     return res;
 }
