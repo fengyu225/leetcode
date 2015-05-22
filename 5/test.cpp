@@ -66,21 +66,3 @@ int main(){
     printTree(arr[0]);
     return 0;
 }
-//int main(){
-//    Node* n0 = new Node();
-//    Node* n1 = new Node();
-//    Node* n2 = new Node();
-//    Node* n3 = new Node();
-//    Node* n4 = new Node();
-//    n0->value = 0;
-//    n1->value = 1;
-//    n2->value = 2;
-//    n3->value = 3;
-//    n4->value = 4;
-//    n0->left = n1;
-//    n0->right = n2;
-//    n2->left=n3;
-//    n2->right = n4;
-//    printTree(n0);
-//    return 0;
-//}
