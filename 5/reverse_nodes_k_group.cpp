@@ -1,3 +1,20 @@
+/*
+Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
+
+If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.
+
+You may not alter the values in the nodes, only nodes itself may be changed.
+
+Only constant memory is allowed.
+
+For example,
+Given this linked list: 1->2->3->4->5
+
+For k = 2, you should return: 2->1->4->3->5
+
+For k = 3, you should return: 3->2->1->4->5
+*/
+
 #include "header.h"
 
 struct ListNode {
@@ -21,55 +38,45 @@ ListNode* create_list(int arr[], int n){
     return result;
 }
 
-ListNode* reverse(ListNode* head){
-    if(!head || !head->next) return head;
-    ListNode* curr = head;
-    ListNode* next = head->next;
-    curr->next = NULL;
-    while(next){
-        ListNode* x = next->next;
-        next->next = curr;
-        curr = next;
-        next = x;
+void reverse(ListNode* head, ListNode* tail){
+    tail->next = NULL;
+    if(head == tail || head->next == NULL) return;
+    ListNode* begin = head, *curr = head->next;
+    begin->next = NULL;
+    while(curr){
+        ListNode* temp = curr->next;
+        curr->next = begin;
+        begin = curr;
+        curr = temp;
     }
-    return curr;
 }
 
-ListNode *reverseKGroup(ListNode *head, int k) {
-    if(k == 1 || !head || !head->next) return head;
-    ListNode* res = NULL;
-    ListNode* curr = NULL;
-    ListNode* first = head;
-    ListNode* second = head;
-    while(second){
+ListNode* reverseKGroup(ListNode* head, int k){
+    if(!head || k==1) return head;
+    ListNode* res = NULL, *curr_tail = NULL, *begin = head, *end = head;
+    while(1){
         for(int i=0; i<k-1; i++){
-            second = second->next;
-            if(!second) break;
+            end = end->next;
+            if(!end){
+                if(!res) res=begin;
+                else curr_tail->next = begin;
+                return res;
+            }
         }
-        if(!second) break;
-        ListNode* x = second->next;
-        second->next = NULL;
-        reverse(first);
-        if(!res){
-            res = second;
-            curr = first;
-        }
-        else{
-            curr->next = second;
-            curr = first;
-        }
-        first = second = x;
+        ListNode* new_begin = end->next;
+        reverse(begin, end);
+        if(res) curr_tail->next = end;
+        else res = end;
+        curr_tail = begin;
+        begin = end = new_begin;
+        if(!begin) break;
     }
-    if(!res)
-        res = first;
-    else
-        curr->next = first;
     return res;
 }
 
 int main(){
-    int arr[] = {1, 2, 3, 4, 5};
-    //int arr[] = {1};
+//    int arr[] = {1, 2, 3, 4, 5};
+    int arr[] = {1, 2};
     ListNode* l = create_list(arr, sizeof(arr)/sizeof(arr[0]));
     ListNode* r = reverseKGroup(l,2);
     while(r){
