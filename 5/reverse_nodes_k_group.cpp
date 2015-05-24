@@ -54,7 +54,7 @@ void reverse(ListNode* head, ListNode* tail){
 ListNode* reverseKGroup(ListNode* head, int k){
     if(!head || k==1) return head;
     ListNode* res = NULL, *curr_tail = NULL, *begin = head, *end = head;
-    while(1){
+    while(begin){
         for(int i=0; i<k-1; i++){
             end = end->next;
             if(!end){
@@ -69,7 +69,6 @@ ListNode* reverseKGroup(ListNode* head, int k){
         else res = end;
         curr_tail = begin;
         begin = end = new_begin;
-        if(!begin) break;
     }
     return res;
 }
