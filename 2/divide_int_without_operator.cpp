@@ -20,6 +20,7 @@ int main(){
     printf("%d\n", divide(-999511578, -2147483648));
     printf("%d\n", divide(100579234, -555806774));
     printf("%d\n", divide(-2147483648, 1));
+    printf("%d\n", divide(-2147483648, -3));
     printf("%d\n", divide(5, 2));
     printf("%d\n", divide(1, -1));
     return 0;
