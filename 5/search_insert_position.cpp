@@ -15,7 +15,6 @@ Here are few examples.
 int searchInsert(vector<int>& nums, int target){
     int sz = nums.size();
     if(sz == 0) return 0;
-    if(sz == 1 && nums[0] == target) return 0;
     int l=0, r=sz-1;
     while(l<r){
         int m = (l+r)/2;
@@ -23,8 +22,9 @@ int searchInsert(vector<int>& nums, int target){
         if(nums[m]>target) r=m;
         else l=m+1;
     }
-    if(l==sz-1) return target<=nums[l]?l:sz;
-    if(l == 0) return target<=nums[l]?0:1;
+    if(nums[l] == target) return l;
+    if(l==sz-1) return target<nums[l]?l:sz;
+    if(l == 0) return target<nums[l]?0:1;
     return l;
 }
 
