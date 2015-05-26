@@ -26,6 +26,14 @@ int find_low(vector<int>& nums, int target){
 int find_high(vector<int>& nums, int target){
     int sz = nums.size();
     if(sz==0) return -1;
+    int l=0, r=sz-1;
+    while(l<r){
+        int m = (l+r+1)/2;
+        if(target == nums[m]) l=m;
+        else if(target<nums[m]) r=m-1;
+        else l=m+1;
+    }
+    return l==r && nums[l] == target?l:-1;
 }
 
 vector<int> searchRange(vector<int>& nums, int target){
@@ -36,11 +44,12 @@ vector<int> searchRange(vector<int>& nums, int target){
 }
 
 int main(){
-//    int A[] = {5, 7, 7, 8, 8, 10};
+    //int A[] = {5, 7, 7, 8, 8, 10};
+    int A[] = {2,2};
 //    vector<int> res = searchRange(A,sizeof(A)/sizeof(A[0]),10);
-    int A[] = {1, 2, 3};
+    //int A[] = {1, 2, 3};
     vector<int> nums(A,A+sizeof(A)/sizeof(A[0]));
-    vector<int> res = searchRange(nums,2);
+    vector<int> res = searchRange(nums,3);
     printf("%d, %d\n", res[0], res[1]);
     return 0;
 }
