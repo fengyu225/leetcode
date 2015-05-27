@@ -10,8 +10,21 @@ Your algorithm should run in O(n) time and uses constant space.
 
 #include "header.h"
 
-int firstMissingPositive(int A[], int n){
-   
+int firstMissingPositive(vector<int>& nums){
+    int sz = nums.size();
+    for(int i=0; i<sz; i++){
+        int curr = nums[i];
+        if(curr<=0 || curr>sz) continue;
+        do{
+            int next = nums[curr-1];
+            nums[i] = next;
+            nums[curr-1] = curr;
+            curr = nums[i];
+        }while(curr>0 && curr<=sz && nums[curr-1] != curr);
+    }
+    for(int i=0; i<sz; i++)
+        if(nums[i] != i+1) return i+1;
+    return sz+1;
 }
 
 int main(){
@@ -20,7 +33,9 @@ int main(){
 //    int arr0[] = {1, 2, 0}; //3
 //    int arr0[] = {1000,-1}; //3
     int arr1[] = {3, 4, -1, 1}; //2 
-    printf("%d\n", firstMissingPositive(arr0,sizeof(arr0)/sizeof(arr0[0])));
-    printf("%d\n", firstMissingPositive(arr1,sizeof(arr1)/sizeof(arr1[0])));
+    vector<int> arr0_v(arr0,arr0+sizeof(arr0)/sizeof(arr0[0]));
+    vector<int> arr1_v(arr1,arr1+sizeof(arr1)/sizeof(arr1[0]));
+    printf("%d\n", firstMissingPositive(arr0_v));
+    printf("%d\n", firstMissingPositive(arr1_v));
     return 0;
 }
