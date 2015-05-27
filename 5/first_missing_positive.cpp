@@ -16,8 +16,7 @@ int firstMissingPositive(vector<int>& nums){
         int curr = nums[i];
         if(curr<=0 || curr>sz) continue;
         do{
-            int next = nums[curr-1];
-            nums[i] = next;
+            nums[i] = nums[curr-1];
             nums[curr-1] = curr;
             curr = nums[i];
         }while(curr>0 && curr<=sz && nums[curr-1] != curr);
