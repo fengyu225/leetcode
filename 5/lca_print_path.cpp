@@ -7,16 +7,6 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-
-//void lca_print_path(TreeNode* root, TreeNode* a, TreeNode* b){
-//    if(!root) return NULL;
-//    if(root == a || root == b) return root;
-//    TreeNode* l = lca(root->left,a,b);
-//    TreeNode* r = lca(root->right,a,b);
-//    if(l && r) return root;
-//    return l?l:r;
-//}
-
 TreeNode* lca_p(TreeNode* root, TreeNode* a, TreeNode* b, vector<int>& res, bool& found){
     if(!root){
         vector<int> temp;
