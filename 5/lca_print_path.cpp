@@ -65,6 +65,6 @@ int main(){
     t2.right = &t6;
     t4.right = &t7;
     t5.right = &t8;
-    lca_print_path(&t0, &t3, NULL);
+    lca_print_path(&t0, &t3, &t3);
     return 0;
 }
