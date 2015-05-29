@@ -17,36 +17,51 @@ struct TreeNode {
 //    return l?l:r;
 //}
 
-TreeNode* lca_p(TreeNode* root, TreeNode* a, TreeNode* b, bool& found_a, bool& found_b){
+TreeNode* lca_p(TreeNode* root, TreeNode* a, TreeNode* b, vector<int>& res, bool& found){
     if(!root){
-        found_a = found_b = false;
+        vector<int> temp;
+        res = temp;
         return NULL;
     }
-    if(root == a){
-        found_a = true;
-        found_b = false;
-        cout<<root->val<<" ";
-        return root;
-    }    
-    if(root == b){
-        found_b = true;
-        found_a = false;
-        cout<<root->val<<" ";
+    if(root == a || root == b){
+        res.push_back(root->val);
+        if(a == b) found = true;
         return root;
     }
-    bool f_a_l = false, f_a_r = false, f_b_l = false, f_b_r = false;
-    TreeNode* l = lca_p(root->left, a, b, f_a_l, f_b_l);
-    TreeNode* r = lca_p(root->right, a, b, f_a_r, f_b_r);
-    if((f_a_l || f_a_r || f_b_l || f_b_r) && !((f_a_l && f_b_l) || (f_a_r && f_b_r))) cout<<root->val<<" ";
-    found_a = f_a_l || f_a_r;
-    found_b = f_b_l || f_b_r;
-    if(l && r) return root;
-    return l?l:r;
+    vector<int> l_res;
+    vector<int> r_res;
+    TreeNode* l = lca_p(root->left, a, b, l_res, found);
+    TreeNode* r = lca_p(root->right, a, b, r_res, found);
+    if(l && r){
+        vector<int> temp(l_res);
+        temp.push_back(root->val);
+        reverse(r_res.begin(), r_res.end());
+        for(int i=0; i<r_res.size(); i++)
+            temp.push_back(r_res[i]);
+        res = temp;
+        found = true;
+        return root;
+    }
+    else{
+        if(!found){
+            if(l){
+                l_res.push_back(root->val);
+            }
+            else{
+                r_res.push_back(root->val);
+            }
+        }
+        if(l || r) res = (l?l_res:r_res);
+        return l?l:r;
+    }
 }
 
 void lca_print_path(TreeNode* root, TreeNode* a, TreeNode* b){
-    bool found_a = false, found_b=false;
-    lca_p(root,a,b,found_a,found_b);
+    vector<int> res;
+    bool found = false;
+    lca_p(root,a,b,res,found);
+    for(int i=0; i<res.size(); i++)
+        cout<<res[i]<<" ";
     cout<<endl;
 }
 
