@@ -51,7 +51,7 @@ TreeNode* lca_p(TreeNode* root, TreeNode* a, TreeNode* b, vector<int>& res, bool
                 r_res.push_back(root->val);
             }
         }
-        if(l || r) res = (l?l_res:r_res);
+        res = (l?l_res:r_res);
         return l?l:r;
     }
 }
