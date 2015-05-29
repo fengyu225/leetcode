@@ -8,11 +8,7 @@ struct TreeNode {
 };
 
 TreeNode* lca_p(TreeNode* root, TreeNode* a, TreeNode* b, vector<int>& res, bool& found){
-    if(!root){
-        vector<int> temp;
-        res = temp;
-        return NULL;
-    }
+    if(!root) return NULL;
     if(root == a || root == b){
         res.push_back(root->val);
         if(a == b) found = true;
@@ -34,12 +30,8 @@ TreeNode* lca_p(TreeNode* root, TreeNode* a, TreeNode* b, vector<int>& res, bool
     }
     else{
         if(!found){
-            if(l){
-                l_res.push_back(root->val);
-            }
-            else{
-                r_res.push_back(root->val);
-            }
+            if(l) l_res.push_back(root->val);
+            if(r) r_res.push_back(root->val);
         }
         res = (l?l_res:r_res);
         return l?l:r;
@@ -50,9 +42,9 @@ void lca_print_path(TreeNode* root, TreeNode* a, TreeNode* b){
     vector<int> res;
     bool found = false;
     lca_p(root,a,b,res,found);
-    for(int i=0; i<res.size(); i++)
-        cout<<res[i]<<" ";
-    cout<<endl;
+    if(found)
+        for(int i=0; i<res.size(); i++)
+            cout<<res[i]<<" ";
 }
 
 int main(){
@@ -73,6 +65,6 @@ int main(){
     t2.right = &t6;
     t4.right = &t7;
     t5.right = &t8;
-    lca_print_path(&t0, &t3, &t7);
+    lca_print_path(&t0, &t3, NULL);
     return 0;
 }
