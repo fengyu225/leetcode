@@ -7,44 +7,34 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-TreeNode* lca_p(TreeNode* root, TreeNode* a, TreeNode* b, vector<int>& res, bool& found){
-    if(!root) return NULL;
-    if(root == a || root == b){
-        res.push_back(root->val);
-        if(a == b) found = true;
-        return root;
-    }
-    vector<int> l_res;
-    vector<int> r_res;
-    TreeNode* l = lca_p(root->left, a, b, l_res, found);
-    TreeNode* r = lca_p(root->right, a, b, r_res, found);
-    if(l && r){
-        vector<int> temp(l_res);
-        temp.push_back(root->val);
-        reverse(r_res.begin(), r_res.end());
-        for(int i=0; i<r_res.size(); i++)
-            temp.push_back(r_res[i]);
-        res = temp;
-        found = true;
-        return root;
-    }
+int lca_p(TreeNode* root, TreeNode* a, TreeNode* b, vector<int>& path){
+    if(!root) return 0;
+    vector<int> l_path;
+    vector<int> r_path;
+    int l = lca_p(root->left, a, b, l_path);
+    int r = lca_p(root->right, a, b, r_path);
+    vector<int> temp;
+    if(l == 2) path = l_path;
+    else if(r == 2) path = r_path;
     else{
-        if(!found){
-            if(l) l_res.push_back(root->val);
-            if(r) r_res.push_back(root->val);
+        if(l == 1) temp = l_path;
+        if(l == 1 || r == 1 || root==a || root==b) temp.push_back(root->val);
+        if(r == 1){
+            reverse(r_path.begin(), r_path.end());
+            for(int i=0; i<r_path.size(); i++) temp.push_back(r_path[i]);
         }
-        res = (l?l_res:r_res);
-        return l?l:r;
+        path = temp;
     }
+    return (root==a)+(root==b)+l+r;
 }
 
 void lca_print_path(TreeNode* root, TreeNode* a, TreeNode* b){
     vector<int> res;
-    bool found = false;
-    lca_p(root,a,b,res,found);
-    if(found)
+    int x = lca_p(root,a,b,res);
+    if(x==2)
         for(int i=0; i<res.size(); i++)
             cout<<res[i]<<" ";
+    cout<<endl;
 }
 
 int main(){
@@ -65,6 +55,6 @@ int main(){
     t2.right = &t6;
     t4.right = &t7;
     t5.right = &t8;
-    lca_print_path(&t0, &t3, &t3);
+    lca_print_path(&t0, &t6, &t5);
     return 0;
 }
