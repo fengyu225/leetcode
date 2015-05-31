@@ -59,7 +59,7 @@ vector<vector<string> > solveNQueens(int n) {
 }
 
 int main(){
-    vector<vector<string> > res = solveNQueens(80);
+    vector<vector<string> > res = solveNQueens(12);
     for(int i=0; i<res.size(); i++){
         for(int j=0; j<res[i].size(); j++)
             printf("%s \n", res[i][j].c_str());
