@@ -8,8 +8,36 @@ For example,
 
 #include "header.h"
 
+void swap(vector<int>& nums, int i, int j){
+    int temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
+}
+
+bool find(vector<int>& nums, int i, int j){
+    for(int x=i; x<j; x++)
+        if(nums[x] == nums[j]) return true;
+    return false;
+}
+
+void search(vector<int>& nums, int curr, vector<vector<int> >& res){
+    if(curr == nums.size()){
+        res.push_back(nums);
+        return;
+    }
+    for(int i=curr; i<nums.size(); i++){
+        if(i!=curr && find(nums, curr, i)) continue;
+        swap(nums, i, curr);
+        search(nums, curr+1, res);
+        swap(nums, i, curr);
+    }
+}
+
 vector<vector<int> > permuteUnique(vector<int>& nums){
     vector<vector<int> > res;
+    if(nums.size() == 0) return res;
+    sort(nums.begin(), nums.end());
+    search(nums, 0, res);
     return res;
 }
 
