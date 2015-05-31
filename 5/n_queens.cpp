@@ -35,7 +35,20 @@ bool isValid(vector<int> A, int r){
 }
 
 void solve(vector<int>& A, int curr, int n, vector<vector<string> >& res){
-
+    if(curr == n){
+        vector<string> temp;
+        for(int i=0; i<n; i++){
+            string s(n,'.');
+            s[A[i]]='Q';
+            temp.push_back(s);
+        }
+        res.push_back(temp);
+        return;
+    }
+    for(int i=0; i<n; i++){
+        A[curr]=i;
+        if(isValid(A,curr)) solve(A,curr+1,n,res);
+    }
 }
 
 vector<vector<string> > solveNQueens(int n) {
@@ -46,7 +59,7 @@ vector<vector<string> > solveNQueens(int n) {
 }
 
 int main(){
-    vector<vector<string> > res = solveNQueens(8);
+    vector<vector<string> > res = solveNQueens(80);
     for(int i=0; i<res.size(); i++){
         for(int j=0; j<res[i].size(); j++)
             printf("%s \n", res[i][j].c_str());
