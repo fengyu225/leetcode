@@ -21,24 +21,23 @@ struct Interval {
     Interval(int s, int e) : start(s), end(e) {}
 };
 
-vector<Interval> insert(vector<Interval> &intervals, Interval newInterval) {
-    vector<Interval> res;
-    int sz = intervals.size();
-    int r = 0;
-    while(r<sz && intervals[r].end<newInterval.start) r++;
-    if(r == sz){
-        res = intervals;
-        res.push_back(newInterval);
-        return res;
-    }    
-    intervals.insert(intervals.begin()+r, newInterval);
-    while(r+1<intervals.size()){
-        if(intervals[r+1].start>intervals[r].end) break;
-        intervals[r].start = std::min(intervals[r].start,intervals[r+1].start);
-        intervals[r].end = std::max(intervals[r].end, intervals[r+1].end);
-        intervals.erase(intervals.begin()+r+1);
+vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
+    vector<Interval> ret;
+    auto it = intervals.begin();
+    for(; it!=intervals.end(); ++it){
+        if(newInterval.end < (*it).start) 
+            break; 
+        else if(newInterval.start > (*it).end) 
+            ret.push_back(*it); 
+        else{ 
+            newInterval.start = min(newInterval.start, (*it).start);
+            newInterval.end = max(newInterval.end, (*it).end);
+        }   
     }
-    return intervals;
+    ret.push_back(newInterval);
+    for(; it!=intervals.end(); ++it)
+        ret.push_back(*it);
+    return ret;
 }
 
 int main(){
