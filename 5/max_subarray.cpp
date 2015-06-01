@@ -21,8 +21,34 @@ int maxSubArray(vector<int>& nums){
     return res;
 }
 */
-int maxSubArray(vector<int>& nums){
 
+int search(vector<int>& nums, int l, int r){
+    if(l>r) return INT_MIN;
+    if(l == r) return nums[l];
+    int m = (l+r)/2;
+    int l_res = search(nums, l, m-1);
+    int r_res = search(nums, m+1, r);
+    int l_max = INT_MIN;
+    int r_max = INT_MIN;
+    int curr = m-1, sum=nums[m];
+    while(curr>=0){
+        sum += nums[curr];
+        l_max=max(sum, l_max);
+        curr--;
+    }
+    curr = m+1, sum=nums[m];
+    while(curr<nums.size()){
+        sum += nums[curr];
+        r_max = max(sum, r_max);
+        curr++;
+    }
+    return max(max(l_res, r_res), l_max+r_max-nums[m]);
+}
+
+int maxSubArray(vector<int>& nums){
+    int sz = nums.size();
+    if(sz == 1) return nums[0];
+    return search(nums, 0, sz-1);
 }
     
 int main(){
