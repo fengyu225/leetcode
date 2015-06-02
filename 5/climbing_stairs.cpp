@@ -6,6 +6,7 @@ Each time you can either climb 1 or 2 steps. In how many distinct ways can you c
 
 #include "header.h"
 
+/* this may overflow */
 int climbStairs(int n) {
     int* arr = new int[n+1];
     arr[0] = 1;
