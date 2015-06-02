@@ -22,22 +22,20 @@ struct Interval {
 };
 
 vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
-    vector<Interval> ret;
-    auto it = intervals.begin();
-    for(; it!=intervals.end(); ++it){
-        if(newInterval.end < (*it).start) 
-            break; 
-        else if(newInterval.start > (*it).end) 
-            ret.push_back(*it); 
-        else{ 
-            newInterval.start = min(newInterval.start, (*it).start);
-            newInterval.end = max(newInterval.end, (*it).end);
-        }   
+    vector<Interval> res;
+    int i = 0;
+    for(; i<intervals.size(); i++){
+        if(newInterval.start>intervals[i].end)
+            res.push_back(intervals[i]);
+        else if(newInterval.end<intervals[i].start) break;
+        else{
+            newInterval.start = min(newInterval.start, intervals[i].start);
+            newInterval.end = max(newInterval.end, intervals[i].end);
+        }
     }
-    ret.push_back(newInterval);
-    for(; it!=intervals.end(); ++it)
-        ret.push_back(*it);
-    return ret;
+    res.push_back(newInterval);
+    for(;i<intervals.size(); i++) res.push_back(intervals[i]);
+    return res;
 }
 
 int main(){
