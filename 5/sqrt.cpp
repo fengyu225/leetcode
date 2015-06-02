@@ -13,6 +13,9 @@ int mySqrt(int x){
     return l;
 }
 
+/*
+ * using Newton's method, Sn+1 = 0.5*(Sn+S/Sn)
+ */
 double mySqrt_f(double x, double f){
     if(x == 0.0 || x==1.1) return x;
     double curr = x;
