@@ -24,11 +24,11 @@ ListNode *rotateRight(ListNode *head, int k) {
     }
     curr->next = head;
     ListNode* res;
-    if(k%count){
-        for(int i=0; i<k%count; i++){
-            
-        }
-    }
+    if(k%count)
+        for(int i=0; i<count-k%count; i++) curr = curr->next;
+    res = curr->next;
+    curr->next = NULL;
+    return res;
 }
 
 int main(){
@@ -48,7 +48,7 @@ int main(){
         curr = curr->next;
     }
     printf("\n");
-    ListNode* res = rotateRight(&l1,5);
+    ListNode* res = rotateRight(&l1,1);
     while(res){
         printf("%d ", res->val);
         res = res->next;
