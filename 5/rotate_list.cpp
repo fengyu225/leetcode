@@ -1,3 +1,11 @@
+/*
+Given a list, rotate the list to the right by k places, where k is non-negative.
+
+For example:
+Given 1->2->3->4->5->NULL and k = 2,
+return 4->5->1->2->3->NULL.
+*/
+
 #include "header.h"
 
 struct ListNode {
@@ -7,25 +15,20 @@ struct ListNode {
 };
 
 ListNode *rotateRight(ListNode *head, int k) {
-    if(k == 0 || !head) return head;
-    ListNode* l = head;
-    ListNode* r = head;
-    for(int i=0; i<k+1; i++){
-        r = r->next;
-        if(!r) r = head;
+    if(!head) return NULL;
+    int count = 1;
+    ListNode* curr = head;
+    while(curr->next){
+        count++;
+        curr=curr->next; 
     }
-    while(r){
-        l = l->next;
-        r = r->next;
-        if(!l) l = head;
-    }
-    ListNode* res = l->next;
-    if(!res) return head;
-    l->next = NULL;
-    ListNode* curr = res;
-    while(curr->next) curr = curr->next;
     curr->next = head;
-    return res;
+    ListNode* res;
+    if(k%count){
+        for(int i=0; i<k%count; i++){
+            
+        }
+    }
 }
 
 int main(){
@@ -45,7 +48,7 @@ int main(){
         curr = curr->next;
     }
     printf("\n");
-    ListNode* res = rotateRight(&l1,10);
+    ListNode* res = rotateRight(&l1,5);
     while(res){
         printf("%d ", res->val);
         res = res->next;

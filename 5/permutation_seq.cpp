@@ -26,6 +26,7 @@ void get_perm(int n, int k, int curr, vector<char>& chars, string& res){
     for(int i=1; i<=n-curr; i++) p*=i;
     int pos = (k-1)/p;
     res += chars[pos];
+    chars.erase(chars.begin()+pos);
     get_perm(n, k-pos*p, curr+1, chars, res);
 }
 
@@ -39,8 +40,8 @@ string getPermutation(int n, int k) {
 }
 
 int main(){
-//    string str0 = getPermutation(3,5);
-    string str0 = getPermutation(5,30);
+    string str0 = getPermutation(3,5);
+//    string str0 = getPermutation(2,1);
     printf("%s\n", str0.c_str());
     return 0;
 }
