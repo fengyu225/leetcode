@@ -20,6 +20,7 @@ If nums = [1,2,3], a solution is:
 
 #include "header.h"
 
+/* using search
 void search(vector<int>& nums, int curr, vector<int>& v, vector<vector<int> >& res){
     if(curr ==  nums.size()){
         res.push_back(v);
@@ -36,6 +37,18 @@ vector<vector<int> > subsets(vector<int>& nums){
     vector<vector<int> > res;
     vector<int> v;
     search(nums, 0, v, res);
+    return res;
+}
+*/
+
+vector<vector<int> > subsets(vector<int>& nums){
+    sort(nums.begin(), nums.end());
+    int sz = nums.size();
+    int l = pow(2,sz);
+    vector<vector<int> > res(l, vector<int>());
+    for(int i=0; i<l; i++)
+        for(int j=0;j<32;j++)
+            if((i>>j)&1) res[i].push_back(nums[j]);
     return res;
 }
 
