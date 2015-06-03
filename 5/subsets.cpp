@@ -20,8 +20,23 @@ If nums = [1,2,3], a solution is:
 
 #include "header.h"
 
-vector<vector<int> > subsets(vector<int>& nums){
+void search(vector<int>& nums, int curr, vector<int>& v, vector<vector<int> >& res){
+    if(curr ==  nums.size()){
+        res.push_back(v);
+        return;
+    }
+    v.push_back(nums[curr]);
+    search(nums, curr+1, v, res);
+    v.pop_back();
+    search(nums, curr+1, v, res);
+}
 
+vector<vector<int> > subsets(vector<int>& nums){
+    sort(nums.begin(), nums.end());
+    vector<vector<int> > res;
+    vector<int> v;
+    search(nums, 0, v, res);
+    return res;
 }
 
 int main(){
