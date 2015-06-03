@@ -11,8 +11,40 @@ Could you devise a constant space solution?
 */
 #include "header.h"
 
+void print(vector<vector<int> > &matrix){
+    cout<<"================="<<endl;
+    for(int i=0; i<matrix.size(); i++){
+        for(int j=0; j<matrix[i].size(); j++)
+            cout<<matrix[i][j]<<" ";
+        cout<<endl;
+    }
+    cout<<"================="<<endl;
+}
+
 void setZeroes(vector<vector<int> > &matrix) {
     int r = matrix.size(), c = matrix[0].size();
+    bool first_row_zero = false, first_col_zero = false;
+    for(int i=0; i<r; i++) first_row_zero |= (matrix[i][0] == 0);
+    for(int i=0; i<c; i++) first_col_zero |= (matrix[0][i] == 0);
+    for(int i=1; i<r; i++)
+        for(int j=1; j<c; j++)
+            if(matrix[i][j] == 0)
+                matrix[i][0] = matrix[0][j] = 0;
+    for(int i=1; i<r; i++){
+        if(matrix[i][0] == 0)
+            for(int j=0;j<c;j++) matrix[i][j] =0;
+    }
+    for(int j=1; j<c; j++){
+        if(matrix[0][j] == 0)
+            for(int i=0; i<r; i++) matrix[i][j] = 0;
+    }
+    for(int i=1; i<r; i++)
+        if(matrix[i][0])
+            matrix[i][0] = first_row_zero?0:matrix[i][0];
+    for(int i=1; i<c; i++)
+        if(matrix[0][i])
+            matrix[0][i] = first_col_zero?0:matrix[0][i];
+    matrix[0][0] = (first_row_zero||first_col_zero)?0:matrix[0][0];
 }
 
 int main(){
