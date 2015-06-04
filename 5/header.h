@@ -17,6 +17,7 @@
 #include<iostream>
 #include<math.h>
 #include<assert.h>
+#include "lib.h"
 
 using namespace std;
 //using std::vector;
