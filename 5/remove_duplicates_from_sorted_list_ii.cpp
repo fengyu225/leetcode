@@ -36,8 +36,8 @@ ListNode *deleteDuplicates(ListNode *head){
 }
 
 int main(){
-    int arr[] = {1, 1, 2, 2, 3, 3, 4, 4, 5};
-//    int arr[] = {1, 2, 2};
+//    int arr[] = {1, 1, 2, 2, 3, 3, 4, 4, 5};
+    int arr[] = {1, 2, 2};
     ListNode* l = create_list(arr, sizeof(arr)/sizeof(arr[0]));
     l = deleteDuplicates(l);
     while(l){
