@@ -67,3 +67,4 @@ permutation_seq.cpp
 valid_number.cpp
 text_justification.cpp
 minimum_window_substring.cpp
+largest_rectangle_in_histogram.cpp
