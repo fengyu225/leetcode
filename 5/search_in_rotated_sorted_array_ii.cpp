@@ -15,10 +15,10 @@ bool search(vector<int>& nums, int target){
     int l = 0, r = sz-1;
     while(l<r){
         int m = (l+r)/2;
-        if(nums[m] == target) return true;
+        if(nums[m] == target || nums[l] == target) return true;
         if(nums[m] == nums[l]) l++;
         else if(nums[m]<nums[l]){
-            if(target<nums[m] || target>=nums[l]) r=m-1;
+            if(target<nums[m] || target>nums[l]) r=m-1;
             else l=m+1;
         }
         else{
