@@ -56,14 +56,6 @@ bool isScramble(string s1, string s2){
             }
         }
     }
-    for(int len=1; len<=s1_len; len++){
-        cout<<"==================== "<<len<<endl;
-        for(int i=0; i<s1_len; i++){
-            for(int j=0; j<s1_len; j++)
-                cout<<arr[i][j][len]<<" ";
-            cout<<endl;
-        }
-    }
     return arr[0][0][s1_len];
 }
 
