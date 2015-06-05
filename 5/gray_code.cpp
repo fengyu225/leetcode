@@ -28,7 +28,6 @@ vector<int> grayCode(int n) {
        for(int i = len-1; i>=0; i--)  
        {  
          int temp=highestBit + result[i];
-         cout<<"pushing "<<temp<<" i="<<i<<" len="<<len<<endl;
          result.push_back(temp);  
        }  
     }  
