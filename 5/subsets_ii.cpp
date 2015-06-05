@@ -18,8 +18,29 @@ If nums = [1,2,2], a solution is:
 
 #include "header.h"
 
+void search(vector<int>& nums, int curr, vector<int>& temp, vector<vector<int> >& res){
+    if(curr == nums.size()){
+        res.push_back(temp);
+        return;
+    }
+    int t = curr+1;
+    while(t<nums.size() && nums[t] == nums[curr]) t++;
+    vector<int> x = temp;
+    search(nums, t, temp, res);
+    for(int i=0; i<t-curr; i++){
+        temp.push_back(nums[curr]);
+        search(nums, t, temp, res);
+    }
+    temp = x;
+}
+
 vector<vector<int>> subsetsWithDup(vector<int>& nums){
-    
+    sort(nums.begin(), nums.end());
+    vector<int> v;
+    vector<vector<int> > res;
+    if(nums.size() == 0) return res;
+    search(nums, 0, v, res);
+    return res;
 }
 
 int main(){
