@@ -18,4 +18,4 @@ class TreeNode {
         TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-TreeNode* create_tree(std::string& v);
+TreeNode* create_tree(std::string v);

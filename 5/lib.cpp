@@ -19,7 +19,7 @@ ListNode* create_list(int arr[], int n){
     return result;
 }
 
-TreeNode* create_tree(string& v){
+TreeNode* create_tree(string v){
     if(v[0] == '#') return NULL;
     queue<TreeNode*> q;
     TreeNode* root = new TreeNode(v[0]-'0');
