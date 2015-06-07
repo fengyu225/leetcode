@@ -1,23 +1,4 @@
-#include "lib.h"
-#include <string>
-#include <queue>
-
-using namespace std;
-
-ListNode* create_list(int arr[], int n){
-    ListNode* result = NULL;
-    ListNode* curr = NULL;
-    for(int i=0; i<n; i++){
-        ListNode* x = new ListNode(arr[i]);
-        if(!result)
-            result = curr = x;
-        else{
-            curr->next = x;
-            curr = curr->next;
-        }
-    }
-    return result;
-}
+#include "header.h"
 
 TreeNode* create_tree(string& v){
     if(v[0] == '#') return NULL;
@@ -38,4 +19,19 @@ TreeNode* create_tree(string& v){
         curr_n = l?l:r; 
     }
     return root;
+}
+
+void inorder(TreeNode* curr){
+    if(!curr) return;
+    cout<<curr->val<<" ";
+    inorder(curr->left);
+    inorder(curr->right);
+}
+
+int main(){
+    string s("1#23");
+    TreeNode* t = create_tree(s);
+    inorder(t);
+    cout<<endl;
+    return 0;
 }

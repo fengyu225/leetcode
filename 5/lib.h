@@ -1,4 +1,5 @@
 #include "stdlib.h"
+#include <string> 
 
 class ListNode {
     public:
@@ -8,3 +9,13 @@ class ListNode {
 }; 
 
 ListNode* create_list(int arr[], int n);
+
+class TreeNode {
+    public:
+        int val;
+        TreeNode *left;
+        TreeNode *right;
+        TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+TreeNode* create_tree(std::string& v);
