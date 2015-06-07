@@ -37,7 +37,7 @@ vector<string> restoreIpAddresses(string s) {
 }
 
 int main(){
-    string s("010010");
+    string s("127001");
     vector<string> res = restoreIpAddresses(s);
     for(int i=0; i<res.size(); i++)
         cout<<res[i]<<" ";

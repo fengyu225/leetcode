@@ -9,39 +9,37 @@ return ["255.255.11.135", "255.255.111.35"]. (Order does not matter)
 
 #include "header.h"
 
-void search(string& s, int curr, int dot, string& temp, string& curr_s, vector<string>& res){
-    if(curr == s.length()){
-        if(dot == 3) res.push_back(temp);
+void search(string& s, int curr, vector<int>& pos, vector<string>& res){
+    if(curr >= s.length()){
+        if(pos.size() == 4){
+            string x = s;
+            for(int i=0; i<pos.size(); i++) x.insert(i+pos[i], ".");
+            x=x.substr(0,x.size()-1);
+            res.push_back(x);
+        } 
         return;
     }
-    string temp_t = temp;
-    string curr_s_t = curr_s;
-    if(curr_s.length()>0){
-        int curr_s_int = stoi(curr_s);
-        if(curr_s_int<=255 && curr_s_int>0 && curr_s[0]!='0' || curr_s_int==0 && dot>0){
-            if(dot<3){
-                temp += curr_s;
-                temp += '.';
-                curr_s = s[curr];
-                search(s, curr+1, dot+1, temp, curr_s, res);
-            }
-        }
+    if(pos.size() >= 4) return;
+    if(s[curr] == '0'){
+        pos.push_back(curr+1);
+        search(s, curr+1, pos, res);
+        pos.pop_back();
+        return;
     }
-    string new_curr_s = curr_s+s[curr];
-    int curr_s_int = stoi(new_curr_s);
-    if(curr_s_int<=255 && curr_s_int>0 && new_curr_s[0]!='0' || curr_s_int == 0 && dot>0)
-        search(s, curr+1, dot, temp, new_curr_s, res);
-    temp = temp_t;
-    curr_s = curr_s_t;
+    for(int i=curr; i<s.length(); i++){
+        string temp = s.substr(curr, i-curr+1);
+        int temp_num = stoi(temp);
+        if(temp_num>255) return;
+        pos.push_back(i+1);
+        search(s,i+1,pos,res);
+        pos.pop_back();
+    }
 }
 
 vector<string> restoreIpAddresses(string s) {
     vector<string> res;
-    if(s.length()>12) return res;
-    if(s.length() == 0) return res;
-    string temp = "";
-    string curr_s = "";
-    search(s, 0, 0, temp, curr_s, res);
+    vector<int> pos;
+    search(s, 0, pos, res);
     return res;
 }
 
