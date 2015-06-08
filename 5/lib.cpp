@@ -39,3 +39,24 @@ TreeNode* create_tree(string v){
     }
     return root;
 }
+
+TreeNode* create_tree(vector<string> v){
+    if(v[0] == "#") return NULL;
+    queue<TreeNode*> q;
+    TreeNode* root = new TreeNode(stoi(v[0]));
+    TreeNode* curr_n = root;
+    q.push(curr_n);
+    int curr = 1;
+    while(!q.empty() && curr_n){
+        TreeNode* l = curr<v.size() && v[curr] != "#"?new TreeNode(stoi(v[curr])):NULL;
+        TreeNode* r = curr+1<v.size() && v[curr+1] != "#"?new TreeNode(stoi(v[curr+1])):NULL;
+        q.push(l);
+        q.push(r);
+        curr_n->left = l;
+        curr_n->right = r;
+        q.pop();
+        curr += 2;
+        curr_n = l?l:r; 
+    }
+    return root;
+}
