@@ -33,5 +33,6 @@ int main(){
     string s4("aadbbbaccc");
     printf("%s\n", isInterleave(s1,s2,s3)?"true":"false");
     printf("%s\n", isInterleave(s1,s2,s4)?"true":"false");
+    cout<<isInterleave("aabcc","dbbca","aadbbcbcac")<<endl;
     return 0;
 }
