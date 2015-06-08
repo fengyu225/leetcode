@@ -24,6 +24,7 @@ vector<int> inorderTraversal(TreeNode *root) {
             TreeNode* t = curr->left;
             while(t->right && t->right != curr) t=t->right;
             if(t->right == curr){
+                t->right = NULL;
                 res.push_back(curr->val);
                 curr = curr->right;
             }
