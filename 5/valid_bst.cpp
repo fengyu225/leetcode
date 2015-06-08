@@ -11,42 +11,52 @@ Both the left and right subtrees must also be binary search trees.
 #include "header.h"
 
 bool isValidBST(TreeNode *root) {
-    TreeNode* curr = root;
-    vector<TreeNode*> s;
-    while(curr){
-        if(curr->left){
-            TreeNode* t = curr->left;
-            while(t->right && t->right != curr) t=t->right;
-            if(t->right == curr){
-                if(!s.empty() && s.back()->val-curr->val<0) return false;
-                s.push_back(curr);
-                t->right = NULL;
-                curr = curr->right;
-            }
-            else{
-                t->right = curr;
-                curr = curr->left;
-            }
-        }
+    if(!root) return true;
+    TreeNode* pre = NULL;
+    stack<TreeNode*> s;
+    s.push(root);
+    while(!s.empty()){
+        TreeNode* t = s.top();
+        if(t->left){s.push(t->left);t->left=NULL;}
         else{
-            if(!s.empty() && s.back()->val-curr->val<0) return false;
-            curr = curr->right;
+            if(pre && t->val<=pre->val) return false;
+            pre = t;
+            s.pop();
+            if(t->right) s.push(t->right);
         }
     }
     return true;
 }
 
+//bool isValidBST(TreeNode *root) {
+//    TreeNode* curr = root;
+//    vector<TreeNode*> s;
+//    while(curr){
+//        if(curr->left){
+//            TreeNode* t = curr->left;
+//            while(t->right && t->right != curr) t=t->right;
+//            if(t->right == curr){
+//                if(!s.empty() && s.back()->val-curr->val>0) return false;
+//                s.push_back(curr);
+//                t->right = NULL;
+//                curr = curr->right;
+//            }
+//            else{
+//                t->right = curr;
+//                curr = curr->left;
+//            }
+//        }
+//        else{
+//            if(!s.empty() && s.back()->val-curr->val>0) return false;
+//            curr = curr->right;
+//        }
+//    }
+//    return true;
+//}
+
 int main(){
-    TreeNode n0(10);
-    TreeNode n1(5);
-    TreeNode n2(15);
-    TreeNode n3(6);
-    TreeNode n4(20);
-    n0.left = &n1;
-    n0.right = &n2;
-    n2.left = &n3;
-    n2.right = &n4;
-    bool res = isValidBST(&n0);
+    TreeNode* root = create_tree("21");
+    bool res = isValidBST(root);
     printf("%s\n", res?"true":"false");
     return 0;
 }
