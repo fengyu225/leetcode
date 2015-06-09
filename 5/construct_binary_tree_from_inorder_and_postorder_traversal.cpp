@@ -1,6 +1,20 @@
 #include "header.h"
 
+TreeNode* build(vector<int>& inorder, int i_l, int i_r, vector<int>& postorder, int p_l, int p_r){
+    if(i_r-i_l != p_r-p_l) return NULL;
+    if(i_r < i_l) return NULL;
+    int x = postorder[p_r];
+    int i=i_l;
+    for(;i<=i_r && inorder[i]!=x;i++);
+    TreeNode* root = new TreeNode(x);
+    root->left = build(inorder, i_l, i-1, postorder, p_l, i-1-i_l+p_l);
+    root->right = build(inorder, i+1, i_r, postorder,p_r-i_r+i ,p_r-1);
+    return root;
+}
+
 TreeNode* buildTree(vector<int> &inorder, vector<int> &postorder) {
+    int i_l=0, i_r=inorder.size()-1, p_l = 0, p_r=inorder.size()-1;
+    return build(inorder, i_l, i_r, postorder, p_l, p_r);
 }    
 
 void pre_order(TreeNode* root){
