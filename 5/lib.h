@@ -21,3 +21,5 @@ class TreeNode {
 
 TreeNode* create_tree(std::string v);
 TreeNode* create_tree(std::vector<std::string> v);
+
+void pre_order(TreeNode* root);

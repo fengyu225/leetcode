@@ -77,3 +77,10 @@ TreeNode* create_tree(vector<string> v){
     }
     return root;
 }
+
+void pre_order(TreeNode* root){
+    if(!root) return;
+    printf("%d ", root->val);
+    pre_order(root->left);
+    pre_order(root->right);
+}
