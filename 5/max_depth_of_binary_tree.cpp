@@ -26,6 +26,7 @@ int maxDepth(TreeNode* root) {
 int maxDepth(TreeNode* root) {
     //using morris traversal
     if(!root) return 0;
+    TreeNode* curr = root;
 }
 
 int main(){
