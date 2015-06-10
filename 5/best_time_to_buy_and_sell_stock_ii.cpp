@@ -7,6 +7,7 @@ Design an algorithm to find the maximum profit. You may complete as many transac
 #include "header.h"
 
 int maxProfit(vector<int>& prices){
+
 }
 
 int main(){
