@@ -78,6 +78,33 @@ TreeNode* create_tree(vector<string> v){
     return root;
 }
 
+TreeLinkNode* create_link_tree(vector<string> v){
+    if(v[0] == "#") return NULL;
+    queue<TreeLinkNode*> q;
+    TreeLinkNode* root = new TreeLinkNode(stoi(v[0]));
+    TreeLinkNode* curr_n = root;
+    q.push(curr_n);
+    int curr = 1;
+    while(!q.empty()){
+        curr_n = q.front();
+        TreeLinkNode* l = curr<v.size() && v[curr] != "#"?new TreeLinkNode(stoi(v[curr])):NULL;
+        TreeLinkNode* r = curr+1<v.size() && v[curr+1] != "#"?new TreeLinkNode(stoi(v[curr+1])):NULL;
+        cout<<curr<<" "<<curr_n->val<<" ";
+        if(l) cout<<l->val<<" "; 
+        else cout<<"NULL"<<" ";
+        if(r) cout<<r->val<<" ";
+        else cout<<"NULL"<<" ";
+        cout<<endl;
+        if(l) q.push(l);
+        if(r) q.push(r);
+        curr_n->left = l;
+        curr_n->right = r;
+        q.pop();
+        curr += 2;
+    }
+    return root;
+}
+
 void pre_order(TreeNode* root){
     if(!root) return;
     printf("%d ", root->val);

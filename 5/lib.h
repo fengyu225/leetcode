@@ -23,3 +23,14 @@ TreeNode* create_tree(std::string v);
 TreeNode* create_tree(std::vector<std::string> v);
 
 void pre_order(TreeNode* root);
+
+class TreeLinkNode {
+    public:
+        TreeLinkNode *left;
+        TreeLinkNode *right;
+        TreeLinkNode *next;
+        int val;
+        TreeLinkNode(int v):left(NULL),right(NULL),next(NULL),val(v) {}
+};
+
+TreeLinkNode* create_link_tree(std::vector<std::string> v);
