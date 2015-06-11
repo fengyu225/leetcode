@@ -40,20 +40,14 @@ void get_res(unordered_map<string, vector<string> >& m, string& start, string& e
 
 vector<vector<string> > findLadders(string start, string end, unordered_set<string> &dict){
     unordered_map<string, vector<string> > m;
-//    queue<string> curr;
-//    queue<string> next;
-    unordered_set<string> curr;
-    unordered_set<string> next;
-    //curr.push(start);
-    curr.insert(start);
-    //queue<string> arr[2]={curr,next};
-    unordered_set<string> arr[2]={curr,next};
+    queue<string> curr;
+    queue<string> next;
+    curr.push(start);
+    queue<string> arr[2]={curr,next};
     int x=0;
-    //while(!arr[x%2].empty()){
-    for(auto curr_iter=arr[x%2].begin(); curr_iter!=arr[x%2].end(); curr_iter++){
-        //string temp = arr[x%2].front();
-        string temp = *iter;
-        //arr[x%2].pop();
+    while(!arr[x%2].empty()){
+        string temp = arr[x%2].front();
+        arr[x%2].pop();
         for(int i=0; i<temp.length(); i++)
             for(int j='a';j<='z';j++){
                 string t = temp;
