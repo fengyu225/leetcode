@@ -22,13 +22,13 @@ void search(TreeNode* root, int& res, int& m){
     l_m=r_m=l_res=r_res=INT_MIN;
     if(root->left) search(root->left, l_res, l_m);
     if(root->right) search(root->right, r_res, r_m);
-    int x = max(l_m,r_m);
-    m = max(x,x+root->val);
-    m = max(m, root->val);
+    m = max(l_m,r_m)+root->val;
+    m = max(m,root->val);
     int child_res=max(l_res,r_res);
     int res_with_curr = max(max(l_m, r_m),(l_m==INT_MIN||r_m==INT_MIN?INT_MIN:l_m+r_m))+root->val;
     res_with_curr = max(res_with_curr,root->val);
     res = max(child_res,res_with_curr);
+//    cout<<root->val<<" "<<m<<" "<<res<<endl;
 }
 
 int maxPathSum(TreeNode* root){
@@ -39,7 +39,7 @@ int maxPathSum(TreeNode* root){
 }
 
 int main(){
-    //string arr[] = {"-1","5","#","4","#","#","2","-4","#"};
+//    string arr[] = {"-1","5","#","4","#","#","2","-4","#"};
     string arr[] = {"2","-1"};
     vector<string> v(arr,arr+sizeof(arr)/sizeof(arr[0]));
     TreeNode* root = create_tree(v);
