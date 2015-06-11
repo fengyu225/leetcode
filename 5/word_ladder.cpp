@@ -33,14 +33,15 @@ int ladderLength(string beginWord, string endWord, unordered_set<string>& wordDi
     while(!arr[x%2].empty()){
         string temp = arr[x%2].front();
         arr[x%2].pop();
-        if(temp == endWord) return res;
         for(int i=0; i<temp.length(); i++)
             for(int j='a'; j<='z'; j++){
                 char c = temp[i];
+                if(c == j) continue;
                 temp[i] = j;
-                if(wordDict.find(temp) != wordDict.end() && has_seen.find(temp) == has_seen.end()){
+                if(temp == endWord) return res+1;
+                if(wordDict.find(temp) != wordDict.end()){
                     arr[(x+1)%2].push(temp);
-                    has_seen.insert(temp);
+                    wordDict.erase(temp);
                 }
                 temp[i] = c;
             }
