@@ -14,15 +14,17 @@ The solution is guaranteed to be unique.
 int canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
     int sz = gas.size();
     vector<int> diff(sz,0);
-    int s = 0;
-    int res = -1;
+    int s = 0, j=-1, sum=0;
     for(int i=0; i<sz; i++){
         diff[i] = gas[i]-cost[i];
+        sum+=diff[i];
         s+=diff[i];
-        if(s>=0 && res==-1) res = i;
+        if(sum<0){
+            j=i;
+            sum = 0;
+        }
     }
-    if(s<0) return -1; 
-    else return res;
+    return s>=0?j+1:-1;
 }
 
 int main(){
