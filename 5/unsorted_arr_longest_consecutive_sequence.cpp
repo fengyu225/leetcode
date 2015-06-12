@@ -11,7 +11,34 @@ Your algorithm should run in O(n) complexity.
 #include "header.h"
 
 int longestConsecutive(vector<int>& nums){
-
+    unordered_map<int,int> m;
+    int res = 1;
+    for(int i=0; i<nums.size(); i++){
+        if(m.find(nums[i]) != m.end()) continue;
+        int x = 1, l=0, r=0;
+        bool left = false, right=false;
+        m[nums[i]] = 1;
+        if(m.find(nums[i]-1) != m.end()){
+            l = m[nums[i]-1];
+            x += abs(l);
+            m[nums[i]] = -1*(1+abs(l));
+            m[nums[i]-abs(l)] = x;
+            left = true;
+        }
+        if(m.find(nums[i]+1) != m.end()){
+            r = m[nums[i]+1];
+            x += abs(r);
+            m[nums[i]] = x;
+            m[nums[i]+abs(r)] = -1*x;
+            right = true;
+        }
+        res = max(res,x);
+        if(left && right){
+            m[nums[i]-abs(l)] = x;
+            m[nums[i]+abs(r)] = -1*x;
+        }
+    }
+    return res;
 }
 
 //int longestConsecutive(vector<int>& nums){
