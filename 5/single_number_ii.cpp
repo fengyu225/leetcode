@@ -8,10 +8,7 @@ int singleNumber(vector<int>& nums){
     int res = 0;
     for(int i=0; i<32; i++){
         int x=0, temp=1<<i;
-        for(int j=0;j<nums.size(); j++){
-            int q = nums[j];
-            if(q&temp) x++;
-        }
+        for(int j=0;j<nums.size(); j++) if(nums[j]&temp) x++;
         res |= (((x%3 == 0)?0:1)<<i);
     }
     return res;
