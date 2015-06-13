@@ -1,47 +1,59 @@
+/*
+Given a string s and a dictionary of words dict, add spaces in s to construct a sentence where each word is a valid dictionary word.
+
+Return all such possible sentences.
+
+For example, given
+s = "catsanddog",
+dict = ["cat", "cats", "and", "sand", "dog"].
+
+A solution is ["cats and dog", "cat sand dog"].
+*/
+
 #include "header.h"
 
-void dfs(string& s, int curr, vector<int>& end_idx, vector<string>& res, unordered_set<string>& dict, vector<vector<bool> >& mp){
-    if(curr>=s.size()){
-        string x = s;
-        for(int i=0; i<end_idx.size()-1; i++){
-            x.insert(end_idx[i]+i, " ");
+void search(string& s, int curr, unordered_set<string>& wordDict, vector<int>& pos, vector<string>& res, vector<vector<bool> >& m){
+    if(curr == s.length()){
+        string temp = "";
+        int start = 0;
+        for(int i=0; i<pos.size(); i++){
+            temp += s.substr(start,pos[i]-start)+" ";
+            start = pos[i];
         }
-        res.push_back(x);
+        if(pos.size() == 0) res.push_back(s);
+        else res.push_back(temp.substr(0,temp.size()-1));
         return;
     }
-    for(int i=0; i<mp[curr].size(); i++){
-        if(mp[curr][i]==true){
-            end_idx.push_back(i+1);
-            dfs(s,i+1,end_idx,res,dict,mp);
-            end_idx.pop_back();
-        }
+    for(int i=curr; i<s.length(); i++){
+        if(!m[curr][i]) continue;
+        pos.push_back(i+1);
+        search(s,i+1,wordDict,pos,res,m);
+        pos.pop_back();
     }
 }
 
-vector<string> wordBreak(string s, unordered_set<string>& dict){
-    int size = s.size();
-    vector<vector<bool> > mp(size,vector<bool>(size,false));
+vector<string> wordBreak(string s, unordered_set<string>& wordDict){
     vector<string> res;
-    for(int i=0; i<size; i++)
-        for(int j=i;j<size;j++)
-            if(dict.find(s.substr(i,j-i+1)) != dict.end())
-                mp[i][j] = true;
+    vector<int> pos;
+    vector<vector<bool> > m(s.length(), vector<bool>(s.length(), false));
+    int sz = s.length();
+    for(int i=0; i<sz; i++)
+        for(int j=i;j<sz; j++)
+            if(wordDict.find(s.substr(i, j-i+1)) != wordDict.end()) m[i][j] = true;
     bool flag = false;
-    for(int i=0;i<s.size();i++)
-        if(mp[i][s.size()-1]){
-            flag = true;
-            break;
-        }
+    for(int i=0; i<sz; i++)
+        if(m[i][sz-1]) flag = true;
     if(!flag) return res;
-    vector<int> end_idx;
-    dfs(s,0,end_idx,res,dict,mp);
+    search(s, 0, wordDict, pos, res, m);
     return res;
 }
 
 int main(){
     vector<string> res;
-    unordered_set<string> dict({"cat", "cats", "and", "sand", "dog"});
-    string s("catsanddog");
+    unordered_set<string> dict({"a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"});
+//    unordered_set<string> dict({"cat", "cats", "and", "sand", "dog"});
+//    string s("catsanddog");
+    string s("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab");
     res = wordBreak(s,dict);
     for(int i=0; i<res.size(); i++)
         std::cout<<res[i]<<std::endl;
