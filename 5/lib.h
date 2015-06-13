@@ -43,3 +43,11 @@ class UndirectedGraphNode {
         vector<UndirectedGraphNode*> neighbors;
         UndirectedGraphNode(int x) : label(x) {};
 };
+
+struct RandomListNode {
+    int label;
+    RandomListNode *next, *random;
+    RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
+};
+
+void print_random_list(RandomListNode* root);

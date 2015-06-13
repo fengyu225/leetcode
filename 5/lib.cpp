@@ -111,3 +111,11 @@ void pre_order(TreeNode* root){
     pre_order(root->left);
     pre_order(root->right);
 }
+
+void print_random_list(RandomListNode* root){
+    while(root){
+        printf("%d ", root->label);
+        root = root->next;
+    }
+    printf("\n");
+}
