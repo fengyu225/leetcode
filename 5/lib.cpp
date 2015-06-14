@@ -14,12 +14,13 @@ ListNode* create_list(int arr[], int n){
         if(!result)
             result = curr = x;
         else{
+            cout<<curr->val<<"->"<<x->val<<endl;
             curr->next = x;
             curr = curr->next;
         }
     }
-    return result;
     cout<<"======================"<<endl;
+    return result;
 }
 
 ListNode* create_list(int arr[], int n, int s){
@@ -137,4 +138,13 @@ void print_random_list(RandomListNode* root){
         root = root->next;
     }
     printf("\n");
+}
+
+void print_list(ListNode* curr){
+    if(!curr) return;
+    while(curr){
+        cout<<curr->val<<" ";
+        curr = curr->next;
+    }
+    cout<<endl;
 }

@@ -53,3 +53,5 @@ struct RandomListNode {
 void print_random_list(RandomListNode* root);
 
 ListNode* create_list(int arr[], int n, int s);
+
+void print_list(ListNode*);
