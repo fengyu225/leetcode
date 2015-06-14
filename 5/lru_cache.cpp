@@ -9,20 +9,50 @@ set(key, value) - Set or insert the value if the key is not already present. Whe
 
 class LRUCache{
 public:
-    LRUCache(int capacity) {
-        capacity = capacity;     
-    }
+    struct cacheEntry{
+        int key;
+        int val;
+        cacheEntry(int k, int v):key(k),val(v){}
+    };
+    LRUCache(int capacity):capacity(capacity){}
     int get(int key) {
-        return 0;    
+        if(map.find(key) == map.end()) return -1;
+        moveToFront(key);
+        return lst.front().val;
     }
     void set(int key, int value) {
-            
+        if(map.find(key) == map.end()){
+            cacheEntry* e = new cacheEntry(key,value);
+            while(lst.size() >= capacity){
+                map.erase(lst.back().key);
+                lst.pop_back();
+            }
+            lst.push_front(*e);
+            map[key] = lst.begin();
+        }
+        else{
+            moveToFront(key);
+            (*map[key]).val = value;
+        }
     }
+private:
     int capacity;
+    unordered_map<int, list<cacheEntry>::iterator> map;
+    list<cacheEntry> lst;
+    void moveToFront(int key){
+        cacheEntry entry = *map[key];
+        lst.erase(map[key]);
+        lst.push_front(entry);
+        map[key] = lst.begin();
+    }    
 };
 
 int main(){
-    LRUCache cache(10);
-    cout<<cache.capacity<<endl;
+    LRUCache cache(5);
+    cache.set(1,1);
+    cache.set(1,1);
+    cache.set(1,1);
+    cache.set(1,1);
+    cache.set(1,1);
     return 0;
 }
