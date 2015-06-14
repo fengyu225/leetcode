@@ -22,6 +22,25 @@ ListNode* create_list(int arr[], int n){
     cout<<"======================"<<endl;
 }
 
+ListNode* create_list(int arr[], int n, int s){
+    ListNode* result = NULL;
+    ListNode* curr = NULL;
+    ListNode* end = NULL;
+    ListNode* start = NULL;
+    for(int i=0; i<n; i++){
+        ListNode* x = new ListNode(arr[i]);
+        if(arr[i] == s) start=x;
+        if(!result)
+            result = curr = x;
+        else{
+            curr->next = x;
+            curr = curr->next;
+        }
+        if(i==n-1) end=curr;
+    }
+    end->next = start;
+    return result;
+}
 TreeNode* create_tree(string v){
     cout<<"======================"<<endl;
     if(v[0] == '#') return NULL;
