@@ -12,6 +12,7 @@ A solution is ["cats and dog", "cat sand dog"].
 
 #include "header.h"
 
+/* using dfs
 void search(string& s, int curr, unordered_set<string>& wordDict, vector<int>& pos, vector<string>& res, vector<vector<bool> >& m){
     if(curr == s.length()){
         string temp = "";
@@ -45,6 +46,43 @@ vector<string> wordBreak(string s, unordered_set<string>& wordDict){
         if(m[i][sz-1]) flag = true;
     if(!flag) return res;
     search(s, 0, wordDict, pos, res, m);
+    return res;
+}
+*/
+
+/*using bfs */
+
+vector<string> wordBreak(string s, unordered_set<string>& wordDict){
+    int sz = s.length();
+    vector<string> res;
+    if(sz == 0) return res;
+    unordered_map<int,unordered_set<int> > m;
+    queue<int> curr;
+    queue<int> next;
+    vector<vector<bool> > in_dict(sz, vector<bool>(sz, false));
+    for(int i=0; i<sz; i++)
+        for(int j=i; j<sz; j++)
+            if(wordDict.find(s.substr(i,j-i+1)) != wordDict.end()) in_dict[i][j] = true;
+    int x = 0;
+    curr.push(-1);
+    queue<int> arr[2] = {curr,next};
+    while(!arr[x%2].empty()){
+        int last_tail = arr[x%2].front();
+        arr[x%2].pop();
+        for(int i=last_tail+1; i<sz; i++){
+            if(in_dict[last_tail+1][i]){
+                m[last_tail].insert(i);
+                arr[(x+1)%2].push(i);
+            }
+        }
+        if(arr[x%2].empty()) x++;
+    }
+    for(auto i=m.begin(); i!=m.end(); i++){
+        cout<<i->first<<": ";
+        for(auto j=i->second.begin(); j!=i->second.end(); j++)
+            cout<<*j<<" ";
+        cout<<endl;
+    }
     return res;
 }
 
