@@ -24,7 +24,6 @@ int maxProduct(vector<int>& nums){
             lp[i]=sn[i-1]==INT_MIN?INT_MAX:max(nums[i],nums[i]*sn[i-1]);
             sn[i]=lp[i-1]==INT_MAX?nums[i]:min(nums[i],nums[i]*lp[i-1]);
         }
-        cout<<i<<" "<<lp[i]<<" "<<sn[i]<<endl;
         if(lp[i] != INT_MAX) res = max(res, lp[i]);
     }
     return res;
