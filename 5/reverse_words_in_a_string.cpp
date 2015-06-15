@@ -45,7 +45,8 @@ void reverseWords(string& s) {
         while(l<sz) s[++curr]=s[l++];
     r=curr==-1?sz-1:curr;
     while(r>=0 && s[r]==' ') r--;
-    s=s.substr(0,r+1);
+    if(r == -1) s="";
+    else s=s.substr(0,r+1);
 }   
 
 int main(){
