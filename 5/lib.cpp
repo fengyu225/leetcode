@@ -132,6 +132,13 @@ void pre_order(TreeNode* root){
     pre_order(root->right);
 }
 
+void in_order(TreeNode* root){
+    if(!root) return;
+    pre_order(root->left);
+    printf("%d ", root->val);
+    pre_order(root->right);
+}
+
 void print_random_list(RandomListNode* root){
     while(root){
         printf("%d ", root->label);
