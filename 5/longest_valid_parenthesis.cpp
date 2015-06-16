@@ -51,7 +51,7 @@ int longestValidParentheses(string s) {
 
 int main(){
     //string s0("()(()))()())");
-    string s0("()(())");
+    string s0(")()())");
     printf("%d\n", longestValidParentheses(s0));
     string s1("(()");
     printf("%d\n", longestValidParentheses(s1));
