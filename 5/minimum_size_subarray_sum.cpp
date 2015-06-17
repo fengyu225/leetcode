@@ -30,7 +30,7 @@ int minSubArrayLen(int s, vector<int>& nums){
             r++;
         }
     }
-    return res;
+    return res==INT_MAX?0:res;
 }
 
 int main(){
