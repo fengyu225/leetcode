@@ -26,12 +26,10 @@ public:
             root = root->left;
         }
     }
-
     /** @return whether we have a next smallest number */
     bool hasNext() {
         return !s.empty();
     }
-
     /** @return the next smallest number */
     int next() {
         int res = s.top()->val;
@@ -47,7 +45,6 @@ public:
         }
         return res;
     }
-
 private:
     stack<TreeNode*> s;
 };
