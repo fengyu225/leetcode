@@ -29,27 +29,27 @@ After calling your function, the tree should look like:
 
 #include "header.h"
 
-    void expand(TreeLinkNode*& head, TreeLinkNode*& tail, TreeLinkNode* temp){
-        if(!temp) return;
-        if(head) tail->next = temp;
-        else head=temp;
-        tail = temp;
-        tail->next = NULL;
-    }
-    
-    void connect(TreeLinkNode *root){
-        if(!root) return;
-        TreeLinkNode* curr = root, *next_head = NULL, *next_tail=NULL;
-        while(curr){
-            expand(next_head, next_tail, curr->left);
-            expand(next_head, next_tail, curr->right);
-            curr = curr->next;
-            if(!curr){
-                curr = next_head;
-                next_head=next_tail=NULL;
-            }
+void expand(TreeLinkNode*& head, TreeLinkNode*& tail, TreeLinkNode* temp){
+    if(!temp) return;
+    if(head) tail->next = temp;
+    else head=temp;
+    tail = temp;
+    tail->next = NULL;
+}
+
+void connect(TreeLinkNode *root){
+    if(!root) return;
+    TreeLinkNode* curr = root, *next_head = NULL, *next_tail=NULL;
+    while(curr){
+        expand(next_head, next_tail, curr->left);
+        expand(next_head, next_tail, curr->right);
+        curr = curr->next;
+        if(!curr){
+            curr = next_head;
+            next_head=next_tail=NULL;
         }
     }
+}
 
 int main(){
     string arr[] = {"1","2","3","4","5","6","7"};
