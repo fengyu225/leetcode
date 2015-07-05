@@ -15,7 +15,27 @@ Special thanks to @Shangrila for adding this problem and creating all test cases
 #include "header.h"
 
 string fractionToDecimal(int numerator, int denominator){
-
+    if(numerator == 0) return "0";
+    bool flag = numerator>0 && denominator > 0 || numerator<0 && denominator<0;
+    long n = abs((long) numerator);
+    long d = abs((long) denominator);
+    string res = "";
+    res += to_string(n/d);
+    n = n%d;
+    if(n == 0) return flag?res:"-"+res;
+    unordered_map<int,int> map;
+    string temp = "";
+    int curr = 0;
+    while(n){
+        if(map.find(n) != map.end()) break;
+        temp += to_string(n*10/d);
+        map[n] = curr++;
+        n = n*10%d;
+    }
+    if(n == 0) return flag?res+"."+temp:"-"+res+"."+temp;
+    temp.insert(map[n],"(");
+    temp += ")";
+    return flag?res+"."+temp:"-"+res+"."+temp;
 }
 
 int main(){
