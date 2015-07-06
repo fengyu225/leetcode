@@ -11,6 +11,12 @@ Special thanks to @ts for adding this problem and creating all test cases.
 
 int count(int s, int n){
     //count number of appearence of n in s!
+    int res = 0;
+    while(s>=n){
+        res+=s/n;
+        s/=n;
+    }
+    return res;
 }
 
 int trailingZeroes(int n) {
@@ -19,5 +25,6 @@ int trailingZeroes(int n) {
 
 int main(){
     cout<<trailingZeroes(10)<<endl;
+//    cout<<count(26,5)<<endl;
     return 0;
 }
