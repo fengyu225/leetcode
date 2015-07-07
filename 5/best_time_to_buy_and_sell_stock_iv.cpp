@@ -9,9 +9,19 @@ You may not engage in multiple transactions at the same time (ie, you must sell 
 
 #include "header.h"
 
+int solvePrices(vector<int>& prices){
+    int res = 0;
+    int sz = prices.size();
+    for(int i=1; i<sz; i++){
+        if(prices[i]>prices[i-1]) res+=prices[i]-prices[i-1];
+    }
+    return res;
+}
+
 int maxProfit(int k, vector<int>& prices){
     if(k == 0) return 0;
     int sz = prices.size();
+    if(k>=sz) return solvePrices(prices);
     if(sz < 2) return 0;
     int local[k+1][sz];
     int global[k+1][sz];
@@ -34,5 +44,6 @@ int maxProfit(int k, vector<int>& prices){
 }
 
 int main(){
+    int arr[] = {}
     return 0;
 }
