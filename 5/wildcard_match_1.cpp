@@ -21,28 +21,33 @@ isMatch("tripadvisor", "ri*vi") → true
 
 #include "header.h"
 
-bool isMatch(string s, string p){
-    p = "*"+p+"*";
-    int curr_p = 0, curr_s = 0, last_p = -1, last_s = -1;
-    int p_sz = p.length(), s_sz = s.length();
-    while(curr_s < s_sz){
-        cout<<curr_p<<" "<<curr_s<<endl;
-        if(curr_p<p_sz && p[curr_p] == s[curr_s]){
-            curr_p++;
-            curr_s++;
-        } 
-        else if(curr_p<p_sz && p[curr_p] == '*'){
-            last_p = curr_p++;
-            last_s = curr_s;
+bool isMatch(char* s, char* p){
+    int s_sz = strlen(s), p_sz = strlen(p);
+    for(int i=0; i<s_sz; i++){
+        int curr_s = i, curr_p = 0;
+        int last_s = -1, last_p = -1;
+        while(curr_s<s_sz){
+            if(curr_p == p_sz) return true;
+            if(p[curr_p] == s[curr_s]){
+                curr_s++;
+                curr_p++;
+            }
+            else if(p[curr_p] == '*'){
+                last_p = curr_p++;
+                last_s = curr_s;
+            }
+            else if(last_p>=i){
+                curr_p = last_p+1;
+                curr_s = ++last_s;
+            }
+            else break;
         }
-        else if(last_p<p_sz && last_p>=0){
-            curr_s = ++last_s;
-            curr_p = last_p+1;
+        if(curr_s == s_sz){
+            while(curr_p<p_sz && p[curr_p] == '*') curr_p++;
+            if(curr_p == p_sz) return true;
         }
-        else return false;
     }
-    while(curr_p<p_sz && p[curr_p] == '*') curr_p++;
-    return curr_p == p_sz;
+    return false;
 }
 
 int main(){
@@ -51,9 +56,9 @@ int main(){
 //    printf("%s\n", isMatch("aaa","aa")?"true":"false");
 //    printf("%s\n", isMatch("aa", "*")?"true":"false");
 //    printf("%s\n", isMatch("aa", "a*")?"true":"false");
-    printf("%s\n", isMatch("cdadadabe", "****a*")?"true":"false");
-    printf("%s\n", isMatch("tripadvisor", "ri*vi")?"true":"false");
-    printf("%s\n", isMatch("tripadvisor", "ri*vo")?"true":"false");
+    char s[] = "TripAdvisor";
+    char p[] = "ri*or***********"; 
+    cout<<isMatch(s,p)<<endl;
 //    printf("%s\n", isMatch("aab", "c*a*b")?"true":"false");
     return 0;
 }
