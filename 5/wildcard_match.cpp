@@ -25,11 +25,11 @@ bool isMatch(string s, string p){
     int s_sz = s.length(), p_sz = p.length();
     int curr_s = 0, curr_p = 0, last_p=-1, last_s=-1;
     while(curr_s<s_sz){
-        if((s[curr_s]==p[curr_p])||(p[curr_p]=='?')){
+        if((curr_p<p_sz && s[curr_s]==p[curr_p])||(curr_p<p_sz && p[curr_p]=='?')){
             curr_s++;
             curr_p++;
         }
-        else if(p[curr_p]=='*'){
+        else if(curr_p<p_sz && p[curr_p]=='*'){
             last_p = curr_p++;
             last_s = curr_s;
         }
