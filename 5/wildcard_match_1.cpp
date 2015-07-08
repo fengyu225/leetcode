@@ -57,7 +57,7 @@ int main(){
 //    printf("%s\n", isMatch("aa", "*")?"true":"false");
 //    printf("%s\n", isMatch("aa", "a*")?"true":"false");
     char s[] = "TripAdvisor";
-    char p[] = "ri*or***********"; 
+    char p[] = "ri*pAdt***********"; 
     cout<<isMatch(s,p)<<endl;
 //    printf("%s\n", isMatch("aab", "c*a*b")?"true":"false");
     return 0;
