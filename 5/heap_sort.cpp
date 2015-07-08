@@ -20,12 +20,11 @@ void siftup(vector<int>& arr, int end){
 void siftdown(vector<int>& arr, int end){
     int curr = 0;
     if(end == 0) return;
-    int child = 2*curr+2<=end && arr[2*curr+2]>arr[2*curr+1]?2*curr+2:2*curr+1;
-    while(child<=end){
+    while(2*curr+1<=end){
+        int child = 2*curr+2<=end && arr[2*curr+2]>arr[2*curr+1]?2*curr+2:2*curr+1;
         if(arr[curr]>arr[child]) break;
         swap(arr, curr, child);
         curr = child;
-        child = 2*curr+2<=end && arr[2*curr+2]>arr[2*curr+1]?2*curr+2:2*curr+1;
     }
 }
 
