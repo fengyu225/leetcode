@@ -141,7 +141,12 @@ void in_order(TreeNode* root){
 
 void print_random_list(RandomListNode* root){
     while(root){
-        printf("%d ", root->label);
+        string x = "";
+        if(root->random)
+            x += to_string(root->random->label);
+        else
+            x += "NULL";
+        cout<<root->label<<"("<<x<<") ";
         root = root->next;
     }
     printf("\n");

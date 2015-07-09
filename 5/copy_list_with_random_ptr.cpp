@@ -6,38 +6,37 @@ Return a deep copy of the list.
 
 #include "header.h"
 
-void add_node(RandomListNode*& head, RandomListNode*& tail, RandomListNode* temp){
-    if(head) tail->next = temp;
-    else head = temp;
+void addToRandomList(RandomListNode*& head, RandomListNode*& tail, RandomListNode* temp){
+    temp->next = NULL;
+    if(!head) head = temp;
+    else tail->next = temp;
     tail = temp;
-    tail->next = NULL;
 }
 
 RandomListNode *copyRandomList(RandomListNode *head) {
     if(!head) return NULL;
     RandomListNode* curr = head;
     while(curr){
-        RandomListNode* temp = new RandomListNode(curr->label);
-        RandomListNode* n = curr->next;
-        curr->next = temp;
-        temp->next = n;
-        curr = n;
+        RandomListNode* temp = curr->next;
+        curr->next = new RandomListNode(curr->label);
+        curr->next->next = temp;
+        curr = temp;
     }
     curr = head;
     while(curr){
-        if(curr->random) curr->next->random = curr->random->next;
-        else curr->next->random = NULL;
+        if(curr->random)
+            curr->next->random = curr->random->next;
         curr = curr->next->next;
     }
-    RandomListNode* res = NULL, *tail=NULL;
+    RandomListNode* res_head = NULL, *res_tail = NULL;
     curr = head;
     while(curr){
         RandomListNode* temp = curr->next->next;
-        add_node(res, tail, curr->next);
+        addToRandomList(res_head, res_tail, curr->next);
         curr->next = temp;
         curr = temp;
     }
-    return res;
+    return res_head;
 }
 
 int main(){
