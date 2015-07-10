@@ -26,8 +26,9 @@ int rob(vector<int>& nums) {
 int main(){
     //int arr[] = {1, 2, 3, 4, 5};
     //int arr[] = {2,1,1,2};
-    int arr[] = {2,7,9,3,1};
-    vector<int> nums(arr, arr+sizeof(arr)/sizeof(arr[0]));
+//    int arr[] = {2,7,9,3,1};
+//    vector<int> nums(arr, arr+sizeof(arr)/sizeof(arr[0]));
+    vector<int> nums(100000,1);
     cout<<rob(nums)<<endl;
     return 0;
 }
