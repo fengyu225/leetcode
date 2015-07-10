@@ -10,23 +10,23 @@ int rob(vector<int>& nums) {
     int res = 0;
     int sz = nums.size();
     if(sz == 0) return 0;
-    vector<int> temp(sz, 0);
-    temp[0] = nums[0];
-    if(sz == 1) return temp[0];
-    temp[1] = nums[1];
-    res = max(temp[0], temp[1]);
-    int m = 0 ;
+    if(sz == 1) return nums[0];
+    res = max(nums[0], nums[1]);
+    int m = 0;
+    int a=nums[0], b=res;
     for(int i=2; i<sz; i++){
-        m = max(m, temp[i-2]);
-        temp[i] = m+nums[i];
-        res = max(temp[i], res);
+        m = max(m, a);
+        a=b;
+        b=m+nums[i];
+        res = max(b, res);
     }
     return res;
 }
 
 int main(){
     //int arr[] = {1, 2, 3, 4, 5};
-    int arr[] = {2,1,1,2};
+    //int arr[] = {2,1,1,2};
+    int arr[] = {2,7,9,3,1};
     vector<int> nums(arr, arr+sizeof(arr)/sizeof(arr[0]));
     cout<<rob(nums)<<endl;
     return 0;
