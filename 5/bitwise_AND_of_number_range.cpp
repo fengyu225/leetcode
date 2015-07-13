@@ -7,18 +7,16 @@ For example, given the range [5, 7], you should return 4.
 #include "header.h"
 
 int rangeBitwiseAnd(int m, int n){
-    int res = 0;
-    for(int i=30; i>=0; i--){
-        int x = 1<<i;
-        if(n<x){
-            res |= (0<<i);
-        }
-        else if(n>x){
-
-        }
+    int i = 0;
+    while (m != n) {
+        m >>= 1;
+        n >>= 1;
+        ++i;
     }
+    return (m << i);     
 }
 
 int main(){
+    cout<<rangeBitwiseAnd(5,7)<<endl;
     return 0;
 }
