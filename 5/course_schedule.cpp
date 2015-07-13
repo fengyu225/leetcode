@@ -54,7 +54,7 @@ bool canFinish(int numCourses, vector<pair<int, int> >& prerequisites){
 
 int main(){
     vector<pair<int, int> > prerequisites;
-    prerequisites.push_back(make_pair(1, 0));
+//    prerequisites.push_back(make_pair(1, 0));
 //    prerequisites.push_back(make_pair(0, 1));
     cout<<canFinish(2, prerequisites)<<endl;
     return 0;
