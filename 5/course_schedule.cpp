@@ -22,6 +22,7 @@ bool visit(unordered_map<int, vector<int> >& graph, unordered_map<int,int>& m, i
     vector<int> n = graph[curr];
     for(int i=0; i<n.size(); i++){
         if(m[n[i]] == 1) return false;
+        if(m[n[i]] == 2) continue;
         m[n[i]] = 1;
         bool res = visit(graph, m, n[i]);
         if(!res) return false;
