@@ -36,6 +36,6 @@ int minSubArrayLen(int s, vector<int>& nums){
 int main(){
     int arr[] = {2, 3, 1, 2, 4, 3};
     vector<int> nums(arr,arr+sizeof(arr)/sizeof(arr[0]));
-    cout<<minSubArrayLen(7,nums)<<endl;
+    cout<<minSubArrayLen(INT_MAX,nums)<<endl;
     return 0;
 }
