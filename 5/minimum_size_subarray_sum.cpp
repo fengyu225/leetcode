@@ -12,25 +12,25 @@ If you have figured out the O(n) solution, try coding another solution of which 
 
 #include "header.h"
 
+int getMin(int res, int curr){
+    if(res>0) return min(curr,res);
+    else return curr;
+}
+
 int minSubArrayLen(int s, vector<int>& nums){
     int sz = nums.size();
-    if(sz ==  0) return 0;
-    int res = INT_MAX;
-    int sum = nums[0];
-    int l=0, r=1;
-    if(sum>=s) return 1;
+    if(sz == 0) return 0;
+    int res = 0;
+    int l = 0, r=0, sum = 0;
     while(r<sz){
         sum += nums[r];
-        if(sum<s) r++;
-        else{
-            while(l<=r && sum>=s){
-                res = min(res, r-l+1);
-                sum -= nums[l++];
-            }
-            r++;
+        while(l<=r && sum>=s){
+            res = getMin(res, r-l+1);
+            sum -= nums[l++];
         }
+        r++;
     }
-    return res==INT_MAX?0:res;
+    return res;
 }
 
 int main(){
