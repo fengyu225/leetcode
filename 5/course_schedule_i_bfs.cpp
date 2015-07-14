@@ -17,46 +17,33 @@ There are a total of 2 courses to take. To take course 1 you should have finishe
 
 #include "header.h"
 
-bool visit(unordered_map<int, vector<int> >& graph, unordered_map<int,int>& m, int curr){
-    m[curr] = 1;
-    vector<int> n = graph[curr];
-    for(int i=0; i<n.size(); i++){
-        if(m[n[i]] == 1) return false;
-        if(m[n[i]] == 2) continue;
-        m[n[i]] = 1;
-        bool res = visit(graph, m, n[i]);
-        if(!res) return false;
-        m[n[i]] = 2;
-    }
-    m[curr] = 2;
-    return true;
-} 
 
 bool canFinish(int numCourses, vector<pair<int, int> >& prerequisites){
     if(numCourses == 0) return true;
-    unordered_map<int, int> m;
-    unordered_map<int, vector<int> > graph;
-    for(int i=0; i<prerequisites.size(); i++){
-        int from = prerequisites[i].first;
-        int to = prerequisites[i].second;
-        if(graph.find(from) == graph.end()){
-            graph[from] = vector<int>();
-        }
-        graph[from].push_back(to);
+    vector<unordered_set<int> > graph(numCourses,unordered_set<int>());
+    vector<int> degrees(numCourses, 0);
+    for(auto i=prerequisites.begin(); i!=prerequisites.end(); i++) 
+        graph[i->second].insert(i->first);
+    for(int i=0; i<graph.size(); i++){
+        for(auto j = graph[i].begin(); j!=graph[i].end(); j++)
+            degrees[*j]++;
     }
-    for(int i=1; i<numCourses; i++){
-        if(m[i]==0){
-            bool res = visit(graph, m, i);
-            if(!res) return false;
-        }
+    for(int i=0; i<numCourses; i++){
+        int j = 0;
+        for(;j<numCourses;j++)
+            if(degrees[j] == 0) break;
+        if(j == numCourses) return false;
+        degrees[j] = -1;
+        for(auto x = graph[j].begin(); x!=graph[j].end(); x++)
+            degrees[*x]--;
     }
     return true;
 }
 
 int main(){
     vector<pair<int, int> > prerequisites;
-//    prerequisites.push_back(make_pair(1, 0));
-//    prerequisites.push_back(make_pair(0, 1));
+    prerequisites.push_back(make_pair(1, 0));
+    prerequisites.push_back(make_pair(0, 1));
     cout<<canFinish(2, prerequisites)<<endl;
     return 0;
 }
