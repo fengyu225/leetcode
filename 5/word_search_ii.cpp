@@ -19,7 +19,7 @@ You may assume that all inputs are consist of lowercase letters a-z.
 #include "header.h"
 
 void search(vector<vector<char> >& board, int i, int j, unordered_set<string>& res, TrieNode* curr_n, string& temp){
-    if(!curr_n) return;
+    //if(!curr_n) return;
     if(!curr_n->inChildren(board[i][j])) return;
     int move[4][2] = {
         {-1, 0},
@@ -33,7 +33,7 @@ void search(vector<vector<char> >& board, int i, int j, unordered_set<string>& r
     board[i][j] = 'X';
     TrieNode* orig_n = curr_n;
     curr_n = curr_n->getChild(c);
-    if(curr_n->inChildren('#')){
+    if(curr_n && curr_n->inChildren('#')){
         res.insert(temp);
     }
     for(int k=0; k<4; k++){
