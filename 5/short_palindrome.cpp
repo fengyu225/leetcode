@@ -19,6 +19,7 @@ string shortestPalindrome(string s) {
     vector<int> next(sz+1, -1);
     int k=-1, j=0;
     next[0] = -1;
+    // calc next array in kmp
     while(j<sz){
         if(k == -1 || ss[j] == ss[k]){
             k++;
