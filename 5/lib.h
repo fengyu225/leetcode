@@ -1,6 +1,7 @@
 #include "stdlib.h"
 #include <string> 
 #include <vector>
+#include <unordered_map>
 
 using namespace std;
 
@@ -56,3 +57,29 @@ void print_random_list(RandomListNode* root);
 ListNode* create_list(int arr[], int n, int s);
 
 void print_list(ListNode*);
+
+class TrieNode {
+public:
+    TrieNode(char c):val(c) {} 
+    TrieNode():val(0) {}
+    TrieNode* addChild(char c);
+    bool inChildren(char c);
+    bool isLeaf();
+    TrieNode* getChild(char c);
+private:
+    char val;
+    unordered_map<char,TrieNode*> children;
+};
+
+class Trie {
+public:
+    Trie() {
+        root = new TrieNode();
+    }
+    void insert(string s);
+    bool search(string key);
+    bool startsWith(string prefix);
+    TrieNode* getRoot();
+private:
+    TrieNode* root;
+};
