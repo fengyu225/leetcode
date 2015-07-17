@@ -8,18 +8,15 @@ Given a list of non-negative integers representing the amount of money of each h
 
 #include "header.h"
 
-int rob_simple(vector<int>& nums) {
-    int res = 0;
-    int sz = nums.size();
-    if(sz == 0) return 0;
-    if(sz == 1) return nums[0];
-    res = max(nums[0], nums[1]);
+int rob_simple(vector<int>& nums, int from, int to){
+    if(from == to) return nums[from];
+    int res = max(nums[from], nums[from+1]);
+    int a=nums[from], b=res;
     int m = 0;
-    int a=nums[0], b=res;
-    for(int i=2; i<sz; i++){
+    for(int i=from+2; i<=to; i++){
         m = max(m, a);
-        a=b;
-        b=m+nums[i];
+        a = b;
+        b = m+nums[i];
         res = max(b, res);
     }
     return res;
@@ -28,12 +25,9 @@ int rob_simple(vector<int>& nums) {
 int rob(vector<int>& nums) {
     int sz = nums.size();
     if(sz==0) return 0;
-    vector<int> nums_a = nums;
-    nums_a.pop_back();
-    int a = rob_simple(nums_a);
-    vector<int> nums_b = nums;
-    nums_b.erase(nums_b.begin());
-    int b = rob_simple(nums_b);
+    if(sz == 1) return nums[0];
+    int a = rob_simple(nums, 0, sz-2);
+    int b = rob_simple(nums, 1, sz-1);
     return max(a,b);
 }
 
