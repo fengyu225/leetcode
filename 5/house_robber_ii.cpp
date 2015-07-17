@@ -8,7 +8,7 @@ Given a list of non-negative integers representing the amount of money of each h
 
 #include "header.h"
 
-int rob_1(vector<int>& nums) {
+int rob_simple(vector<int>& nums) {
     int res = 0;
     int sz = nums.size();
     if(sz == 0) return 0;
@@ -30,10 +30,10 @@ int rob(vector<int>& nums) {
     if(sz==0) return 0;
     vector<int> nums_a = nums;
     nums_a.pop_back();
-    int a = rob_1(nums_a);
+    int a = rob_simple(nums_a);
     vector<int> nums_b = nums;
     nums_b.erase(nums_b.begin());
-    int b = rob_1(nums_b);
+    int b = rob_simple(nums_b);
     return max(a,b);
 }
 
