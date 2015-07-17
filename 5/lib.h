@@ -83,3 +83,5 @@ public:
 private:
     TrieNode* root;
 };
+
+void print_arr(vector<int>& nums, int l, int r);

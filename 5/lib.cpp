@@ -214,3 +214,8 @@ bool Trie::startsWith(string prefix) {
 TrieNode* Trie::getRoot(){
     return this->root;
 }
+
+void print_arr(vector<int>& nums, int l, int r){
+    for(int i = l; i<=r; i++) cout<<nums[i]<<" ";
+    cout<<endl;
+}
