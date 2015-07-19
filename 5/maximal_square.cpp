@@ -25,6 +25,7 @@ int maximalSquare(vector<vector<char> >& matrix){
             if(matrix[i][j] == '0') arr[i][j] = 0;
             else if(i == 0 || j== 0) arr[i][j] = 1;
             else arr[i][j] = min(min(arr[i-1][j], arr[i][j-1]), arr[i-1][j-1])+1;
+//            else arr[i][j] = min(arr[i-1][j], arr[i][j-1])+1;
             res = max(res, arr[i][j]);
         }
     }
@@ -32,14 +33,14 @@ int maximalSquare(vector<vector<char> >& matrix){
 }
 
 int main(){
-    char arr0[] = "10100";    
-    char arr1[] = "10111";    
-    char arr2[] = "11111";    
-    char arr3[] = "10010";    
-    vector<char> v_arr0(arr0, arr0+5);
-    vector<char> v_arr1(arr1, arr1+5);
-    vector<char> v_arr2(arr2, arr2+5);
-    vector<char> v_arr3(arr3, arr3+5);
+    char arr0[] = "1010";    
+    char arr1[] = "1011";    
+    char arr2[] = "1011";    
+    char arr3[] = "1111";    
+    vector<char> v_arr0(arr0, arr0+4);
+    vector<char> v_arr1(arr1, arr1+4);
+    vector<char> v_arr2(arr2, arr2+4);
+    vector<char> v_arr3(arr3, arr3+4);
     vector<vector<char> > matrix;
     matrix.push_back(v_arr0);
     matrix.push_back(v_arr1);
