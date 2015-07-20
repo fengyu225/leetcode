@@ -96,6 +96,48 @@ int calculate(string s){
     return stack.empty()?0:stoi(stack.top()); 
 }
 
+//int expression(stringstream& s);
+//
+//int term(stringstream& s){
+//    char c;
+//    int left = 0;
+//    while ( ::isspace(s.peek()) )  // skip whitespaces
+//        s.ignore();
+//
+//    if ( s.peek() == '(' ){
+//        s.ignore(); // skip
+//        left = expression(s);     // calculate expression inside braces
+//    }
+//    else
+//        s >> left;                // simply return first integer if its not braced expression
+//    return left;
+//}
+//int expression(stringstream& s){
+//    int left = term(s);
+//    while (true){
+//        char c;
+//        s >> c;
+//        if (s.eof())               // eof is set after read operation (if its failed)     
+//            break;
+//        switch (c){
+//        case '+':
+//            left += term(s);
+//            break;
+//        case '-':
+//            left -= term(s);
+//            break;
+//        case ')':
+//            return left;
+//        }
+//    }
+//    return left;
+//}
+//
+//int calculate(string s){
+//    stringstream ss(s);
+//    return expression(ss);
+//}
+
 int main(){
     cout<<calculate("(1+(4+5+2)-3)+(6+8)")<<endl;
     cout<<calculate(" 21-1 + 2 ")<<endl;
