@@ -21,34 +21,8 @@ long calc(long l, string op, long r){
     if(op == "-") return l-r;
 }
 
-string readToken(string s, int& curr){
-    int sz = s.length();
-    if(curr == sz) return "";
-    string res = "";
-    while(curr<sz){
-        char c = s[curr++];
-        if(c == ' ') continue;
-        if(c == '(' || c == ')' || c == '+' || c == '-'){
-            if(res.length() == 0) return string(1,c);
-            else{
-                curr--;
-                break;
-            }
-        }
-        res += c;
-    }
-    return res;
-}
-
-bool isNum(string& s){
-    for(char c:s){
-        if(c<='9' && c>='0') continue;
-        else return false;
-    }
-    return true;
-}
-
 //int calculate(string s){
+//    //two stack
 //    int sz = s.length();
 //    if(sz == 0) return 0;
 //    stack<long> nums;
@@ -82,6 +56,7 @@ bool isNum(string& s){
 //}
 
 int calculate(string s){
+    //one stack
     int sz = s.length();
     if(sz == 0) return 0;
     stack<string> stack;
