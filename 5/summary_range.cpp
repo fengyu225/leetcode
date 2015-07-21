@@ -9,6 +9,7 @@ For example, given [0,1,2,4,5,7], return ["0->2","4->5","7"].
 vector<string> summaryRanges(vector<int>& nums){
     int sz = nums.size();
     vector<string> res;
+    if(sz == 0) return res;
     int head = 0, tail = 0;
     for(int i=1; i<sz; i++){
         if(nums[i] == nums[tail]+1) tail++;
