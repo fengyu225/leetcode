@@ -29,7 +29,6 @@ int kthSmallest(TreeNode* root, int k) {
                     break;
                 }
             }
-            if(stack.empty()) break;
         }
     }
     return res;
