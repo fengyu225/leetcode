@@ -1,44 +1,34 @@
+/*
+Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+
+According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow a node to be a descendant of itself).”
+        _______3______
+       /              \
+    ___5__          ___1__
+   /      \        /      \
+   6      _2       0       8
+         /  \
+         7   4
+For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3. Another example is LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
+*/
+
 #include "header.h"
 
-/*
- * http://www.geeksforgeeks.org/find-a-pair-with-given-sum-in-bst/
- */
-struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
-
-
-TreeNode* lca(TreeNode* root, TreeNode* a, TreeNode* b){
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q){
     if(!root) return NULL;
-    if(root == a || root == b) return root;
-    TreeNode* l = lca(root->left,a,b);
-    TreeNode* r = lca(root->right,a,b);
-    if(l && r) return root;
-    return l?l:r;
+    if(!p || !q) return p?p:q;
+    if(root == p || root==q) return root;
+    TreeNode* l_res = lowestCommonAncestor(root->left, p, q);
+    TreeNode* r_res = lowestCommonAncestor(root->right, p, q);
+    if(l_res && r_res) return root;
+    return l_res?l_res:r_res;
 }
 
-
 int main(){
-    TreeNode t0(15);
-    TreeNode t1(10);
-    TreeNode t2(20);
-    TreeNode t3(8);
-    TreeNode t4(12);
-    TreeNode t5(16);
-    TreeNode t6(25);
-    TreeNode t7(13);
-    TreeNode t8(17);
-    t0.left = &t1;
-    t0.right = &t2;
-    t1.left = &t3;
-    t1.right = &t4;
-    t2.left = &t5;
-    t2.right = &t6;
-    t4.right = &t7;
-    t5.right = &t8;
-    cout<<lca(&t0,&t3,&t7)->val<<endl;
+    TreeNode* root = create_tree("3516208##74");
+    TreeNode* res = lowestCommonAncestor(root, root->left, root->left->right->right);
+    if(!res) cout<<"NULL";
+    cout<<res->val;
+    cout<<endl;
     return 0;
 }
