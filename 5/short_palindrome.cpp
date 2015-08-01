@@ -11,29 +11,29 @@ Given "abcd", return "dcbabcd".
 
 string shortestPalindrome(string s) {
     if(s.length()<2) return s;
-    string ss = s+"#";
     string orig = s;
     reverse(s.begin(), s.end());
-    ss += s;
-    int sz = ss.length();
-    vector<int> next(sz+1, -1);
-    int k=-1, j=0;
+    string ss = orig+"#"+s;
+    vector<int> next(ss.length()+1, -1);
+    int k = -1, curr = 0;
     next[0] = -1;
-    // calc next array in kmp
-    while(j<sz){
-        if(k == -1 || ss[j] == ss[k]){
+    while(curr<ss.length()){
+        if(k == -1 || ss[curr]==ss[k]){
             k++;
-            j++;
-            next[j] = k;
-        } 
+            curr++;
+            next[curr] = k;
+        }
         else k = next[k];
     }
-    string x = ss.substr(next[sz], orig.length()-next[sz]);
-    reverse(x.begin(), x.end());
-    return x+orig;
+    int l = next[ss.length()];
+    if(l == orig.length()) return orig;
+    string pre = orig.substr(l, orig.length()-l);
+    reverse(pre.begin(), pre.end());
+    return pre+orig;
 }
 
 int main(){
-    cout<<shortestPalindrome("abbacd")<<endl;
+    //cout<<shortestPalindrome("abbacd")<<endl;
+    cout<<shortestPalindrome("abb")<<endl;
     return 0;
 }
