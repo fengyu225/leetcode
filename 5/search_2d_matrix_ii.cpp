@@ -20,29 +20,44 @@ Given target = 20, return false.
 
 #include "header.h"
 
-bool search(vector<vector<int> >& matrix, int target, int r_start, int r_end, int c_start, int c_end){
-    if(r_start>r_end || c_start>c_end) return false;
-    int r_m = (r_start+r_end)/2;
-    int c_m = (c_start+c_end)/2;
-    if(matrix[r_m][c_m] == target) return true;
-    else if(matrix[r_m][c_m]<target)
-        return 
-            search(matrix, target, r_m+1, r_end, c_m+1, c_end) ||
-            search(matrix, target, r_start, r_m, c_m+1, c_end) ||
-            search(matrix, target, r_m+1, r_end, c_start, c_m);
-    else
-        return
-            search(matrix, target, r_start, r_m-1, c_start, c_m-1) ||
-            search(matrix, target, r_start, r_m-1, c_m, c_end) ||
-            search(matrix, target, r_m, r_end, c_start, c_m-1);
-}
+// quad search
+//bool search(vector<vector<int> >& matrix, int target, int r_start, int r_end, int c_start, int c_end){
+//    if(r_start>r_end || c_start>c_end) return false;
+//    int r_m = (r_start+r_end)/2;
+//    int c_m = (c_start+c_end)/2;
+//    if(matrix[r_m][c_m] == target) return true;
+//    else if(matrix[r_m][c_m]<target)
+//        return 
+//            search(matrix, target, r_m+1, r_end, c_m+1, c_end) ||
+//            search(matrix, target, r_start, r_m, c_m+1, c_end) ||
+//            search(matrix, target, r_m+1, r_end, c_start, c_m);
+//    else
+//        return
+//            search(matrix, target, r_start, r_m-1, c_start, c_m-1) ||
+//            search(matrix, target, r_start, r_m-1, c_m, c_end) ||
+//            search(matrix, target, r_m, r_end, c_start, c_m-1);
+//}
+//
+//bool searchMatrix(vector<vector<int> >& matrix, int target) {
+//    int r = matrix.size();
+//    if(r == 0) return false;
+//    int c = matrix[0].size();
+//    if(c == 0) return false;
+//    return search(matrix, target, 0, r-1, 0, c-1);
+//}
 
 bool searchMatrix(vector<vector<int> >& matrix, int target) {
     int r = matrix.size();
     if(r == 0) return false;
     int c = matrix[0].size();
     if(c == 0) return false;
-    return search(matrix, target, 0, r-1, 0, c-1);
+    int curr_r = 0, curr_c = c-1;
+    while(curr_r<r && curr_r>=0 && curr_c<c && curr_c >= 0){
+        if(matrix[curr_r][curr_c] == target) return true;
+        else if(matrix[curr_r][curr_c]<target) curr_r++;
+        else curr_c--;
+    }
+    return false;
 }
 
 int main(){
