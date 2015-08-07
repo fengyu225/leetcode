@@ -29,8 +29,10 @@ bool isOneEditDistance(string s, string t){
 }
 
 int main(){
-    cout<<isOneEditDistance("a", "ac")<<endl;
-    //cout<<isOneEditDistance("abcd", "abe")<<endl;
-    //cout<<isOneEditDistance("abcd", "abed")<<endl;
+    cout<<isOneEditDistance("", "")<<endl;
+    cout<<isOneEditDistance("a", "")<<endl;
+    cout<<isOneEditDistance("abc", "ab")<<endl;
+    cout<<isOneEditDistance("abcd", "abe")<<endl;
+    cout<<isOneEditDistance("abcd", "abed")<<endl;
     return 0;
 }
