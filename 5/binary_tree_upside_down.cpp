@@ -13,30 +13,29 @@ return the root of the binary tree [4,5,2,#,#,3,1].
  5   2
     / \
    3   1  
+
 */
 
 #include "header.h"
 
-void upsideDown(TreeNode* root, TreeNode*& new_root, TreeNode*& tail){
-    if(!root || !root->left){
-        new_root = root;
-        tail = root;
+void search(TreeNode* root, TreeNode*& new_root, TreeNode*& curr){
+    if(!root->left){
+        curr = new_root = root;
+        curr->left = curr->right = NULL;
         return;
     }
-    TreeNode* l_new_root = NULL, *l_tail = NULL;
-    upsideDown(root->left, l_new_root, l_tail);
-    TreeNode* temp = root->right;
-    root->left = root->right = NULL;
-    l_tail->left = temp;
-    l_tail->right = root;
-    new_root = l_new_root;
-    tail = root;
+    TreeNode* temp = NULL;
+    search(root->left, new_root, temp);
+    temp->left = root->right;
+    temp->right= root;
+    curr = root;
+    curr->left = curr->right = NULL;
 }
 
-TreeNode* upsideDownBinaryTree(TreeNode* root){
-    if(!root || !root->left) return root;
-    TreeNode* new_root = NULL, *tail=NULL;
-    upsideDown(root, new_root, tail);
+TreeNode* upsideDownBinaryTree(TreeNode* root) {
+    if(!root) return NULL;
+    TreeNode* new_root = NULL, *curr = NULL;
+    search(root, new_root, curr);
     return new_root;
 }
 
