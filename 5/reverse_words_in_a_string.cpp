@@ -22,46 +22,44 @@ Reduce them to a single space in the reversed string.
 #include "header.h"
 
 void reverse(string& s, int l, int r){
-    while(l<r){
+    for(;l<r;l++,r--){
         char c = s[l];
         s[l] = s[r];
         s[r] = c;
-        l++;
-        r--;
     }
 }
 
 void reverseWords(string& s) {
     int sz = s.length();
     if(sz==0 ) return;
-    reverse(s,0,sz-1);
-    int l=0, r=1;
-    while(r<sz){
-        if(s[r] == ' '){
-            if(s[l] == ' ') r++;
+    int start = 0, end = 0, curr = 1;
+    reverse(s, 0, sz-1);
+    while(curr<sz){
+        if(s[end] == ' '){
+            if(s[curr] == ' ') curr++;
             else{
-                reverse(s,l,r-1);
-                l = r;
-                r++;
+                s[++end] = s[curr++];
+                start = end;
             }
         }
         else{
-            if(s[l] == ' ') l=r;
-            r++;
+            if(s[curr] == ' '){
+                reverse(s, start, end);
+                s[++end] = s[curr++];
+                start = end;
+            }
+            else s[++end] = s[curr++];
         }
     }
-    int curr=-1;
-    l = 0;
-    while(l<sz && s[l]==' ') l++;
-    if(l != 0)
-        while(l<sz) s[++curr]=s[l++];
-    r=curr==-1?sz-1:curr;
-    while(r>=0 && s[r]==' ') r--;
-    s=s.substr(0,r+1);
+    if(s[end] != ' ') reverse(s, start, end);
+    start = s[0] == ' '?1:0;
+    end = s[end] == ' ' && end>0?end-1:end;
+    s=s.substr(start, end-start+1);
 }
 
 int main(){
-    string s = "        hello         ,           world           ";
+    //string s = "        hello         ,           world           ";
+    string s = "        ";
     reverseWords(s);
     cout<<"|"<<s<<"|"<<endl;
     return 0;
