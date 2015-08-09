@@ -24,24 +24,22 @@ int read4(char *buf){
 
 int read(char *buf, int n) {
     if(n == 0) return 0;
-    int c_cnt = 0;
+    int c_cnt = 0, last = 0;
     while(1){
         int temp = read4(buf);
-        if(n-c_cnt<temp){
-            *(buf+n-c_cnt) = '\0';
-            return n;
-        }
-        if(temp<4){
-            *(buf+temp) = '\0';
-            return c_cnt+temp;
+        if(n-c_cnt<temp || temp<4){
+            last = n-c_cnt<temp?n-c_cnt:temp;
+            break;
         }
         buf += 4;
         c_cnt += 4;
     }
+    *(buf+last) = '\0';
+    return c_cnt+last;
 }
 
 int main(){
-    int n = INT_MAX;
+    int n = 5;
     char buf[n];
     int res = read(buf, n);  
     cout<<buf<<endl;
