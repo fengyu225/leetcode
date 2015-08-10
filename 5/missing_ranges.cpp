@@ -6,7 +6,7 @@ For example, given [0, 1, 3, 50, 75], lower = 0 and upper = 99, return ["2", "4-
 
 #include "header.h"
 
-void push(vector<string>& res, int lower, int upper){
+void push(vector<string>& res, long lower, long upper){
     if(lower>upper) return;
     if(lower == upper) res.push_back(to_string(lower));
     else res.push_back(to_string(lower)+"->"+to_string(upper));
@@ -28,15 +28,16 @@ vector<string> findMissingRanges(vector<int>& nums, int lower, int upper){
             start = end = nums[i];
         }
     }
-    push(res, end+1, upper);
+    push(res, (long)end+1, (long)upper);
     return res;
 }
 
 int main(){
-    int arr[] = {0, 1, 3, 50, 75};
+    //int arr[] = {0, 1, 3, 50, 75};
+    int arr[] = {INT_MAX};
     //int arr[] = {-1};
     vector<int> v_arr(arr, arr+sizeof(arr)/sizeof(arr[0]));
-    vector<string> res = findMissingRanges(v_arr, 0, 99);
+    vector<string> res = findMissingRanges(v_arr, 0, INT_MAX);
     //vector<string> res = findMissingRanges(v_arr, -2, -1);
     for(int i=0; i<res.size(); i++) cout<<res[i]<<" ";
     cout<<endl;
