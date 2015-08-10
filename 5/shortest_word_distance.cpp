@@ -14,19 +14,32 @@ You may assume that word1 does not equal to word2, and word1 and word2 are both 
 #include "header.h"
 
 int shortestDistance(vector<string>& words, string word1, string word2){
+    // one-pass solution
     int sz = words.size();
-    unordered_map<string, vector<int> > map;
+    int idx1 = -1, idx2 = -1, res = INT_MAX;
+    bool check = false;
     for(int i=0; i<sz; i++){
-        if(map.find(words[i]) == map.end()) map[words[i]] = vector<int>();
-        map[words[i]].push_back(i);
-    }
-    int res = INT_MAX;
-    for(int i=0; i<map[word1].size(); i++){
-        for(int j=0; j<map[word2].size(); j++)
-            res = min(res, abs(map[word1][i] - map[word2][j]));
+        if(words[i] == word1) {idx1 = i;check=true;}
+        if(words[i] == word2) {idx2 = i;check=true;}
+        if(check && idx1>-1 && idx2>-1) {res = min(res, abs(idx1-idx2)); check=false;}
     }
     return res;
 }
+
+//int shortestDistance(vector<string>& words, string word1, string word2){
+//    int sz = words.size();
+//    unordered_map<string, vector<int> > map;
+//    for(int i=0; i<sz; i++){
+//        if(map.find(words[i]) == map.end()) map[words[i]] = vector<int>();
+//        map[words[i]].push_back(i);
+//    }
+//    int res = INT_MAX;
+//    for(int i=0; i<map[word1].size(); i++){
+//        for(int j=0; j<map[word2].size(); j++)
+//            res = min(res, abs(map[word1][i] - map[word2][j]));
+//    }
+//    return res;
+//}
 
 int main(){
     //["a","c","b","b","a"], "a", "b"
