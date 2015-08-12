@@ -42,7 +42,8 @@ vector<string> findStrobogrammatic(int n) {
 }
 
 int main(){
-    vector<string> res = findStrobogrammatic(4);
+    vector<string> res = findStrobogrammatic(3);
+    sort(res.begin(), res.end());
     for(auto s:res) cout<<s<<" ";
     cout<<endl;
     return 0;
