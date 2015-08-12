@@ -67,7 +67,6 @@ int compare(string s, string t){
     if(s.length()<t.length()) return -1*compare(t, s);
     if(s.length() == t.length()) return s.compare(t);
     for(int i=0; i<s.length()-t.length(); i++) t="0"+t;
-    //cout<<s<<" "<<t<<";;;;;;;"<<endl;
     return s.compare(t);
 }
 
@@ -83,15 +82,10 @@ int strobogrammaticInRange(string low, string high) {
         res += countStrobogrammatic(i);
     }
     for(auto s:l){
-        //cout<<s<<" "<<low<<" "<<high<<endl;
-        //cout<<compare(s,low)<<endl;
-        //cout<<compare(s,high)<<endl;
         if(compare(s, low)>=0 && compare(s,high)<=0) res++;
     }
-    //cout<<endl;
     if(l_sz == h_sz) return res;
     for(auto s:h){
-        //cout<<s<<" "<<low<<" "<<high<<endl;
         if(compare(s, low)>=0 && compare(s,high)<=0) res++;
     }
     return res;
