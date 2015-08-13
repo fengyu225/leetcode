@@ -21,14 +21,18 @@ public:
         row = vec2d.size();
         curr_c = -1;
         this->vec2d = vec2d;
+        next_r = next_c = 0;
     }
 
     int next() {
+        curr_r = next_r;
+        curr_c = next_c;
         return this->vec2d[curr_r][curr_c];
     }
 
     bool hasNext() {
         if(row == 0) return false;
+        int old_r = curr_r, old_c = curr_c;
         curr_c++;
         if(curr_c == vec2d[curr_r].size()){
             do{
@@ -37,12 +41,18 @@ public:
             }while(curr_r<row && vec2d[curr_r].size() == 0);
             if(curr_r == row) return false;
         }
+        next_c = curr_c;
+        next_r = curr_r;
+        curr_c = old_c;
+        curr_r = old_r;
         return true;
     }
 private:
     int row;
     int curr_r;
     int curr_c;
+    int next_r;
+    int next_c;
     vector<vector<int> > vec2d;
 };
 
