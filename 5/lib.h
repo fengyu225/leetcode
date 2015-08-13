@@ -85,3 +85,10 @@ private:
 };
 
 void print_arr(vector<int>& nums, int l, int r);
+
+struct Interval {
+    int start;
+    int end;
+    Interval() : start(0), end(0) {}
+    Interval(int s, int e) : start(s), end(e) {}
+};
