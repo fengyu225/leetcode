@@ -35,13 +35,36 @@ output:
 
 #include "header.h"
 
+void search(int n, int curr, int curr_res, vector<int>& temp, vector<vector<int> >& res){
+    if(curr_res>n) return;
+    if(curr_res == n){
+        res.push_back(temp);
+        return;
+    }
+    for(int i=curr; i<n; i++){
+        temp.push_back(i);
+        search(n, i, curr_res*i, temp, res);
+        temp.pop_back();
+    }
+}
+
 vector<vector<int> > getFactors(int n){
-    
+    vector<vector<int> > res;
+    if(n == 1) return res;
+    vector<int> temp;
+    for(int i=2; i<n; i++){
+        temp.push_back(i);
+        search(n, i, i, temp, res);
+        temp.pop_back();
+    }
+    return res;
 }
 
 int main(){
     vector<vector<int> > res = getFactors(32);
-    for(int i=0; i<res.size(); i++) cout<<res[i]<<" ";
-    cout<<endl;
+    for(int i=0; i<res.size(); i++){
+        for(int j=0; j<res[i].size(); j++) cout<<res[i][j]<<" ";
+        cout<<endl;
+    }
     return 0;
 }
