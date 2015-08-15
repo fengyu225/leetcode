@@ -35,33 +35,59 @@ output:
 
 #include "header.h"
 
-void search(int n, int curr, int curr_res, vector<int>& temp, vector<vector<int> >& res){
-    if(curr_res>n) return;
-    if(curr_res == n){
-        res.push_back(temp);
-        return;
+//void search(int n, int curr, int curr_res, vector<int>& temp, vector<vector<int> >& res){
+//    if(curr_res>n || n%curr_res != 0) return;
+//    if(curr_res == n){
+//        res.push_back(temp);
+//        return;
+//    }
+//    for(int i=curr; i<n; i++){
+//        if((n/curr_res)%i != 0) continue;
+//        temp.push_back(i);
+//        search(n, i, curr_res*i, temp, res);
+//        temp.pop_back();
+//    }
+//}
+//
+//vector<vector<int> > getFactors(int n){
+//    vector<vector<int> > res;
+//    if(n == 1) return res;
+//    vector<int> temp;
+//    for(int i=2; i<sqrt(n); i++){
+//        if(n%i != 0) continue;
+//        temp.push_back(i);
+//        search(n, i, i, temp, res);
+//        temp.pop_back();
+//    }
+//    return res;
+//}
+
+void search(int n, vector<int>& temp, vector<vector<int> >& res){
+    int x = temp.empty()?2:temp.back();
+    while(x<=n/x){
+        if(n%x == 0){
+            temp.push_back(x);
+            temp.push_back(n/x);
+            res.push_back(temp);
+            temp.pop_back();
+            search(n/x, temp, res);
+            temp.pop_back();
+        }
+        x++;
     }
-    for(int i=curr; i<n; i++){
-        temp.push_back(i);
-        search(n, i, curr_res*i, temp, res);
-        temp.pop_back();
-    }
-}
+} 
 
 vector<vector<int> > getFactors(int n){
     vector<vector<int> > res;
     if(n == 1) return res;
     vector<int> temp;
-    for(int i=2; i<n; i++){
-        temp.push_back(i);
-        search(n, i, i, temp, res);
-        temp.pop_back();
-    }
+    search(n, temp, res);
     return res;
 }
 
 int main(){
-    vector<vector<int> > res = getFactors(32);
+    //vector<vector<int> > res = getFactors(23848713);
+    vector<vector<int> > res = getFactors(12);
     for(int i=0; i<res.size(); i++){
         for(int j=0; j<res[i].size(); j++) cout<<res[i][j]<<" ";
         cout<<endl;
