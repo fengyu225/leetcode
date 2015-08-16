@@ -17,9 +17,7 @@ int minCost(vector<vector<int> >& costs){
         for(int j=0; j<3; j++){
             if(i == 0) arr[i][j] = costs[i][j];
             else{
-//                cout<<i<<" "<<j<<" "<<arr[i-1][(j+1)%3]<<" "<<arr[i-1][(j+2)%3]<<endl;
                 arr[i][j] = min(arr[i-1][(j+1)%3], arr[i-1][(j+2)%3])+costs[i][j]; 
-//                cout<<i<<" "<<j<<" "<<arr[i][j]<<endl;
             }
         }
     }
