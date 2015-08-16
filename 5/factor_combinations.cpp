@@ -87,7 +87,7 @@ vector<vector<int> > getFactors(int n){
 
 int main(){
     //vector<vector<int> > res = getFactors(23848713);
-    vector<vector<int> > res = getFactors(12);
+    vector<vector<int> > res = getFactors(36);
     for(int i=0; i<res.size(); i++){
         for(int j=0; j<res[i].size(); j++) cout<<res[i][j]<<" ";
         cout<<endl;
