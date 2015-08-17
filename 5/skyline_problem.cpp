@@ -29,9 +29,11 @@ class cmp{
 
 vector<pair<int, int> > getSkyline(vector<vector<int> >& buildings){
     vector<pair<int, int> > res;
-    priority_queue<pair<int,int>, vector<pair<int,int> >, cmp> q; 
-    for(auto b:buildings){
-        
+    priority_queue<pair<int,int>, vector<pair<int,int> >, cmp> bound_q; 
+    priority_queue<pair<int,int>, vector<pair<int,int> >, cmp> height_q; 
+    int last_h = 0;
+    int sz = buildings.size();
+    for(int i=0; i<sz; i++){
     }
     return res;
 }
