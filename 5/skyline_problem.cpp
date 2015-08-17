@@ -20,11 +20,33 @@ There must be no consecutive horizontal lines of equal height in the output skyl
 
 #include "header.h"
 
-vector<pair<int, int> > getSkyline(vector<vector<int> >& buildings){
+class cmp{
+    public:
+        bool operator() (pair<int,int> l, pair<int,int> r){
+            return r.second<l.second;
+        }
+};
 
+vector<pair<int, int> > getSkyline(vector<vector<int> >& buildings){
+    vector<pair<int, int> > res;
+    priority_queue<pair<int,int>, vector<pair<int,int> >, cmp> q; 
+    for(auto b:buildings){
+        
+    }
+    return res;
 }
 
 int main(){
-
+    vector<vector<int> > buildings = {
+        {2, 9, 10},
+        {3, 7, 15},
+        {5, 12, 12},
+        {15, 20, 10},
+        {19, 24, 8}
+    };
+    vector<pair<int,int> > res = getSkyline(buildings);
+    for(int i=0; i<res.size(); i++)
+        cout<<res[i].first<<" "<<res[i].second<<", ";
+    cout<<endl;
     return 0; 
 }
