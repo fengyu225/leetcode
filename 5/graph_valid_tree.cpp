@@ -11,10 +11,29 @@ Note: you can assume that no duplicate edges will appear in edges. Since all edg
 
 #include "header.h"
 
+void search(unordered_map<int,vector<int> >& m, unordered_map<int,bool>& visited, int curr, int& c){
+    if(visited[curr] || m.find(curr) == m.end() || m[curr].size() == 0) return;
+    c--;
+    visited[curr] = true;
+    for(int n:m[curr]) search(m, visited, n, c); 
+}
+
 bool validTree(int n, vector<pair<int, int> >& edges) {
     int sz = edges.size();
     if(sz != n-1) return false;
-      
+    if(sz == 0 && n == 1) return true;
+    unordered_map<int,vector<int> > m;
+    for(auto e:edges){
+        if(m.find(e.first) == m.end()) m[e.first] = vector<int>();
+        m[e.first].push_back(e.second);
+        if(m.find(e.second) == m.end()) m[e.second] = vector<int>();
+        m[e.second].push_back(e.first);
+    }
+    unordered_map<int,bool> visited;
+    for(int i=0; i<n; i++) visited[i]=false;
+    int c = n;
+    search(m, visited, 0, c);
+    return c == 0;
 }
 
 int main(){
