@@ -41,7 +41,24 @@ Note that 1 is typically treated as an ugly number.
 //}
 
 int nthUglyNumber(int n) {
-
+    //faster and less space
+    deque<int> q;
+    int i_2 = 0, i_3 = 0, i_5 = 0;
+    q.push_back(1);
+    int curr = 2;
+    while(curr<=n){
+        int temp = min(q[i_2]*2, min(q[i_3]*3, q[i_5]*5));
+        q.push_back(temp);
+        if(q[i_2]*2 == temp) i_2++;
+        if(q[i_3]*3 == temp) i_3++;
+        if(q[i_5]*5 == temp){
+            q.pop_front();
+            i_2--;
+            i_3--;
+        }
+        curr++;
+    }
+    return q.back();
 }
 
 int main(){
