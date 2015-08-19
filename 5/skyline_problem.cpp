@@ -20,68 +20,33 @@ There must be no consecutive horizontal lines of equal height in the output skyl
 
 #include "header.h"
 
-class q_cmp{
-    public:
-        bool operator() (pair<int,int> l, pair<int,int> r){
-            return l.second<r.second;
-        }
-};
-
 class cmp{
     public:
         bool operator() (pair<int,int> l, pair<int,int> r){
-            return abs(l.second)<abs(r.second);
+            if(l.first<r.first) return true;
+            else if(l.first>r.first) return false;
+            else if(l.second*r.second<0) return l.second>0;
+            else return l.second>r.second;
         }
 };
 
 vector<pair<int, int> > getSkyline(vector<vector<int> >& buildings){
     vector<pair<int, int> > res;
-    priority_queue<pair<int,int>, vector<pair<int,int> >, q_cmp> height_q; 
     vector<pair<int,int> > points;
-    for(int i=0; i<buildings.size(); i++){
-        if(buildings.size()>=2 && i<buildings.size()-1 && buildings[i][0] == buildings[i+1][0] && buildings[i][1] == buildings[i+1][1]){
-            buildings[i+1][2] = max(buildings[i][2], buildings[i+1][2]);
-            buildings.erase(buildings.begin()+i);
-            i--;
-        }
-    }
-    int sz = buildings.size();
-    for(int i=0; i<sz; i++){
-        points.push_back(make_pair(i, buildings[i][0]));
-        points.push_back(make_pair(i, -1*buildings[i][1]));
+    for(auto b:buildings){
+        points.push_back(make_pair(b[0], b[2]));
+        points.push_back(make_pair(b[1], -1*b[2]));
     }
     sort(points.begin(), points.end(), cmp());
-    for(int i=0; i<points.size(); i++){
-        int h;
-        if(points[i].second>=0){
-            h = buildings[points[i].first][2];
-            height_q.push(make_pair(points[i].first, h)); 
-            while(!height_q.empty() && buildings[height_q.top().first][1]<points[i].second)
-                height_q.pop();
-            h = height_q.top().second;
-            if(res.empty() || res.back().second<h) res.push_back(make_pair(points[i].second, h));
-        }
-        else{
-            while(!height_q.empty() && buildings[height_q.top().first][1]<-1*points[i].second)
-                height_q.pop();
-            if(!height_q.empty() && height_q.top().first == points[i].first){
-                height_q.pop();
-                while(!height_q.empty() && buildings[height_q.top().first][1]<-1*points[i].second)
-                    height_q.pop();
-                if(height_q.empty()){
-                    res.push_back(make_pair(-1*points[i].second, 0));
-                }
-                else{
-                    if(res.empty() || res.back().second>height_q.top().second)
-                        res.push_back(make_pair(-1*points[i].second, height_q.top().second));
-                }
-            } 
-        }
-    }
-    for(int i=0; i<res.size(); i++){
-        if(i-2>=0 && res[i].first == res[i-1].first && res[i].second == res[i-2].second){
-            res.erase(res.begin()+(i-1), res.begin()+i+1);
-            i-=2;
+    multiset<int> q;
+    int last_h = 0;
+    for(auto p:points){
+        if(p.second>0) q.insert(p.second);
+        else q.erase(q.find(-1*p.second));
+        if(q.empty() || *q.rbegin() != last_h){
+            int new_h = q.empty()?0:*q.rbegin();
+            res.push_back(make_pair(p.first, new_h));
+            last_h = new_h;
         }
     }
     return res;
@@ -104,6 +69,15 @@ int main(){
         {9, 10, 5}
     };
 
+//    vector<vector<int> > buildings = {
+//        {2, 4, 7},
+//        {2, 4, 5},
+//        {2, 4, 6}
+//    };
+//    vector<vector<int> > buildings = {
+//        {0, 3, 5},
+//        {3, 10, 5}
+//    };
     vector<pair<int,int> > res = getSkyline(buildings);
     for(int i=0; i<res.size(); i++)
         cout<<res[i].first<<" "<<res[i].second<<", ";
