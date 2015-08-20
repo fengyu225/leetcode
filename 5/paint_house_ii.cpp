@@ -26,21 +26,11 @@ int minCostII(vector<vector<int> >& costs){
         } 
         min_arr.first = min_arr.second = -1;
         for(int j=0; j<k; j++){
-            if(min_arr.first==-1) min_arr.first = j;
-            else if(min_arr.second == -1){
-                if(arr[i][j]<arr[i][min_arr.first]){
-                    min_arr.second = min_arr.first;
-                    min_arr.first = j;
-                }
-                else min_arr.second = j;
+            if(min_arr.first == -1 || arr[i][j]<arr[i][min_arr.first]){
+                min_arr.second = min_arr.first;
+                min_arr.first = j;
             }
-            else{
-                if(arr[i][j]<arr[i][min_arr.first]){
-                    min_arr.second = min_arr.first;
-                    min_arr.first = j;
-                }
-                else if(arr[i][j]<arr[i][min_arr.second]) min_arr.second = j;
-            }
+            else if(min_arr.second == -1 || arr[i][j]<arr[i][min_arr.second]) min_arr.second = j;
         }
     }
     return arr[n-1][min_arr.first]; 
@@ -73,7 +63,6 @@ int minCostII(vector<vector<int> >& costs){
 //}
 
 int main(){
-
     vector<vector<int> > costs = {
         {3,14,12,2,20,16,12,2},
         {9,6,9,8,2,9,20,18},
