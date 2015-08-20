@@ -22,6 +22,13 @@ class TreeNode {
         TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+class MultiTreeNode {
+    public:
+        char c;
+        vector<MultiTreeNode*> children;
+        MultiTreeNode(char x) : c(x), children(vector<MultiTreeNode*>()) {}
+};
+
 TreeNode* create_tree(std::string v);
 TreeNode* create_tree(std::vector<std::string> v);
 
