@@ -13,6 +13,7 @@ Could you solve it in O(nk) runtime?
 #include "header.h"
 
 int minCostII(vector<vector<int> >& costs){
+    //O(n*k*lg(k))
     int n = costs.size();
     if(n == 0) return 0;
     int k = costs[0].size();
