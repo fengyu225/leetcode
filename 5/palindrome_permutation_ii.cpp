@@ -69,8 +69,8 @@ vector<string> generatePalindromes(string s) {
 int main(){
     //vector<string> res = generatePalindromes("aabb");
     //vector<string> res = generatePalindromes("abc");
-    vector<string> res = generatePalindromes("aaaaaa");
-    for(string s:res) cout<<s<<" ";
-    cout<<endl;
+    print_vector<string>(generatePalindromes("aaaaaa"));
+    print_vector<string>(generatePalindromes("aabb"));
+    print_vector<string>(generatePalindromes("abd"));
     return 0;
 }

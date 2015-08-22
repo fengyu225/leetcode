@@ -2,6 +2,7 @@
 #include <string> 
 #include <vector>
 #include <unordered_map>
+#include <iostream>
 
 using namespace std;
 
@@ -64,6 +65,14 @@ void print_random_list(RandomListNode* root);
 ListNode* create_list(int arr[], int n, int s);
 
 void print_list(ListNode*);
+
+template<typename T>
+void print_vector(vector<T> v){
+    for(int i=0; i<v.size(); i++) cout<<v[i]<<" ";
+    cout<<endl;
+}
+
+
 
 class TrieNode {
 public:
