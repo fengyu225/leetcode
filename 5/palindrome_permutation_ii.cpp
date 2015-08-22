@@ -24,9 +24,9 @@ bool check(string& even, int curr, int i){
 void search(string& even, int curr, char& odd_char, vector<string>& res){
     if(curr == even.length()){
         string temp = even;
-        reverse(even.begin(), even.end());
-        if(odd_char != ' ') res.push_back(temp+odd_char+even);
-        else res.push_back(temp+even);
+        reverse(temp.begin(), temp.end());
+        if(odd_char != ' ') res.push_back(even+odd_char+temp);
+        else res.push_back(even+temp);
         return;
     }
     for(int i=curr; i<even.length(); i++){
@@ -51,16 +51,25 @@ vector<string> generatePalindromes(string s) {
             odd_count++;
             odd_char = i.first;
         }
-        else even+=i.first;
+        else{
+            int c = i.second/2;
+            for(int j=0; j<c; j++) even+=i.first;
+        }
     }
     if(odd_count>=2) return res;
+    if(m[odd_char] != 1){
+        int c = m[odd_char]/2;
+        for(int i=0; i<c; i++) even+=odd_char;
+    }
     sort(even.begin(), even.end());
     search(even, 0, odd_char, res);
     return res;
 }
 
 int main(){
-    vector<string> res = generatePalindromes("aabb");
+    //vector<string> res = generatePalindromes("aabb");
+    //vector<string> res = generatePalindromes("abc");
+    vector<string> res = generatePalindromes("aaaaaa");
     for(string s:res) cout<<s<<" ";
     cout<<endl;
     return 0;
