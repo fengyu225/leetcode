@@ -27,13 +27,12 @@ string simplifyPath(string path) {
         }
         curr++;
     }
-    if(s.empty()) return "/";
     while(!s.empty()){
         string temp = s.top();
         res += "/"+temp+res;
         s.pop();
     }
-    return res;
+    return res.empty()?"/":res;
 }
 
 int main(){
