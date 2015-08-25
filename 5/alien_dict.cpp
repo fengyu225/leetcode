@@ -30,14 +30,15 @@ void calc_order(string& curr, string& next, vector<string>& m){
     }
 }
 
-bool topo_sort(vector<string>& m, int curr, string& res, vector<bool>& visited){
-    if(visited[curr]) return false;
-    visited[curr] = true;
+bool topo_sort(vector<string>& m, int curr, string& res, vector<int>& visited){
+    visited[curr] = 1;
     for(char c:m[curr]){
-        //cout<<(char)(curr+'a')<<c<<endl;
+        if(visited[c-'a'] == 1) return false;
+        if(visited[c-'a'] == 2) continue;
         bool temp = topo_sort(m, c-'a', res, visited);
         if(!temp) return false;
     }
+    visited[curr] = 2;
     res += (char)(curr+'a');
     return true;
 }
@@ -46,31 +47,29 @@ string alienOrder(vector<string>& words) {
     vector<string> m(26, "");
     vector<bool> occur(26, false);
     int sz = words.size();
-    if(sz == 1) return "";
     for(int i=0; i<sz-1; i++) calc_order(words[i], words[i+1], m);
-    for(int i=0; i<sz; i++)
+    for(int i=0; i<sz; i++) 
         for(char c:words[i]) occur[c-'a'] = true;
     string res = "";
-    vector<bool> visited(26, false);
-    bool correct = true;
+    vector<int> visited(26, 0);
     for(int i=0; i<26; i++){
-        if(m[i].length() != 0 && !visited[i]) correct &= topo_sort(m, i, res, visited);
+        if(occur[i] && visited[i] == 0){
+            bool correct = topo_sort(m, i, res, visited);
+            if(!correct) return "";
+        }
     }
-    if(!correct) return "";
     reverse(res.begin(), res.end());
-    for(int i=0; i<26; i++)
-        if(!visited[i] && occur[i]) res += (char)(i+'a');
     return res;
 }
 
 int main(){
-    vector<string> words = {
-        "wrt",
-        "wrf",
-        "er",
-        "ett",
-        "rftt"
-    };    
+//    vector<string> words = {
+//        "wrt",
+//        "wrf",
+//        "er",
+//        "ett",
+//        "rftt"
+//    };    
 //    vector<string> words = {
 //        "z",
 //        "z"
@@ -81,6 +80,9 @@ int main(){
 //        "b",
 //        "a"
 //    };
+    vector<string> words = {
+        "wnlb"
+    };
     cout<<alienOrder(words)<<endl;
     return 0;
 }
