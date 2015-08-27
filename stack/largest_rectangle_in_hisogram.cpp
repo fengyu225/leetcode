@@ -24,6 +24,7 @@ void calc_right(vector<int>& height, vector<int>& right){
         }
         curr++;
     }
+    height.pop_back();
 }
     
 int largestRectangleArea(vector<int>& height) {
@@ -35,9 +36,9 @@ int largestRectangleArea(vector<int>& height) {
     calc_right(height, left);
     reverse(left.begin(), left.end());
     reverse(height.begin(), height.end());
-    for(int i=0; i<sz; i++) cout<<left[i]<<" ";
-    cout<<endl;
-    return 0;
+    int res = 0;
+    for(int i=0; i<sz; i++) res = max(res, left[i]+right[i]-height[i]);
+    return res;
 }
 
 int main(){
