@@ -37,8 +37,10 @@ Do not rely on any library method such as eval or serialize methods. You should 
 
 class Codec {
 public:
-
     // Encodes a list of strings to a single string.
+    // idea is change ["a2", "a|a3", "ccc4"] to "5,2,4,4a2a|a3ccc4"
+    // 2,4,4 are string len
+    // 5 is length of string "2,4,4"
     string encode(vector<string>& strs) {
         string res = "";
         string temp = "";
