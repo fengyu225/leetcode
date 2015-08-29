@@ -18,7 +18,20 @@ Note: Recursive solution is trivial, could you do it iteratively?
 vector<int> preorderTraversal(TreeNode* root) {
     vector<int> res;
     if(!root) return res;
-    
+    stack<TreeNode*> st;
+    TreeNode* curr = root;
+    while(1){
+        res.push_back(curr->val);
+        st.push(curr);
+        if(curr->left) curr = curr->left;
+        else{
+            while(!st.empty() && st.top()->right == NULL) st.pop();
+            if(st.empty()) break;
+            curr = st.top()->right;
+            st.pop();
+        }
+    }
+    return res;
 }
 
 int main(){

@@ -81,8 +81,9 @@ public:
 
 int main(){
     Codec codec;
-    vector<string> strs = {"a2", "a|a3", "ccc4"};
+    vector<string> strs = {"a2", "", "ccc4"};
     vector<string> res = codec.decode(codec.encode(strs));
+    cout<<res.size()<<endl;
     for(string s:res) cout<<s<<" ";
     cout<<endl;
     return 0;
