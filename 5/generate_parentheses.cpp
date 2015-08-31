@@ -8,30 +8,7 @@ For example, given n = 3, a solution set is:
 
 #include "header.h"
 
-void gen(int left_count, int close_count, string& s, vector<string>& res, int n){
-    if(close_count == n){
-        res.push_back(s);
-        return;
-    }
-    if(left_count+close_count<n){
-        s+='(';
-        gen(left_count+1, close_count, s, res, n);
-        s.pop_back();
-    }        
-    if(left_count>0){
-        s+=')';
-        gen(left_count-1, close_count+1, s, res, n);
-        s.pop_back();
-    }
-}
-
 vector<string> generateParenthesis(int n) {
-    vector<string> res;
-    if(n == 0) return res;
-    int left_count = 0;
-    string s = "";
-    gen(left_count, 0, s, res, n);
-    return res;
 }
 
 int main(){
