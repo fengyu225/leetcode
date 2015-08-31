@@ -18,18 +18,12 @@ Answer: 3
 
 #include "header.h"
 
-struct pos{
-    int x;
-    int y;
-    pos(int x,int y):x(x),y(y){}
-};
-
-void dfs(vector<vector<char> >& grid, int i, int j){
-    queue<pos*> q;
-    q.push(new pos(i,j));
-    grid[i][j] = 'A';
+void search(vector<vector<char> >& grid, int i, int j, int r, int c){
+    queue<pair<int,int> > q;
+    q.push(make_pair(i, j));
+    grid[i][j] = 'X';
     while(!q.empty()){
-        pos* curr = q.front();
+        pair<int,int> curr = q.front();
         q.pop();
         int move[4][2] = {
             {0, 1},
@@ -38,25 +32,28 @@ void dfs(vector<vector<char> >& grid, int i, int j){
             {-1, 0}
         };
         for(int i=0; i<4; i++){
-            int new_x = curr->x+move[i][0];
-            int new_y = curr->y+move[i][1];
-            if(new_x>=0 && new_x<grid.size() && new_y>=0 && new_y<grid[0].size() && grid[new_x][new_y] == '1'){
-                q.push(new pos(new_x, new_y));
-                grid[new_x][new_y]='A';
+            int new_x = move[i][0]+curr.first;
+            int new_y = move[i][1]+curr.second;
+            if(new_x>=0 && new_x<r && new_y>=0 && new_y<c && grid[new_x][new_y] == '1'){
+                q.push(make_pair(new_x, new_y));
+                grid[new_x][new_y] = 'X';
             }
         }
-        delete curr;
     }
 }
 
 int numIslands(vector<vector<char> >& grid) {
+    int r = grid.size();
+    if(r == 0) return 0;
+    int c = grid[0].size();
     int res = 0;
-    for(int i=0; i<grid.size(); i++){
-        for(int j=0; j<grid[i].size(); j++)
-            if(grid[i][j]=='1'){
+    for(int i=0; i<r; i++){
+        for(int j=0; j<c; j++){
+            if(grid[i][j] == '1'){
+                search(grid, i, j, r, c);
                 res++;
-                dfs(grid,i,j);
             }
+        }
     }
     return res;
 }

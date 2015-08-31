@@ -12,42 +12,23 @@ Another example is ")()())", where the longest valid parentheses substring is "(
 int longestValidParentheses(string s) {
     int sz = s.length();
     if(sz<2) return 0;
-    stack<int> stack;
+    stack<int> st;
     int res = 0;
-    stack.push(-1);
     for(int i=0; i<sz; i++){
-        if(s[i] == '(') stack.push(i);
-        else if(stack.top() != -1 && s[stack.top()]=='('){
-            stack.pop();
-            res = max(res, i-stack.top());
+        if(s[i] == '(') st.push(i);
+        else{
+            if(st.empty()) st.push(i);
+            else{
+                if(s[st.top()] == '('){
+                    st.pop();
+                    res = max(res, i-(st.empty()?-1:st.top()));
+                }
+                else st.push(i);
+            }
         }
-        else stack.push(i);
     }
     return res;
 }
-
-//int longestValidParentheses(string s) {
-//    int sz = s.length();
-//    if(sz<2) return 0;
-//    stack<int> stack;
-//    int res = 0;
-//    int begin = -1;
-//    for(int i=0; i<sz; i++){
-//        if(s[i] == '(') stack.push(i);
-//        else{
-//            if(stack.empty()){
-//                begin = i;
-//                continue;
-//            } 
-//            stack.pop();
-//            if(stack.empty())
-//                res = max(res,i-begin);
-//            else
-//                res = max(res, i-stack.top());
-//        }
-//    }
-//    return res;
-//}
 
 int main(){
     //string s0("()(()))()())");
