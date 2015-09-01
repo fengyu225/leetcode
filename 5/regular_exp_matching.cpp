@@ -21,17 +21,19 @@ isMatch("aab", "c*a*b") → true
 #include "header.h"
 
 bool isMatch(string& s, int s_start, int s_end, string& p, int p_start, int p_end){
+    //recursive
     if(p_start>p_end) return s_start>s_end;
     if(p_start == p_end) return s_start == s_end && (p[p_start] == '.' || p[p_start] == s[s_start]);
     if(p[p_start+1] != '*')
         return s_start<=s_end &&  (p[p_start] == '.' || p[p_start] == s[s_start]) && isMatch(s, s_start+1, s_end, p, p_start+1, p_end);
     //p[p_start+1] == '*'
+    if(isMatch(s, s_start, s_end, p, p_start+2, p_end)) return true;
     while(s_start<=s_end && (p[p_start] == s[s_start] || p[p_start] == '.')){
-        if(isMatch(s, s_start, s_end, p, p_start+2, p_end)) return true;
+        if(isMatch(s, s_start+1, s_end, p, p_start+2, p_end)) return true;
         s_start++;
     }
-    return isMatch(s, s_start, s_end, p, p_start+2, p_end);
-//    return false;
+//    return isMatch(s, s_start, s_end, p, p_start+2, p_end);
+    return false;
 }
 
 bool isMatch(string s, string p){
