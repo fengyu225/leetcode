@@ -26,7 +26,7 @@ int removeDuplicates(vector<int>& nums) {
 }
 
 int main(){
-    vector<int> nums = {1, 1, 2};
+    vector<int> nums = {1, 1, 2, 2, 2, 3,3,3,3,3,3,3};
     int res = removeDuplicates(nums);
     for(int i=0; i<res; i++) cout<<nums[i]<<" ";
     cout<<endl;
