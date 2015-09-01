@@ -17,18 +17,20 @@ The number of ways decoding "12" is 2.
 #include "header.h"
 
 int numDecodings(string s){
-    int sz = s.length();
-    if(sz == 0) return 0;
-    vector<int> arr(sz+1, 0);
+    int s_len = s.length();
+    if(s_len==0) return s_len;
+    vector<int> arr(s_len, 0);
+    if(s[0] == '0') return 0;
     arr[0] = 1;
-    arr[1] = s[0]=='0'?0:1;
-    for(int i=2; i<=sz; i++){
-        int a = s[i-1]=='0'?0:arr[i-1];
-        int temp = stoi(s.substr(i-2, 2));
-        if(temp>=1 && temp<=26 && s[i-2]!='0') a+=arr[i-2];
-        arr[i] = a;
+    for(int i=1; i<s_len; i++){
+        int temp = 0;
+        if(i-1>=0 && (s[i-1] == '1' || s[i-1] == '2' && s[i]<='6' && s[i]>='0'))
+            temp += i-2>=0?arr[i-2]:1;
+        if(s[i]!='0')
+            temp += arr[i-1];
+        arr[i] = temp;
     }
-    return arr[sz];
+    return arr[s_len-1];
 }
 
 int main(){
