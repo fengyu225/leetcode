@@ -20,11 +20,26 @@ Expected:       [2,1,3]
 
 void nextPermutation(vector<int>& nums) {
     int sz = nums.size();
-
+    if(sz == 1) return;
+    int l = sz-2;
+    while(l>=0){
+        if(nums[l]<nums[l+1]) break;
+        l--;
+    }
+    if(l<0) sort(nums.begin(), nums.end());
+    else{
+        int i = sz-1;
+        while(i>l){
+            if(nums[i]<=nums[l]) i--;
+            else break;
+        }
+        swap(nums[l], nums[i]);
+        sort(nums.begin()+l+1, nums.end());
+    }
 }
 
 int main(){
-    int arr[] = {1, 3,2};
+    int arr[] = {5, 4, 7, 5, 3, 2};
     vector<int> v(arr, arr+sizeof(arr)/sizeof(arr[0]));
     nextPermutation(v);
     for(int i=0; i<v.size(); i++)
