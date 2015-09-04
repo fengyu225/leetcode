@@ -13,16 +13,19 @@ The minimum number of jumps to reach the last index is 2. (Jump 1 step from inde
 
 #include "header.h"
 
-int jump(vector<int>& nums){
-    int l = -1, r = 0, curr=0, res=0;
+int jump(vector<int>& nums) {
     int sz = nums.size();
-    while(r<sz-1){
-        int new_l = r; 
-        int new_r = r;
-        for(int i=l+1;i<=r;i++)
-            new_r = max(new_r, i+nums[i]);
+    if(sz <= 1) return 0;
+    int l = 0, r = 0;
+    int res = 0;
+    while(1){
+        int new_r=-1;
+        for(int i=l; i<=r; i++) new_r = max(new_r, i+nums[i]);
         res++;
-        l = new_l, r=new_r;
+        if(new_r == r) return -1;
+        if(new_r>=sz-1) return res;
+        l = r+1;
+        r = new_r;
     }
     return res;
 }
