@@ -21,15 +21,22 @@ bool knows(int a, int b){
 
 class Solution {
 public:
+//    int findCelebrity(int n) {
+//        if(n == 0) return -1;
+//        if(n == 1) return 0;
+//        int curr = 0, next = 1;
+//        while(next<n){
+//            if(knows(curr,next)) curr = next++;
+//            else next++;
+//        }
+//        for(int i=0; i<n; i++) if(curr != i && (knows(curr, i) || !knows(i, curr))) return -1;
+//        return curr;
+//    }
     int findCelebrity(int n) {
-        if(n == 0) return -1;
-        if(n == 1) return 0;
+        if(n<2) return n?0:-1;
         int curr = 0, next = 1;
-        while(next<n){
-            if(knows(curr,next)) curr = next++;
-            else next++;
-        }
-        for(int i=0; i<n; i++) if(curr != i && knows(curr, i)) return -1;
+        for(;next<n;next++) if(knows(curr,next)) curr = next;
+        for(int i=0; i<n; i++) if(curr != i && (knows(curr, i) || !knows(i, curr))) return -1;
         return curr;
     }
 };
