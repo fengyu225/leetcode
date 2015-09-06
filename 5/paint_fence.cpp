@@ -11,18 +11,30 @@ n and k are non-negative integers.
 
 #include "header.h"
 
+//int numWays(int n, int k) {
+//    //arr0[i] number of ways to paint i posts with i and i-1 have same color
+//    //arr1[i] number of ways to paint i posts with i and i-1 have different color
+//    if(n == 0 || k == 0) return 0;
+//    vector<int> arr0(n, 0);
+//    vector<int> arr1(n, 0);
+//    arr1[0] = k;
+//    for(int i=1; i<n; i++){
+//        arr0[i] = arr1[i-1];
+//        arr1[i] = (k-1)*(arr0[i-1]+arr1[i-1]);
+//    }
+//    return arr0[n-1]+arr1[n-1];
+//}
+
 int numWays(int n, int k) {
-    //arr0[i] number of ways to paint i posts with i and i-1 have same color
-    //arr1[i] number of ways to paint i posts with i and i-1 have different color
     if(n == 0 || k == 0) return 0;
-    vector<int> arr0(n, 0);
-    vector<int> arr1(n, 0);
-    arr1[0] = k;
+    int a=0,b=0,c=k,d=0;
     for(int i=1; i<n; i++){
-        arr0[i] = arr1[i-1];
-        arr1[i] = (k-1)*(arr0[i-1]+arr1[i-1]);
+        b = c;
+        d = (k-1)*(a+c);
+        a = b;
+        c = d;
     }
-    return arr0[n-1]+arr1[n-1];
+    return a+c;
 }
 
 int main(){
