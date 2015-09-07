@@ -15,15 +15,24 @@ bool isBadVersion(int version);
 
 class Solution {
 public:
+//    int firstBadVersion(int n) {
+//        if(n>2 && isBadVersion(n) && !isBadVersion(n-1)) return n;
+//        int l = 1, r=n;
+//        while(l+1<r){
+//            int m = l+(r-l)/2;
+//            if(isBadVersion(m)) r=m;
+//            else l=m+1;
+//        }
+//        return isBadVersion(l)?l:r;
+//    }
     int firstBadVersion(int n) {
-        if(n>2 && isBadVersion(n) && !isBadVersion(n-1)) return n;
         int l = 1, r=n;
-        while(l+1<r){
+        while(l<r){
             int m = l+(r-l)/2;
             if(isBadVersion(m)) r=m;
             else l=m+1;
         }
-        return isBadVersion(l)?l:r;
+        return l;
     }
 };
 
