@@ -7,16 +7,16 @@ For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return
 #include "header.h"
 
 int numSquares(int n) {
-    vector<int> arr(n+1, 0);
+    int arr[n+1];
+    memset(arr, 0, sizeof(arr));
     for(int i=1; i<=n; i++){
-        arr[i] = i;
-        for(int j = 1; j*j<=i; j++){
-            if(j*j == i) {
-                arr[i] = 1;
-                break;
-            }
-            arr[i] = min(arr[i], arr[i-j*j]+1); 
+        int x = (int) floor( sqrt((double) n) + 0.5 );
+        if(x*x == n){
+            arr[i] = 1;
+            continue;
         }
+        arr[i] = i;
+        for(int j = 1; j*j<=i; j++) arr[i] = min(arr[i], arr[i-j*j]+1); 
     }
     return arr[n];
 }
