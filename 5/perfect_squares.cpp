@@ -8,24 +8,35 @@ For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return
 
 int numSquares(int n) {
     int arr[n+1];
-    memset(arr, 0, sizeof(arr));
+    arr[0] = 0;
     for(int i=1; i<=n; i++){
-        int x = (int) floor( sqrt((double) n) + 0.5 );
-        if(x*x == n){
-            arr[i] = 1;
-            continue;
+        int temp = INT_MAX;
+        for(int j = 1; j*j<=i; j++){
+            temp = min(temp, arr[i-j*j]+1); 
         }
-        arr[i] = i;
-        for(int j = 1; j*j<=i; j++) arr[i] = min(arr[i], arr[i-j*j]+1); 
+        arr[i] = temp;
     }
     return arr[n];
 }
 
+int numSquares(int n) {
+    //this code is much faster than above code, because it use static?
+    static vector<int> dp {0};
+    while (dp.size() <= n) {
+        int m = dp.size(), squares = INT_MAX;
+        for (int i=1; i*i<=m; ++i)
+            squares = min(squares, dp[m-i*i] + 1);
+        dp.push_back(squares);
+    }
+    return dp[n];
+}
+
 int main(){
-    cout<<numSquares(12)<<endl;
-    cout<<numSquares(INT_MAX-2)<<endl;
-    cout<<numSquares(13)<<endl;
-    cout<<numSquares(1)<<endl;
-    cout<<numSquares(4)<<endl;
+    cout<<numSquares(100000)<<endl;
+//    cout<<numSquares(12)<<endl;
+//    cout<<numSquares(100000)<<endl;
+//    cout<<numSquares(13)<<endl;
+//    cout<<numSquares(1)<<endl;
+//    cout<<numSquares(4)<<endl;
     return 0;
 }
