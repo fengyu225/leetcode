@@ -16,7 +16,7 @@ bool isBadVersion(int version);
 class Solution {
 public:
 //    int firstBadVersion(int n) {
-//        if(n>2 && isBadVersion(n) && !isBadVersion(n-1)) return n;
+//        //l, r needs to be long to prevent integer overflow problem
 //        int l = 1, r=n;
 //        while(l+1<r){
 //            int m = l+(r-l)/2;
