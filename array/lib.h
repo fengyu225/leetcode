@@ -73,6 +73,13 @@ void print_vector(vector<T> v){
 }
 
 
+template<typename T>
+void print_2d_vector(vector<vector<T> > v){
+    for(auto v_t:v){
+        for(auto i:v_t) cout<<i<<" ";
+        cout<<endl;
+    }
+}
 
 class TrieNode {
 public:
