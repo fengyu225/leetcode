@@ -18,6 +18,11 @@ Could you come up with an one-pass algorithm using only constant space?
 #include "header.h"
 
 void sortColors(vector<int>& nums) {
+    // loop invariant:
+    // [0, l] :0
+    // (l, curr): 1
+    // [curr, r) unsorted
+    // [r, sz-1); 2
     int sz = nums.size();
     int l = -1, r = sz, curr = 0;
     while(curr<r){
