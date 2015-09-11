@@ -42,7 +42,20 @@ vector<vector<int> > subsets(vector<int>& nums){
 */
 
 vector<vector<int> > subsets(vector<int>& nums) {
-
+    sort(nums.begin(), nums.end());
+    int sz = nums.size();
+    vector<vector<int> > res;
+    for(int i=0; i<(1<<sz); i++){
+        vector<int> temp;
+        int m = 0, k=i;
+        while(k){
+            if(k&1) temp.push_back(nums[m]);
+            m++;
+            k>>=1; 
+        }
+        res.push_back(temp);
+    }
+    return res;
 }
 
 int main(){
