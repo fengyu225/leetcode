@@ -18,15 +18,37 @@ Bonus point if you are able to do this using only O(n) extra space, where n is t
 
 using namespace std;
 
-int minimumTotal(vector<vector<int>>& triangle) {
-
+int minimumTotal(vector<vector<int> >& triangle) {
+    int r = triangle.size();
+    if(r == 1) return triangle[0][0];
+    int sz = triangle.back().size();
+    vector<int> curr(sz, 0);
+    vector<int> next(sz, 0);
+    curr[0] = triangle[0][0];
+    vector<int> arr[2] = {curr, next};
+    int x = 1;
+    int res = INT_MAX;
+    for(int i=1; i<r; i++){
+        for(int j=0; j<=i; j++){
+            int val;
+            if(j == 0) val = arr[(x-1)%2][j];
+            else if(j == i) val = arr[(x-1)%2][i-1];
+            else val = min(arr[(x-1)%2][j-1], arr[(x-1)%2][j]);
+            arr[x%2][j] = val+triangle[i][j];
+            if(i == r-1) res = min(res, arr[x%2][j]);
+        }
+        x++;
+    }
+    return res;
 }
 
 int main(){
-    vector<vector<int> > triangle;
-    int arr[4][4] = {{2},{3,4},{6,5,7},{4,1,8,3}};
-    for(int i=0; i<4; i++)
-        triangle.push_back(vector<int>(arr[i],arr[i]+i+1));
-    printf("%d\n", minimumTotal(triangle));
+    vector<vector<int> > triangle = {
+        {2},
+        {3,4},
+        {6, 5, 7},
+        {4, 1, 8, 3}
+    };
+    cout<<minimumTotal(triangle)<<endl;
     return 0;
 }
