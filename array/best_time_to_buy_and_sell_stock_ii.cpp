@@ -12,6 +12,7 @@ int maxProfit(vector<int>& prices){
     for(int i=1; i<sz; i++) res += max(prices[i]-prices[i-1], 0);
     return res;
 }
+
 int main(){
     int prices[] = {5, 1, 2, 3, 4};
     vector<int> prices_v(prices,prices+sizeof(prices)/sizeof(prices[0]));
