@@ -7,13 +7,19 @@ If you were only permitted to complete at most one transaction (ie, buy one and 
 #include "header.h"
 
 int maxProfit(vector<int>& prices) {
-
+    int sz = prices.size();
+    if(sz < 2) return 0;
+    int small = prices[0], res = 0;
+    for(int i=1; i<sz; i++){
+        small = min(small, prices[i-1]);
+        res = max(res, prices[i]-small);
+    }
+    return res;
 }
 
 int main(){
-    //int prices_arr[] = {0, 1, 2, 3};
-    int prices_arr[] = {1,2,4};
-    vector<int> prices(prices_arr,prices_arr+sizeof(prices_arr)/sizeof(prices_arr[0]));
+    vector<int> prices = {1,2,4};
+//    vector<int> prices = {0, 1, 2, 3};
     printf("%d\n", maxProfit(prices));
     return 0;
 }
