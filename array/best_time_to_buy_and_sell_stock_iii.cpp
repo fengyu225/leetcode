@@ -15,9 +15,11 @@ int maxProfit(vector<int>& prices) {
     vector<int> left(sz, 0);
     vector<int> right(sz, 0);
     left[0] = prices[0];
-    for(int i=1; i<sz; i++) left[i] = min(prices[i], left[i-1]);
     right[sz-1] = prices[sz-1];
-    for(int i=sz-2; i>=0; i--) right[i] = max(prices[i], right[i+1]);
+    for(int i=1; i<sz; i++){
+        left[i] = min(prices[i], left[i-1]);
+        right[sz-1-i] = max(prices[sz-1-i], right[sz-i]);
+    }
     int temp = 0, res = 0;
     for(int i=1; i<sz; i++){
         temp = max(temp, prices[i]-left[i]);
