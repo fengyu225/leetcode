@@ -18,8 +18,18 @@ The array may contain duplicates.
 int findMin(vector<int>& nums) {
     int sz = nums.size();
     if(sz == 1) return nums[0];
-    int l = 0, r = sz-1, m;
-    
+    int l = 0, r = sz-1;
+    while(l+1<r){
+        int m = (l+r)/2;
+        if(nums[l] == nums[r]) l++;
+        else if(nums[l]<nums[r]) return nums[l];
+        else{
+            if(nums[m]<nums[l]) r = m;
+            else if(nums[m] == nums[r]) l=m;
+            else l = m+1;
+        }
+    } 
+    return nums[l]<nums[r]?nums[l]:nums[r];
 }
 
 int main(){
