@@ -8,10 +8,16 @@ Examples:
 "3456237490", 9191 -> []
 */
 
+// 3:24
 #include "header.h"
 
 vector<string> addOperators(string num, int target) {
-
+    int sz = num.length();
+    if(sz == 1) return num[0]-'0' == target?vector<string>(1, num):vector<string>(); 
+    vector<vector<vector<int>* > > arr(sz-1, vector<vector<int>* >(3, NULL));
+    for(int i=0; i<sz-1; i++){
+         
+    }
 }
 
 int main(){
