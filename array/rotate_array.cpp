@@ -19,6 +19,7 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 //}
 //
 //void rotate(vector<int>& nums, int k) {
+//    //AC
 //    int sz = nums.size();
 //    k = k%sz;
 //    if(k == 0) return;
@@ -47,6 +48,7 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 //}
 //
 //void rotate(vector<int>& nums, int k) {
+//    //AC
 //    int sz = nums.size();
 //    k = k%sz;
 //    if(k == 0) return;
@@ -59,6 +61,7 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 
 /* method 3 (rotate one by one) */
 //void rotate_one(vector<int>& nums){
+//    //TLE
 //    int sz = nums.size();
 //    int temp = nums[sz-1];
 //    for(int i=sz-1; i>0; i--) nums[i] = nums[i-1];
@@ -73,6 +76,7 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 
 /* method 4 */
 void rotate(vector<int>& nums, int k) {
+    //AC
     int sz = nums.size();
     k = k%sz;
     if(k == 0) return;
