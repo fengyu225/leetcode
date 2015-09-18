@@ -10,19 +10,18 @@ vector<string> findMissingRanges(vector<int>& nums, int lower, int upper) {
     int sz = nums.size();
     vector<string> res;
     if(sz == 0) return lower == upper?vector<string>(1, to_string(lower)):vector<string>(1, to_string(lower)+"->"+to_string(upper));
-    if(nums[0]>lower) nums.insert(nums.begin(), lower);
-    if(nums[nums.size()-1] != upper) nums.push_back(upper);
-    sz = nums.size();
-    
+
+    return res;
 }
 
 int main(){
     //int arr[] = {0, 1, 3, 50, 75};
-    int arr[] = {INT_MAX};
+ //   int arr[] = {INT_MAX};
     //int arr[] = {-1};
-    vector<int> v_arr(arr, arr+sizeof(arr)/sizeof(arr[0]));
-    vector<string> res = findMissingRanges(v_arr, 0, INT_MAX);
-    //vector<string> res = findMissingRanges(v_arr, -2, -1);
+//    vector<int> v_arr = {INT_MAX};
+    //vector<int> v_arr = {0, 1, 3, 50, 75};
+    vector<int> v_arr = {-1};
+    vector<string> res = findMissingRanges(v_arr, -2, -1);
     for(int i=0; i<res.size(); i++) cout<<res[i]<<" ";
     cout<<endl;
     return 0;
