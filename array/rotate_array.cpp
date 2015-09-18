@@ -57,6 +57,25 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 //    }
 //}
 
+/* method 3 (rotate one by one) */
+//void rotate_one(vector<int>& nums){
+//    int sz = nums.size();
+//    int temp = nums[sz-1];
+//    for(int i=sz-1; i>0; i--) nums[i] = nums[i-1];
+//    nums[0] = temp;
+//}
+//    
+//void rotate(vector<int>& nums, int k) {
+//    int sz = nums.size();
+//    k = k%sz;
+//    for(int i=0; i<k; i++) rotate_one(nums);
+//}
+
+/* method 4 */
+void rotate(vector<int>& nums, int k) {
+
+}
+
 int main(){
     //int arr[] = {1,2,3,4,5,6,7};
 //    int arr[] = {1,2};
