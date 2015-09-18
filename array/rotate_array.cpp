@@ -73,7 +73,13 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 
 /* method 4 */
 void rotate(vector<int>& nums, int k) {
-
+    int sz = nums.size();
+    k = k%sz;
+    if(k == 0) return;
+    vector<int> temp;
+    for(int i=sz-k; i<sz; i++) temp.push_back(nums[i]);
+    for(int i=sz-k-1; i>=0; i--) nums[i+k] = nums[i];
+    for(int i=0; i<k; i++) nums[i] = temp[i];
 }
 
 int main(){
