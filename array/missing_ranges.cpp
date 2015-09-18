@@ -7,7 +7,13 @@ For example, given [0, 1, 3, 50, 75], lower = 0 and upper = 99, return ["2", "4-
 #include "header.h"
 
 vector<string> findMissingRanges(vector<int>& nums, int lower, int upper) {
-
+    int sz = nums.size();
+    vector<string> res;
+    if(sz == 0) return lower == upper?vector<string>(1, to_string(lower)):vector<string>(1, to_string(lower)+"->"+to_string(upper));
+    if(nums[0]>lower) nums.insert(nums.begin(), lower);
+    if(nums[nums.size()-1] != upper) nums.push_back(upper);
+    sz = nums.size();
+    
 }
 
 int main(){
