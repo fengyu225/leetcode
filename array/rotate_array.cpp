@@ -27,11 +27,35 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 //    reverse(nums, k, sz-1);
 //}
 
-void rotate(vector<int>& nums, int k) {
-    int sz = nums.size();
-    k = k%sz;
-    if(k == 0) return;
-}
+/* method 2 */
+// for 1, 2, 3, 4, 5, 6, 7
+// we do this 1->4->7->3->6->2->5
+//int rotate_helper(vector<int>& num, int curr, int k){
+//    int sz = num.size();
+//    int orig = curr, from = curr, to = (curr+k)%sz, res = 0;
+//    int temp = num[from];
+//    while(to != orig){
+//        int x = num[to];
+//        num[to] = temp;
+//        temp = x;
+//        from = to;
+//        to = (to+k)%sz;
+//        res++;
+//    }
+//    num[orig] = temp;
+//    return res+1;
+//}
+//
+//void rotate(vector<int>& nums, int k) {
+//    int sz = nums.size();
+//    k = k%sz;
+//    if(k == 0) return;
+//    int cnt = 0, curr = 0;
+//    while(cnt<sz){
+//        cnt += rotate_helper(nums, curr, k);
+//        curr++;
+//    }
+//}
 
 int main(){
     //int arr[] = {1,2,3,4,5,6,7};
