@@ -17,31 +17,60 @@ The solution set must not contain duplicate quadruplets.
 
 /* hashtable */
 vector<vector<int> > fourSum(vector<int>& nums, int target) {
-    int sz = nums.size();
     vector<vector<int> > res;
-    if(sz<4) return res;;
-    for(int i=0; i+3<sz; i++){
+    int sz = nums.size();
+    unordered_map<int,vector<pair<int,int> > > m;
+    sort(nums.begin(), nums.end());
+    for(int i=sz-1; i>0; i--){
+        if(i<sz-1 && nums[i] == nums[i+1]) continue;
+        for(int j=i-1; j>=0; j--){
+            if(j<i-1 && nums[j] == nums[j+1]) continue;
+            if(m.find(nums[i]+nums[j]) == m.end()) m[nums[i]+nums[j]] = vector<pair<int,int> >();
+            m[nums[i]+nums[j]].push_back(make_pair(j, i));
+        }
+    }
+    for(int i=0; i<sz; i++){
         if(i>0 && nums[i] == nums[i-1]) continue;
-        for(int j=i+1; j+2<sz; j++){
+        for(int j=i+1; j<sz; j++){
             if(j>i+1 && nums[j] == nums[j-1]) continue;
-            unordered_set<int> m;
-            for(int k = j+1; k<sz; k++){
-                if(m.find(nums[k]) != m.end()) continue;
-                int temp = target-nums[i]-nums[j];
-                if(m.find(temp-nums[k]) != m.end()){
-                    vector<int> temp_v;
-                    temp_v.push_back(nums[i]);
-                    temp_v.push_back(nums[j]);
-                    temp_v.push_back(nums[k]);
-                    temp_v.push_back(temp-nums[k]);
-                    res.push_back(temp_v);
-                }
-                m.insert(nums[k]);
+            int t = target-nums[i]-nums[j];
+            if(m.find(t) != m.end()){
+                for(auto p:m[t])
+                    if(p.first>j)
+                        res.push_back(vector<int>({nums[i], nums[j], nums[p.first], nums[p.second]}));
             }
         }
     }
     return res;
 }
+    
+///* hashtable */
+//vector<vector<int> > fourSum(vector<int>& nums, int target) {
+//    int sz = nums.size();
+//    vector<vector<int> > res;
+//    if(sz<4) return res;;
+//    for(int i=0; i+3<sz; i++){
+//        if(i>0 && nums[i] == nums[i-1]) continue;
+//        for(int j=i+1; j+2<sz; j++){
+//            if(j>i+1 && nums[j] == nums[j-1]) continue;
+//            unordered_set<int> m;
+//            for(int k = j+1; k<sz; k++){
+//                if(m.find(nums[k]) != m.end()) continue;
+//                int temp = target-nums[i]-nums[j];
+//                if(m.find(temp-nums[k]) != m.end()){
+//                    vector<int> temp_v;
+//                    temp_v.push_back(nums[i]);
+//                    temp_v.push_back(nums[j]);
+//                    temp_v.push_back(nums[k]);
+//                    temp_v.push_back(temp-nums[k]);
+//                    res.push_back(temp_v);
+//                }
+//                m.insert(nums[k]);
+//            }
+//        }
+//    }
+//    return res;
+//}
 
 /* 2 pointers */
 //vector<vector<int> > fourSum(vector<int>& nums, int target) {
