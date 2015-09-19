@@ -13,19 +13,6 @@ You may assume that word1 does not equal to word2, and word1 and word2 are both 
 
 #include "header.h"
 
-int shortestDistance(vector<string>& words, string word1, string word2){
-    // one-pass solution
-    int sz = words.size();
-    int idx1 = -1, idx2 = -1, res = INT_MAX;
-    bool check = false;
-    for(int i=0; i<sz; i++){
-        if(words[i] == word1) {idx1 = i;check=true;}
-        if(words[i] == word2) {idx2 = i;check=true;}
-        if(check && idx1>-1 && idx2>-1) {res = min(res, abs(idx1-idx2)); check=false;}
-    }
-    return res;
-}
-
 int shortestDistance(vector<string>& words, string word1, string word2) {
     int sz = words.size();
     int pos1 = -1, pos2 = -1, res = sz+1;
@@ -38,20 +25,9 @@ int shortestDistance(vector<string>& words, string word1, string word2) {
     return res;
 }
 
-//int shortestDistance(vector<string>& words, string word1, string word2){
-//    int sz = words.size();
-//    unordered_map<string, vector<int> > map;
-//    for(int i=0; i<sz; i++){
-//        if(map.find(words[i]) == map.end()) map[words[i]] = vector<int>();
-//        map[words[i]].push_back(i);
-//    }
-//    int res = INT_MAX;
-//    for(int i=0; i<map[word1].size(); i++){
-//        for(int j=0; j<map[word2].size(); j++)
-//            res = min(res, abs(map[word1][i] - map[word2][j]));
-//    }
-//    return res;
-//}
+//["this","is","a","long","sentence","is","fun","day","today","sunny","weather","is","a","day","tuesday","this","sentence","run","running","rainy"]
+//"weather"
+//"long"
 
 int main(){
     //["a","c","b","b","a"], "a", "b"
@@ -60,8 +36,9 @@ int main(){
 //    cout<<shortestDistance(v_arr, "coding", "practice")<<endl;
 //    cout<<shortestDistance(v_arr, "makes", "coding")<<endl;
     
-    string arr[] = {"a","c","b","b","a"};
+    //string arr[] = {"a","c","b","b","a"};
+    string arr[] = {"this","is","a","long","sentence","is","fun","day","today","sunny","weather","is","a","day","tuesday","this","sentence","run","running","rainy"};
     vector<string> v_arr(arr, arr+sizeof(arr)/sizeof(arr[0]));
-    cout<<shortestDistance(v_arr, "a", "b")<<endl;
+    cout<<shortestDistance(v_arr, "weather", "long")<<endl;
     return 0;
 }
