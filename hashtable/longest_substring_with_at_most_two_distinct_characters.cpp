@@ -10,6 +10,7 @@ T is "ece" which its length is 3.
 
 int lengthOfLongestSubstringTwoDistinct(string s) {
     //two pointers
+    //hashtable
     int s_len = s.length();    
     if(s_len < 2) return s_len;
     int has_found[256] = {0};
