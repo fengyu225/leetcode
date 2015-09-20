@@ -12,28 +12,15 @@ Your algorithm should run in linear runtime complexity. Could you implement it u
 
 #include "header.h"
 
-//vector<int> singleNumber(vector<int>& nums){
-//    //using O(n) space
-//    vector<int> res;
-//    int sz = nums.size();
-//    unordered_map<int,int> m;
-//    for(int c:nums) m[c]++;
-//    for(int c:nums) if(m[c] == 1) res.push_back(c);
-//    return res;
-//}
-
 vector<int> singleNumber(vector<int>& nums){
-    vector<int> res;
     int sz = nums.size();
-    int a_xor_b = nums[0];
-    for(int i=1; i<sz; i++) a_xor_b^=nums[i];
-    int a=0;
-    int i=1;
-    for(;i<INT_MAX;i<<=1)
-        if(a_xor_b&i) break;
-    for(int c:nums) if(c&i) a^=c;
-    res.push_back(a);
-    res.push_back(a^a_xor_b);
+    int x = accumulate(nums.begin(), nums.end(), 0, bit_xor<int>());
+    int n = x&~(x-1);
+    vector<int> res(2,0);
+    for(int i=0; i<sz; i++){
+        if(nums[i]&n) res[0]^=nums[i];
+        else res[1]^=nums[i];
+    }
     return res;
 }
 
