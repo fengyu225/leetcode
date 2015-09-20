@@ -7,6 +7,7 @@ Return a deep copy of the list.
 #include "header.h"
 
 RandomListNode *copyRandomList(RandomListNode *head) {
+    if(!head) return NULL;
 
 }
 
