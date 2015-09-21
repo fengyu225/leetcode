@@ -24,7 +24,6 @@ bool isIsomorphic(string s, string t) {
     unordered_map<char,char> from;
     unordered_map<char,char> to;
     for(int i=0; i<sz; i++){
-//        if(s[i] == t[i]) continue;
         if(to.find(s[i])!=to.end() && to[s[i]] != t[i] || from.find(t[i]) != from.end() && from[t[i]] != s[i])
             return false;
         from[t[i]] = s[i];
