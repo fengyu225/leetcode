@@ -6,9 +6,41 @@ Return a deep copy of the list.
 
 #include "header.h"
 
+void addToList(RandomListNode*& res, RandomListNode*& res_curr, RandomListNode* x){
+    if(!x) return;
+    x->next = NULL;
+    if(!res) res = x;
+    else res_curr->next = x;
+    res_curr = x;
+}
+
 RandomListNode *copyRandomList(RandomListNode *head) {
     if(!head) return NULL;
-
+    RandomListNode* curr = head;
+    while(curr){
+        RandomListNode* n = curr->next;
+        RandomListNode* x = new RandomListNode(curr->label);
+        curr->next = x;
+        x->next = n;
+        curr = n;
+    }
+    curr = head;
+    while(curr){
+        if(curr->random){
+            curr->next->random = curr->random->next;
+        }
+        curr = curr->next->next;
+    }
+    RandomListNode* res = NULL, *res_curr = NULL;
+    curr = head;
+    while(curr){
+        RandomListNode* n = curr->next->next;
+        RandomListNode* x = curr->next;
+        curr->next = n;
+        addToList(res,res_curr,x);
+        curr = n;
+    }
+    return res;
 }
 
 int main(){
