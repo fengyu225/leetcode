@@ -38,7 +38,7 @@ void reorderList(ListNode*& curr, ListNode*& head, int l, int r){
 
 void reorderList(ListNode* head) {
     int len = getLen(head);
-    ListNode* new_head = NULL, *new_tail = NULL;
+    ListNode* new_head = NULL;
     reorderList(head, new_head, 0, len-1);
     head = new_head;
 }
