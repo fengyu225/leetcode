@@ -8,6 +8,7 @@ Can you solve it without using extra space?
 #include "header.h"
 
 ListNode *detectCycle(ListNode *head) {
+    if(!head) return NULL;
 }
 
 
