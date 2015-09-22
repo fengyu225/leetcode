@@ -19,7 +19,28 @@ Your code should preferably run in O(n) time and use only O(1) memory.
 
 #include "header.h"
 
+int getLen(ListNode* l){
+    int res = 0;
+    for(;l;res++, l = l->next);
+    return res;
+}
 
+void advance(ListNode*& head, int n){
+    for(int i=0; i<n; i++, head = head->next);
+}
+
+ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+    if(!headA || !headB) return NULL;
+    int a_len = getLen(headA), b_len = getLen(headB);
+    if(a_len>b_len) advance(headA, abs(a_len-b_len));
+    if(b_len>a_len) advance(headB, abs(a_len-b_len));
+    while(headA){
+        if(headA == headB) return headA;
+        headA = headA->next;
+        headB = headB->next;
+    }
+    return NULL;
+}
 
 int main(){
     int arr[] = {4, 5, 6};
