@@ -7,29 +7,26 @@ Could you do it in O(n) time and O(1) space?
 
 #include "header.h"
 
-//bool search(ListNode*& head, int curr, int len){
-//    // recursive
-//    if(len%2 == 0 && curr==(len-1)/2){
-//        ListNode* n = head->next;
-//        bool res = head->val == n->val;
-//        head = n;
-//        return res;
+//bool check(ListNode*& head, int l, int r){
+//    if(l>r) return true;
+//    if(l == r){
+//        head = head->next;
+//        return true;
 //    }
-//    if(len%2 == 1 && curr == (len-1)/2) return true;
-//    ListNode* orig = head;
+//    int l_v = head->val;
 //    head = head->next;
-//    bool res = search(head, curr+1, len);
+//    bool x = check(head, l+1, r-1);
+//    bool res = x && l_v == head->val;
 //    head = head->next;
-//    res = res && orig->val == head->val;
 //    return res;
 //}
 //
 //bool isPalindrome(ListNode* head) {
 //    if(!head) return true;
-//    int l = 0;
-//    ListNode* curr = head;
-//    for(;curr;curr=curr->next,l++);
-//    return search(head, 0, l);
+//    int len = 0;
+//    ListNode* x = head;
+//    for(;x;x=x->next, len++);
+//    return check(head, 0, len-1);
 //}
 
 ListNode* reverse(ListNode* head){
