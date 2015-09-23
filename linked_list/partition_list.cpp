@@ -10,8 +10,25 @@ return 1->2->2->4->3->5.
 
 #include "header.h"
 
-ListNode* partition(ListNode* head, int x) {
+void addToList(ListNode*& res, ListNode*& res_tail, ListNode* curr){
+    curr->next = NULL;
+    if(!res) res = curr;
+    else res_tail->next = curr;
+    res_tail =  curr;
+}
 
+ListNode* partition(ListNode* head, int x) {
+    if(!head) return NULL;
+    ListNode* l_res = NULL, *l_res_tail = NULL, 
+        *r_res = NULL, *r_res_tail = NULL, *curr = head;
+    while(curr){
+        ListNode* temp = curr->next;
+        if(curr->val<x) addToList(l_res, l_res_tail, curr);
+        else addToList(r_res, r_res_tail, curr);
+        curr = temp;
+    }
+    if(l_res) l_res_tail->next = r_res;
+    return l_res_tail?l_res:r_res;
 }
 
 int main(){
