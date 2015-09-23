@@ -17,8 +17,47 @@ For k = 3, you should return: 3->2->1->4->5
 
 #include "header.h"
 
+void add(ListNode*& res, ListNode*& res_tail, ListNode* head, ListNode* tail){
+    if(!res) res = head;
+    else res_tail->next = head;
+    res_tail = tail;
+}
+
+void reverse(ListNode* head, ListNode* tail){
+    if(!head || head && !head->next) return;
+    ListNode* curr = head, *next = head->next;
+    head->next = NULL;
+    while(next){
+        ListNode* temp = next->next;
+        next->next = curr;
+        curr = next;
+        next = temp;
+    }
+}
+
 ListNode* reverseKGroup(ListNode* head, int k){
     if(!head || k==1) return head;
+    ListNode* res = NULL, *res_tail = NULL;
+    ListNode* tail = head;
+    while(tail){
+        for(int i=1; i<k; i++){
+            if(tail) tail = tail->next;
+            else break;
+        }
+        if(tail){
+            ListNode* temp = tail->next;
+            tail->next = NULL;
+            reverse(head, tail);
+            print_list(tail);
+            add(res, res_tail, tail, head);
+            head = tail = temp;
+        }
+        else{
+            add(res, res_tail, head, tail);
+            break;
+        }
+    }
+    return res;
 }
 
 int main(){
