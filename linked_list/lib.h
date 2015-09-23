@@ -15,6 +15,8 @@ class ListNode {
 
 ListNode* create_list(int arr[], int n);
 
+void addToList(ListNode*& res, ListNode*& res_tail, ListNode* curr);
+
 class TreeNode {
     public:
         int val;

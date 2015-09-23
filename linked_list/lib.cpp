@@ -23,6 +23,13 @@ ListNode* create_list(int arr[], int n){
     return result;
 }
 
+void addToList(ListNode*& res, ListNode*& res_tail, ListNode* curr){
+    curr->next = NULL;
+    if(!res) res = curr;
+    else res_tail->next = curr;
+    res_tail =  curr;
+}
+
 ListNode* create_list(int arr[], int n, int s){
     ListNode* result = NULL;
     ListNode* curr = NULL;
