@@ -20,9 +20,7 @@ int numTrees(int n) {
             arr[len][start] = 0;
             for(int l_len = 0; l_len<len; l_len++)
                 arr[len][start] += arr[l_len][start] * arr[len-l_len-1][start+l_len+1];
-            cout<<arr[len][start]<<" ";
         }
-        cout<<endl;
     }
     return arr[n][1];
 }
