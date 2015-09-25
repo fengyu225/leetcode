@@ -24,6 +24,23 @@ The maximum depth is the number of nodes along the longest path from the root no
 
 int maxDepth(TreeNode* root) {
     if(!root) return 0;
+    int res = 0;
+    queue<TreeNode*> curr;
+    queue<TreeNode*> next;
+    curr.push(root);
+    queue<TreeNode*> arr[2] = {curr, next};
+    int x = 0;
+    while(!arr[x%2].empty()){
+        TreeNode* temp = arr[x%2].front();
+        if(temp->left) arr[(x+1)%2].push(temp->left);
+        if(temp->right) arr[(x+1)%2].push(temp->right);
+        arr[x%2].pop();
+        if(arr[x%2].empty()){
+            x++;
+            res = max(res, x);
+        }
+    }
+    return res;
 }
 
 int main(){
