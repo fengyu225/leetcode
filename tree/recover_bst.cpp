@@ -20,6 +20,7 @@ void check_and_update(TreeNode* prev, TreeNode* curr, TreeNode*& left, TreeNode*
 }
 
 void recoverTree(TreeNode* root) {
+    //Morris traversal
     if(!root) return;
     TreeNode* prev = NULL, *curr = root, *left = NULL, *right = NULL;
     while(curr){
