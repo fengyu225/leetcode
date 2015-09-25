@@ -31,19 +31,30 @@ void addToRes(TreeNode*& res, TreeNode*& res_tail, TreeNode* new_res, TreeNode* 
     }
     else{
         res_tail->right = new_res;
-        res_tail = new_res_tail;
+        res_tail = new_res_tail?new_res_tail:res_tail;
     }
 }
 
 void flatten(TreeNode* root, TreeNode*& res, TreeNode*& res_tail){
     if(!root) return;
-    
+    cout<<root->val<<endl;
+    res = res_tail = root;
+    TreeNode* left = root->left, *right = root->right;
+    root->left = NULL;
+    root->right = NULL;
+    TreeNode* temp = NULL, *temp_tail = NULL;
+    flatten(left, temp, temp_tail);
+    addToRes(res, res_tail, temp, temp_tail);
+    temp = temp_tail = NULL;
+    flatten(right, temp, temp_tail);
+    addToRes(res, res_tail, temp, temp_tail);
 }
 
 void flatten(TreeNode* root) {
     if(!root) return;
     TreeNode* res = NULL, *res_tail = NULL;
     flatten(root, res, res_tail);
+    root = res;
 }
 
 int main(){
