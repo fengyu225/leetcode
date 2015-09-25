@@ -6,20 +6,24 @@ The maximum depth is the number of nodes along the longest path from the root no
 
 #include "header.h"
 
-void search(TreeNode* root, int& res, int curr){
-    if(!root->left && !root->right){
-        res = max(res, curr+1);
-        return;
-    }
-    if(root->left) search(root->left, res, curr+1);
-    if(root->right) search(root->right, res, curr+1);
-}
+//void search(TreeNode* root, int& res, int curr){
+//    if(!root->left && !root->right){
+//        res = max(res, curr+1);
+//        return;
+//    }
+//    if(root->left) search(root->left, res, curr+1);
+//    if(root->right) search(root->right, res, curr+1);
+//}
+//
+//int maxDepth(TreeNode* root) {
+//    if(!root) return 0;
+//    int res = 0;
+//    search(root, res, 0);
+//    return res;
+//}
 
 int maxDepth(TreeNode* root) {
     if(!root) return 0;
-    int res = 0;
-    search(root, res, 0);
-    return res;
 }
 
 int main(){
