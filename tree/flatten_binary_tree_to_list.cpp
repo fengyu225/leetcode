@@ -24,8 +24,26 @@ The flattened tree should look like:
 
 #include "header.h"
 
-void flatten(TreeNode* root) {
+void addToRes(TreeNode*& res, TreeNode*& res_tail, TreeNode* new_res, TreeNode* new_res_tail){
+    if(!res){
+        res = new_res;
+        res_tail = new_res_tail;
+    }
+    else{
+        res_tail->right = new_res;
+        res_tail = new_res_tail;
+    }
+}
+
+void flatten(TreeNode* root, TreeNode*& res, TreeNode*& res_tail){
+    if(!root) return;
     
+}
+
+void flatten(TreeNode* root) {
+    if(!root) return;
+    TreeNode* res = NULL, *res_tail = NULL;
+    flatten(root, res, res_tail);
 }
 
 int main(){
