@@ -18,8 +18,25 @@ return the root of the binary tree [4,5,2,#,#,3,1].
 
 #include "header.h"
 
+TreeNode* upsideDownBinaryTree(TreeNode* root, TreeNode*& right){
+    if(!root->left){
+        right = root;
+        return root;
+    }
+    TreeNode* r;
+    TreeNode* l = upsideDownBinaryTree(root->left, r);
+    root->left = NULL;
+    r->left  = root->right;
+    r->right = root;
+    root->right = NULL;
+    right = root;
+    return l;
+}
+
 TreeNode* upsideDownBinaryTree(TreeNode* root) {
-    
+    if(!root) return root;
+    TreeNode* right = NULL;
+    return upsideDownBinaryTree(root, right);
 }
 
 int main(){
