@@ -26,46 +26,34 @@ After running your function, the 2D grid should be:
 
 #define INF 2147483647
 
-void update(vector<vector<int> >& rooms, int m, int n, int i, int j){
-    vector<vector<bool> > visited(m, vector<bool>(n, false));
-    queue<pair<int,int> > curr;
-    queue<pair<int,int> > next;
-    curr.push(make_pair(i,j));
-    queue<pair<int,int> > q_arr[2] = {curr, next};
-    int x = 0;
-    visited[i][j] = true;
-    while(!q_arr[x%2].empty()){
-        pair<int,int> curr_pos = q_arr[x%2].front();
+/* only push cell with distance larger than current min x into queue */
+void wallsAndGates(vector<vector<int> >& rooms) {
+    int m = rooms.size();
+    if(m == 0) return;
+    int n = rooms[0].size();
+    queue<pair<int,int> > q;
+    for(int i=0; i<m; i++){
+        for(int j=0; j<n; j++){
+            if(rooms[i][j] == 0) q.push(make_pair(i, j));
+        }
+    }
+    while(!q.empty()){
+        pair<int,int> curr_pos = q.front();
         int move[4][2] = {
             {0, 1},
             {0, -1},
             {1, 0}, 
             {-1, 0}
         }; 
+        int x = rooms[curr_pos.first][curr_pos.second]+1;
+        q.pop();
         for(int k=0; k<4; k++){
             int new_x = move[k][0]+curr_pos.first;
             int new_y = move[k][1]+curr_pos.second;
-            if(new_x<m && new_x>=0 && new_y<n && new_y>=0 && rooms[new_x][new_y]>0  && visited[new_x][new_y] == false){
-                rooms[new_x][new_y] = min(rooms[new_x][new_y], x+1);
-                visited[new_x][new_y] = true;
-                q_arr[(x+1)%2].push(make_pair(new_x, new_y));
+            if(new_x<m && new_x>=0 && new_y<n && new_y>=0 && rooms[new_x][new_y]>x){
+                rooms[new_x][new_y] = x;
+                q.push(make_pair(new_x, new_y));
             }
-        }
-        q_arr[x%2].pop();
-        if(q_arr[x%2].empty()){
-            x++;
-        }
-    }
-}
-
-void wallsAndGates(vector<vector<int> >& rooms) {
-    int m = rooms.size();
-    if(m == 0) return;
-    int n = rooms[0].size();
-    for(int i=0; i<m; i++){
-        for(int j=0; j<n; j++){
-            if(rooms[i][j] == 0)
-                update(rooms, m, n, i, j);
         }
     }
 }
