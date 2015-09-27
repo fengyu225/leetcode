@@ -9,7 +9,15 @@ You are guaranteed to have only one unique value in the BST that is closest to t
 #include "header.h"
 
 int closestValue(TreeNode* root, double target) {
-
+    TreeNode* curr = root, *candidate = root;
+    while(curr){
+        if(target == curr->val) return curr->val;
+        if(fabs((double)candidate->val - target)>fabs((double)curr->val - target))
+            candidate = curr;
+        else if(target>curr->val) curr = curr->right;
+        else curr = curr->left;
+    }
+    return candidate->val;
 }
 
 int main(){
