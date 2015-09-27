@@ -18,18 +18,15 @@ int kthSmallest(TreeNode* root, int k) {
         TreeNode* temp = st.top();
         if(temp->left) st.push(temp->left);
         else{
-            while(!st.empty() && st.top()->right == NULL){
-                temp = st.top();
+            while(!st.empty()){
+                TreeNode* temp = st.top();
                 st.pop();
                 curr++;
-                if(curr == k) return temp->val;
-            }
-            if(!st.empty()){
-                temp = st.top();
-                st.pop();
-                curr++;
-                if(curr == k) return temp->val;
-                st.push(temp->right);
+                if(curr==k) return temp->val;
+                if(temp->right){
+                    st.push(temp->right);
+                    break;
+                }
             }
         }
     }
