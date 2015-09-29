@@ -17,34 +17,53 @@ Your runtime complexity should be less than O(n2).
 //    }
 //}
 
-int search(vector<int>& nums, int l, int r){
-    if(l == r) return nums[l];
-    int tail = l, curr = l+1;
-    int min_v = nums[l], max_v = nums[l];
-    while(curr<=r){
-        if(nums[curr]<min_v) min_v = nums[curr];
-        if(nums[curr]>max_v) max_v = nums[curr];
-        if(nums[curr] == nums[l] || curr != r && nums[curr] == nums[r]) return nums[curr];
-        if(nums[curr]<nums[l]) swap(nums[++tail], nums[curr]);
-        curr++;
-    }
-    swap(nums[tail], nums[l]);
-    if(tail == l) return search(nums, l+1, r);
-    if(tail == r) return search(nums, l, r-1);
-    if(nums[tail]-min_v<tail-l) return search(nums, l, tail);
-    else return search(nums, tail, r);
-}
+//int search(vector<int>& nums, int l, int r){
+//    //changing array
+//    if(l == r) return nums[l];
+//    int tail = l, curr = l+1;
+//    int min_v = nums[l], max_v = nums[l];
+//    while(curr<=r){
+//        if(nums[curr]<min_v) min_v = nums[curr];
+//        if(nums[curr]>max_v) max_v = nums[curr];
+//        if(nums[curr] == nums[l] || curr != r && nums[curr] == nums[r]) return nums[curr];
+//        if(nums[curr]<nums[l]) swap(nums[++tail], nums[curr]);
+//        curr++;
+//    }
+//    swap(nums[tail], nums[l]);
+//    if(tail == l) return search(nums, l+1, r);
+//    if(tail == r) return search(nums, l, r-1);
+//    if(nums[tail]-min_v<tail-l) return search(nums, l, tail);
+//    else return search(nums, tail, r);
+//}
+//
+//int findDuplicate(vector<int>& nums) {
+//    int sz = nums.size();
+//    int l = 0, r = sz-1;
+//    return search(nums, l, r);
+//}
 
 int findDuplicate(vector<int>& nums) {
-    int sz = nums.size();
-    int l = 0, r = sz-1;
-    return search(nums, l, r);
+    print_vector<int>(nums);
+    int n = nums.size()-1;
+    int l = 1, r = n;
+    while(l<r){
+        int m = l+(r-l)/2;
+        int count = 0;
+        for(int i=0; i<n+1; i++){
+            if(nums[i]<=m) count++;
+        }
+        cout<<l<<" "<<" "<<m<<" "<<r<<" : "<<count<<endl;
+        if(count<=m) l=m+1;
+        //if(m-l+1>count) l=m;
+        else r=m;
+    }
+    return nums[l];
 }
 
 int main(){
 //    vector<int> nums = {1, 2, 3, 4, 5, 3};
 //    vector<int> nums = {2,2,2,2,2};
-    vector<int> nums = {14,16,12,1,16,17,6,8,5,19,16,13,16,3,11,16,4,16,9,7};
+    vector<int> nums = {1, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 16, 16, 16, 16, 16, 16, 17, 19};
     cout<<findDuplicate(nums)<<endl;
     return 0;
 }
