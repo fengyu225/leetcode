@@ -13,7 +13,6 @@ int maxProfit(vector<int>& prices){
     arr[0] = INT_MAX;
     for(int i=1; i<sz; i++){
         arr[i] = min(arr[i-1],prices[i-1]);
-        cout<<prices[i]<<" "<<arr[i]<<endl;
         res = max(res,prices[i]-arr[i]);
     }
     return res;
