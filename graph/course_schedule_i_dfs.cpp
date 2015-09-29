@@ -17,37 +17,28 @@ There are a total of 2 courses to take. To take course 1 you should have finishe
 
 #include "header.h"
 
-bool visit(unordered_map<int, vector<int> >& graph, unordered_map<int,int>& m, int curr){
-    m[curr] = 1;
-    vector<int> n = graph[curr];
-    for(int i=0; i<n.size(); i++){
-        if(m[n[i]] == 1) return false;
-        if(m[n[i]] == 2) continue;
-        m[n[i]] = 1;
-        bool res = visit(graph, m, n[i]);
-        if(!res) return false;
-        m[n[i]] = 2;
+bool visit(int curr, unordered_map<int, vector<int> >& graph, vector<int>& visited){
+    visited[curr] = 1;
+    for(auto r:graph[curr]){
+        if(visited[r] == 1) return false;
+        if(visited[r] == 2) continue;
+        if(!visit(r, graph, visited)) return false;
     }
-    m[curr] = 2;
+    visited[curr] = 2;
     return true;
-} 
+}
 
-bool canFinish(int numCourses, vector<pair<int, int> >& prerequisites){
+bool canFinish(int numCourses, vector<pair<int, int> >& prerequisites) {
     if(numCourses == 0) return true;
-    unordered_map<int, int> m;
-    unordered_map<int, vector<int> > graph;
-    for(int i=0; i<prerequisites.size(); i++){
-        int from = prerequisites[i].first;
-        int to = prerequisites[i].second;
-        if(graph.find(from) == graph.end()){
-            graph[from] = vector<int>();
-        }
-        graph[from].push_back(to);
+    unordered_map<int,vector<int> > graph;
+    for(auto p:prerequisites){
+        if(graph.find(p.first) == graph.end()) graph[p.first] = vector<int>();
+        graph[p.first].push_back(p.second);
     }
-    for(int i=1; i<numCourses; i++){
-        if(m[i]==0){
-            bool res = visit(graph, m, i);
-            if(!res) return false;
+    vector<int> visited(numCourses, 0);
+    for(int i=0; i<numCourses; i++){
+        if(visited[i] == 0){
+            if(!visit(i, graph, visited)) return false;
         }
     }
     return true;
