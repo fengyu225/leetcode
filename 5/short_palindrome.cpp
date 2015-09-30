@@ -10,26 +10,23 @@ Given "abcd", return "dcbabcd".
 #include "header.h"
 
 string shortestPalindrome(string s) {
-    if(s.length()<2) return s;
-    string orig = s;
+    string temp = s;
     reverse(s.begin(), s.end());
-    string ss = orig+"#"+s;
-    vector<int> next(ss.length()+1, -1);
-    int k = -1, curr = 0;
-    next[0] = -1;
-    while(curr<ss.length()){
-        if(k == -1 || ss[curr]==ss[k]){
-            k++;
-            curr++;
-            next[curr] = k;
+    s = temp+"#"+s;
+    int s_len = s.length();
+    vector<int> next(s_len+1, -1);
+    int curr = 0, k = -1;
+    while(curr<s_len){
+        if(k == -1 || s[curr] == s[k]) next[++curr] = ++k;
+        else{
+            k = next[k];
         }
-        else k = next[k];
     }
-    int l = next[ss.length()];
-    if(l == orig.length()) return orig;
-    string pre = orig.substr(l, orig.length()-l);
+    int l = next[s_len];
+    if(l == temp.length()) return temp;
+    string pre = temp.substr(l, temp.length()-l);
     reverse(pre.begin(), pre.end());
-    return pre+orig;
+    return pre+temp;
 }
 
 int main(){
