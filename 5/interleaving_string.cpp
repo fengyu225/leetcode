@@ -27,10 +27,6 @@ bool isInterleave(string s1, string s2, string s3){
             else arr[i][j] = false;
         }
     }
-    for(int i=0; i<s3_sz+1; i++){
-        for(int j=0; j<s1_sz+1; j++) cout<<arr[i][j]<<" ";
-        cout<<endl;
-    }
     return arr[s3_sz][s1_sz];
 }
 
