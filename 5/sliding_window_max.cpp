@@ -24,8 +24,9 @@ Could you solve it in linear time?
 
 vector<int> maxSlidingWindow(vector<int>& nums, int k) {
     int sz = nums.size();
-    if(sz <= 1 || k==1) return nums;
+    if(sz<=1 || k == 1) return nums;
     deque<int> q;
+    k = min(k, sz);
     for(int i=0; i<k; i++){
         while(!q.empty() && nums[q.back()]<nums[i]) q.pop_back();
         q.push_back(i);
@@ -35,11 +36,11 @@ vector<int> maxSlidingWindow(vector<int>& nums, int k) {
     for(int i=k; i<sz; i++){
         while(!q.empty() && nums[q.back()]<nums[i]) q.pop_back();
         q.push_back(i);
-        if(!q.empty() && q.front()<=i-k) q.pop_front();
+        while(!q.empty() && q.front()<i-k+1) q.pop_front();
         res.push_back(nums[q.front()]);
     }
     return res;
-}
+}   
 
 int main(){
     int arr[] = {1, 3, -1, -3, 5, 3, 6, 7};

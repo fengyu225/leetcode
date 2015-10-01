@@ -10,28 +10,23 @@ You may assume k is always valid, 1 ≤ k ≤ array's length.
 
 #include "header.h"
 
-void swap(vector<int>& nums, int l, int r){
-    int temp = nums[l];
-    nums[l] = nums[r];
-    nums[r] = temp;
-}
-
 int findKthLargest(vector<int>& nums, int k) {
     int sz = nums.size();
-    int l = 0, r = sz-1;
+    if(sz == 1) return nums[0];
+    int l = 0, r = sz-1, tail, curr;
     while(l<r){
-        int tail = l, curr = l+1;
+        tail = l, curr = l+1;
         while(curr<=r){
-            if(nums[curr]>=nums[l]) swap(nums, ++tail, curr);
+            if(nums[curr]>nums[l]) swap(nums[++tail], nums[curr]);
             curr++;
         }
-        swap(nums, tail, l);
-        if(k == tail-l+1) return nums[tail];
-        else if(k<tail-l+1) r = tail-1;
-        else{
-            k -= (tail-l+1);
+        swap(nums[tail], nums[l]);
+        if(tail-l+1 == k) return nums[tail];
+        else if(tail-l+1<k){
+            k-=(tail-l+1);
             l = tail+1;
         }
+        else r=tail;
     }
     return nums[l];
 }
@@ -39,6 +34,6 @@ int findKthLargest(vector<int>& nums, int k) {
 int main(){
     int arr[] = {3, 2, 1, 5, 6, 4};
     vector<int> v_arr(arr, arr+sizeof(arr)/sizeof(arr[0]));
-    cout<<findKthLargest(v_arr, 6)<<endl;
+    cout<<findKthLargest(v_arr, 1)<<endl;
     return 0;    
 }

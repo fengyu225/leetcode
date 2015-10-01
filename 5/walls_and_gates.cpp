@@ -26,32 +26,30 @@ After running your function, the 2D grid should be:
 
 #define INF 2147483647
 
-/* only push cell with distance larger than current min x into queue */
 void wallsAndGates(vector<vector<int> >& rooms) {
-    int m = rooms.size();
-    if(m == 0) return;
-    int n = rooms[0].size();
+    int r = rooms.size();
+    if(r == 0) return;
+    int c = rooms[0].size();
     queue<pair<int,int> > q;
-    for(int i=0; i<m; i++){
-        for(int j=0; j<n; j++){
+    for(int i=0; i<r; i++){
+        for(int j=0; j<c; j++)
             if(rooms[i][j] == 0) q.push(make_pair(i, j));
-        }
     }
     while(!q.empty()){
         pair<int,int> curr_pos = q.front();
+        int curr_dis = rooms[curr_pos.first][curr_pos.second];
         int move[4][2] = {
             {0, 1},
             {0, -1},
-            {1, 0}, 
+            {1, 0},
             {-1, 0}
-        }; 
-        int x = rooms[curr_pos.first][curr_pos.second]+1;
+        };
         q.pop();
-        for(int k=0; k<4; k++){
-            int new_x = move[k][0]+curr_pos.first;
-            int new_y = move[k][1]+curr_pos.second;
-            if(new_x<m && new_x>=0 && new_y<n && new_y>=0 && rooms[new_x][new_y]>x){
-                rooms[new_x][new_y] = x;
+        for(int i=0; i<4; i++){
+            int new_x = curr_pos.first+move[i][0];
+            int new_y = curr_pos.second+move[i][1];
+            if(new_x>=0 && new_x<r && new_y>=0 && new_y<c && rooms[new_x][new_y]>curr_dis+1){
+                rooms[new_x][new_y] = curr_dis+1;
                 q.push(make_pair(new_x, new_y));
             }
         }

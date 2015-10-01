@@ -1,31 +1,40 @@
-#include <iostream>
-#include <vector>
-using namespace std;
+#include "header.h"
 
-// To execute C++, please define "int main()"
-
-
-// Input: array of unique integers, and size of the array
-// Output: second-largest number
-
-int func(vector<int>& arr){
-  int sz = arr.size();
-  if(sz<2) return -1;
-  int largest = -1, second_largest = -1;
-  for(int i=0; i<sz; i++){
-    if(largest == -1 || arr[i]>arr[largest]){
-      second_largest = largest;
-      largest = i;
+void search(unordered_map<string,vector<int> >& country_astr, int curr, int k, vector<string>& countries, vector<string>& selected, int& res){
+    if(selected.size() == k){
+        int temp = 1;
+        for(auto c:selected) temp*=country_astr[c].size();
+        res += temp;
+        print_vector<string>(selected);
+        return;
     }
-    else if(second_largest == -1 || arr[i]>arr[second_largest])
-      second_largest = i;
-  }
-  return second_largest;
+    if(curr == country_astr.size()) return;
+    for(int i=curr; i<countries.size(); i++){
+        selected.push_back(countries[i]);
+        search(country_astr, i+1, k, countries, selected, res);
+        selected.pop_back();
+    }
+}
+
+int count(unordered_map<string,vector<int> >& country_astr){
+    if(country_astr.size() == 0) return 0;
+    int res = 0;
+    vector<string> selected;
+    vector<string> countries;
+    for(auto i:country_astr) countries.push_back(i.first);
+    print_vector<string>(countries);
+    search(country_astr, 0, 2, countries, selected, res);
+    return res;
 }
 
 int main(){
-  int arr0[] = {0, 1, 2, 3};
-  vector<int> v_arr0(arr0, arr0+4);
-  cout<<func(v_arr0)<<endl;
-  return 0;
+    unordered_map<string, vector<int> > country_astr;
+    vector<int> China = {0, 1, 2};
+    vector<int> US = {0, 1};
+    vector<int> India = {0, 1};
+    country_astr["China"] = China;
+    country_astr["US"] = US;
+    country_astr["India"] = India;
+    cout<<count(country_astr)<<endl;
+    return 0;
 }
