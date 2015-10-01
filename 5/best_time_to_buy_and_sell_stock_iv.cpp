@@ -32,7 +32,7 @@ int maxProfit(int k, vector<int>& prices){
         for(int j = 1; j<=k; j++){
             local[j][i] = max(
                     global[j-1][i-1]+max(diff, 0),
-                    local[j][i-1]+diff
+                    local[j][i-1]+diff //cancel last sale at i-1
                     );
             global[j][i] = max(
                     global[j][i-1],
