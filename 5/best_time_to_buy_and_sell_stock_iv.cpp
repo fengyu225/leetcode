@@ -27,6 +27,7 @@ int maxProfit(int k, vector<int>& prices){
     int global[k+1][sz];
     memset(local, 0, sizeof(local));
     memset(global, 0, sizeof(global));
+    //local[j][i]: at most j transaction and last transaction sell at i
     for(int i=1; i<sz; i++){
         int diff = prices[i] - prices[i-1];
         for(int j = 1; j<=k; j++){
