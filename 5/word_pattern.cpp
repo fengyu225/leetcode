@@ -24,7 +24,6 @@ bool wordPattern(string pattern, string str) {
     unordered_map<char,string> from;
     unordered_map<string,char> to;
     while(getline(ss, curr, ' ')){
-//        cout<<curr<<endl;
         if(from.find(pattern[i]) == from.end() && to.find(curr) == to.end()){
             from[pattern[i]] = curr;
             to[curr] = pattern[i];
