@@ -37,9 +37,7 @@ void update(vector<vector<int> >& board, int i, int j, int r, int c){
     if(board[i][j]&1){
         if(live_count == 2 || live_count == 3) board[i][j]|=2;
     }
-    else{
-        if(live_count == 3) board[i][j] |= 2;
-    }
+    else if(live_count == 3) board[i][j] |= 2;
 }
 
 void gameOfLife(vector<vector<int> >& board) {
