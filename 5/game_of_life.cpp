@@ -16,8 +16,40 @@ In this question, we represent the board using a 2D array. In principle, the boa
 
 #include "header.h"
 
-void gameOfLife(vector<vector<int> >& board) {
+void update(vector<vector<int> >& board, int i, int j, int r, int c){
+    int move[8][2] = {
+        {0, 1},
+        {0, -1},
+        {1, 1},
+        {1, -1},
+        {1, 0},
+        {-1, 1},
+        {-1, -1},
+        {-1, 0}
+    }; 
+    int live_count = 0;
+    for(int x=0; x<8; x++){
+        int new_x = move[x][0]+i;
+        int new_y = move[x][1]+j;
+        if(new_x>=0 && new_x<r && new_y>=0 && new_y<c && board[new_x][new_y]&1)
+            live_count++;
+    }
+    if(board[i][j]&1){
+        if(live_count == 2 || live_count == 3) board[i][j]|=2;
+    }
+    else{
+        if(live_count == 3) board[i][j] |= 2;
+    }
+}
 
+void gameOfLife(vector<vector<int> >& board) {
+    int r = board.size();
+    if(r == 0) return;
+    int c = board[0].size();
+    for(int i=0; i<r; i++)
+        for(int j=0; j<c; j++) update(board, i, j, r, c);
+    for(int i=0; i<r; i++)
+        for(int j=0; j<c; j++) board[i][j]>>=1;
 }
 
 int main(){
