@@ -22,7 +22,11 @@ void gameOfLife(vector<vector<int> >& board) {
 
 int main(){
     vector<vector<int> > board = {
-     
+        {0, 1, 0}, 
+        {0, 0, 0}, 
+        {1, 0, 1} 
     };
+    gameOfLife(board);
+    print_2d_vector<int>(board);
     return 0;
 }
