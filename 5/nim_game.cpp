@@ -9,11 +9,10 @@ For example, if there are 4 stones in the heap, then you will never win the game
 #include "header.h"
 
 bool canWinNim(int n) {
-
+    return n%4 != 0;
 }
 
 int main(){
-
-
+    cout<<canWinNim(10)<<endl;
     return 0;
 }
