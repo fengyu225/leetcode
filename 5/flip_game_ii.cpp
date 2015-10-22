@@ -12,7 +12,17 @@ Derive your algorithm's runtime complexity.
 #include "header.h"
 
 bool canWin(string s) {
-
+    int sz = s.length();
+    for(int i=0; i<sz-1; i++){
+        if(s[i] == '+' && s[i+1] == '+'){
+            string temp = s;
+            temp[i] = '-';
+            temp[i+1] = '-';
+            bool res = canWin(temp);
+            if(!res) return true;
+        }
+    }
+    return false;
 }
 
 int main(){
