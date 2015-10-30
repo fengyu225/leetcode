@@ -26,16 +26,32 @@ Note: Do not use class member/global/static variables to store states. Your seri
  * };
  */
 class Codec {
+    TreeNode* deserialize(vector<string>& v, int curr, int& end){
+        if(curr == v.size()) return NULL;
+        end = curr;
+        if(v[curr] == "#") return NULL;
+        TreeNode* root = new TreeNode(stoi(v[curr]));
+        int x = end;
+        root->left = deserialize(v, curr+1, x);
+        root->right = deserialize(v, x+1, end);
+        return root;
+    }
 public:
 
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
-
+        if(!root) return "#|";
+        return to_string(root->val)+"|"+serialize(root->left)+serialize(root->right);    
     }
 
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
-        
+        vector<string> v;
+        stringstream ss(data);
+        string temp;
+        while(getline(ss, temp, '|')) v.push_back(temp);
+        int end = 0;
+        return deserialize(v, 0, end);
     }
 };
 
