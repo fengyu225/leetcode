@@ -20,9 +20,24 @@ You may assume that the secret number and your friend's guess only contain digit
 #include "header.h"
 
 string getHint(string secret, string guess) {
-    
+    int a = 0, b = 0;
+    vector<int> count(10, 0);
+    int len = secret.length();
+    for(int i=0; i<len; i++){
+        if(secret[i] == guess[i]) a++;
+        else count[secret[i]-'0']++;
+    }
+    for(int i=0; i<len; i++){
+        if(secret[i] != guess[i] && count[guess[i]-'0']){
+            count[guess[i]-'0']--;
+            b++;
+        }
+    }
+    return to_string(a)+"A"+to_string(b)+"B";
 }
 
 int main(){
-    
+    //cout<<getHint("1123", "0111")<<endl;
+    cout<<getHint("1807", "1807")<<endl;
+    return 0; 
 }
