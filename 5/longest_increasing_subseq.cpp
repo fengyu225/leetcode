@@ -12,20 +12,30 @@ Follow up: Could you improve it to O(n log n) time complexity?
 
 #include "header.h"
 
+//int lengthOfLIS(vector<int>& nums) {
+//    //dp
+//    int sz = nums.size(), res = 1;
+//    if(sz == 0) return 0;
+//    vector<int> arr(sz, 1);
+//    for(int i=1; i<sz; i++){
+//        int temp = 1;
+//        for(int j=0; j<i; j++){
+//            if(nums[j]<nums[i]) temp = max(temp, arr[j]+1);
+//        }
+//        arr[i] = temp;
+//        res = max(res, arr[i]);
+//    }
+//    return res;
+//}
+
 int lengthOfLIS(vector<int>& nums) {
-    //dp
-    int sz = nums.size(), res = 1;
-    if(sz == 0) return 0;
-    vector<int> arr(sz, 1);
-    for(int i=1; i<sz; i++){
-        int temp = 1;
-        for(int j=0; j<i; j++){
-            if(nums[j]<nums[i]) temp = max(temp, arr[j]+1);
-        }
-        arr[i] = temp;
-        res = max(res, arr[i]);
-    }
-    return res;
+    //nlogn using binary search
+    //http://www.geeksforgeeks.org/longest-monotonically-increasing-subsequence-size-n-log-n/
+    //https://en.wikipedia.org/wiki/Longest_increasing_subsequence
+    //m[i]=j means nums[j] is the current minimal ending integers in an non-decreasing array of length i
+    int sz = nums.size();
+    vector<int> m(sz, -1);
+        
 }
 
 int main(){
