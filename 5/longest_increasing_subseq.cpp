@@ -28,7 +28,7 @@ Follow up: Could you improve it to O(n log n) time complexity?
 //    return res;
 //}
 
-int find(vector<int>& nums, vector<int>& m, int i){
+int bsearch(vector<int>& nums, vector<int>& m, int i){
     int sz = m.size();
     int l = 0, r = sz-1;
     while(l+1<r){
@@ -50,7 +50,7 @@ int lengthOfLIS(vector<int>& nums) {
     for(int i=0; i<sz; i++){
         if(m[0] == -1 || nums[m[0]]>=nums[i]) m[0] = i;
         else{
-            int x = find(nums, m, i);
+            int x = bsearch(nums, m, i);
             m[x+1] = i;
         }
     }         
