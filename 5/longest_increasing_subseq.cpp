@@ -28,6 +28,17 @@ Follow up: Could you improve it to O(n log n) time complexity?
 //    return res;
 //}
 
+int find(vector<int>& nums, vector<int>& m, int i){
+    int sz = m.size();
+    int l = 0, r = sz-1;
+    while(l+1<r){
+        int x = l+(r-l)/2;
+        if(m[x] == -1 || nums[m[x]]>=nums[i]) r = x-1;
+        else l = x;
+    }
+    return m[r] != -1 && nums[m[r]]<nums[i]?r:l;
+}
+
 int lengthOfLIS(vector<int>& nums) {
     //nlogn using binary search
     //http://www.geeksforgeeks.org/longest-monotonically-increasing-subsequence-size-n-log-n/
@@ -35,11 +46,22 @@ int lengthOfLIS(vector<int>& nums) {
     //m[i]=j means nums[j] is the current minimal ending integers in an non-decreasing array of length i
     int sz = nums.size();
     vector<int> m(sz, -1);
-        
+    int res = 1;
+    for(int i=0; i<sz; i++){
+        if(m[0] == -1 || nums[m[0]]>=nums[i]) m[0] = i;
+        else{
+            int x = find(nums, m, i);
+            m[x+1] = i;
+        }
+    }         
+    for(res=0; res<sz && m[res]!=-1; res++);
+    return res;
 }
 
 int main(){
-    vector<int> nums = {10, 9, 2, 5, 3, 7, 101, 18};
+    vector<int> nums = {2,2};
+//    vector<int> nums = {10, 9, 2, 5, 3, 7, 101, 18};
+//    vector<int> nums = {9, 10};
     cout<<lengthOfLIS(nums)<<endl;
     return 0;
 }
