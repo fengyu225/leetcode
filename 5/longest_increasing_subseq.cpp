@@ -45,6 +45,7 @@ int lengthOfLIS(vector<int>& nums) {
     //https://en.wikipedia.org/wiki/Longest_increasing_subsequence
     //m[i]=j means nums[j] is the current minimal ending integers in an non-decreasing array of length i
     int sz = nums.size();
+    if(sz == 0) return 0;
     vector<int> m(sz, -1);
     int res = 1;
     for(int i=0; i<sz; i++){
