@@ -12,21 +12,21 @@ You may assume no duplicate exists in the array.
 
 int search(vector<int>& nums, int target){
     int sz = nums.size();
-    if(sz == 0) return -1;
-    int l=0, r=sz-1;
+    if(sz <2) return sz == 1 && nums[0] == target?0:-1;
+    int l = 0, r = sz-1;
     while(l<r){
-        int m = (l+r)/2;
+        int m = l+(r-l)/2;
         if(target == nums[m]) return m;
-        if(nums[0]<=nums[m]){
-            if(target>nums[m] || (target<nums[0] && target<nums[m])) l=m+1;
+        if(nums[0]<nums[m]){
+            if(target>nums[m] || target<nums[m] && target<nums[0]) l=m+1;
             else r=m-1;
         }
-        else{ //nums[0]>nums[m]
-            if((target>=nums[0] && target>nums[m]) || target<nums[m]) r=m-1;
+        else{
+            if(target<nums[m] || target>nums[0] && target>nums[m]) r=m-1;
             else l=m+1;
         }
     }
-    return l==r && nums[l] == target?l:-1;
+    return l == m && nums[l] == target?l:-1;
 }
 
 int main(){
