@@ -12,46 +12,83 @@ Examples:
 
 #include "header.h"
 
-void search(string& s, unordered_set<string>& res_set, string& temp, int curr, int open, int s_sz, int& max_valid_len){
-    //dfs
-    if(s_sz-curr<open) return;
-    if(curr == s_sz){
-        if(temp.length()>=max_valid_len && res_set.find(temp) == res_set.end()){
-            max_valid_len = temp.length();
-            res_set.insert(temp);
-        }
-        return;
-    }    
-    if(s[curr] != '(' && s[curr] != ')'){
-        temp += s[curr];
-        search(s, res_set, temp, curr+1, open, s_sz, max_valid_len);
-        temp.pop_back();
-        return;
+//void search(string& s, unordered_set<string>& res_set, string& temp, int curr, int open, int s_sz, int& max_valid_len){
+//    //dfs
+//    if(s_sz-curr<open) return;
+//    if(curr == s_sz){
+//        if(temp.length()>=max_valid_len && res_set.find(temp) == res_set.end()){
+//            max_valid_len = temp.length();
+//            res_set.insert(temp);
+//        }
+//        return;
+//    }    
+//    if(s[curr] != '(' && s[curr] != ')'){
+//        temp += s[curr];
+//        search(s, res_set, temp, curr+1, open, s_sz, max_valid_len);
+//        temp.pop_back();
+//        return;
+//    }
+//    if(s[curr] == '('){
+//        temp += "(";
+//        search(s, res_set, temp, curr+1, open+1, s_sz, max_valid_len);
+//        temp.pop_back();
+//        search(s, res_set, temp, curr+1, open, s_sz, max_valid_len);
+//    }
+//    else{
+//        if(!(s[curr] == ')' && open==0)){
+//            temp += ')';
+//            search(s, res_set, temp, curr+1, open-1, s_sz, max_valid_len);
+//            temp.pop_back();
+//        }
+//        search(s, res_set, temp, curr+1, open, s_sz, max_valid_len);
+//    }
+//}
+//
+//vector<string> removeInvalidParentheses(string s) {
+//    vector<string> res;
+//    int sz = s.length();
+//    unordered_set<string> res_set;
+//    string temp = "";
+//    int max_valid_len = 0;
+//    search(s, res_set, temp, 0, 0, sz, max_valid_len);
+//    for(string a:res_set) res.push_back(a);
+//    return res;
+//}
+
+bool is_valid(string& s){
+    int open = 0;
+    for(int i=0; i<s.length(); i++){
+        if(open<0) return false;
+        if(s[i] == '(') open++;
+        else if(s[i] == ')') open--;
     }
-    if(s[curr] == '('){
-        temp += "(";
-        search(s, res_set, temp, curr+1, open+1, s_sz, max_valid_len);
-        temp.pop_back();
-        search(s, res_set, temp, curr+1, open, s_sz, max_valid_len);
-    }
-    else{
-        if(!(s[curr] == ')' && open==0)){
-            temp += ')';
-            search(s, res_set, temp, curr+1, open-1, s_sz, max_valid_len);
-            temp.pop_back();
-        }
-        search(s, res_set, temp, curr+1, open, s_sz, max_valid_len);
-    }
+    return open == 0;
 }
 
 vector<string> removeInvalidParentheses(string s) {
     vector<string> res;
-    int sz = s.length();
-    unordered_set<string> res_set;
-    string temp = "";
-    int max_valid_len = 0;
-    search(s, res_set, temp, 0, 0, sz, max_valid_len);
-    for(string a:res_set) res.push_back(a);
+    queue<string> q;
+    unordered_set<string> visited;
+    unordered_set<string> existed;
+    q.push(s);
+    bool found = false;
+    while(!q.empty()){
+        string temp = q.front();
+        q.pop();
+        if(is_valid(temp)){
+            res.push_back(temp);
+            found = true;
+        }
+        if(found) continue;
+        for(int i=0; i<temp.length(); i++){
+            if(temp[i] != '(' && temp[i] != ')') continue;
+            string temp_n = temp.substr(0, i) + temp.substr(i+1, temp.length()-i-1);
+            if(visited.find(temp_n) == visited.end()){
+                q.push(temp_n);
+                visited.insert(temp_n);
+            }
+        }
+    }
     return res;
 }
 
@@ -61,9 +98,6 @@ int main(){
 //    vector<string> res = removeInvalidParentheses(")()");
 //    vector<string> res = removeInvalidParentheses("(");
 //    vector<string> res = removeInvalidParentheses(")");
-//    string input = "";
-//    for(int i=0; i<10; i++) input.append("(");
-//    for(int i=0; i<9; i++) input.append(")");
     vector<string> res = removeInvalidParentheses("(()()))q(l)()o)(z");
     cout<<res.size()<<endl;
     for(string temp:res){
