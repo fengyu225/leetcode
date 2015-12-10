@@ -69,7 +69,6 @@ vector<string> removeInvalidParentheses(string s) {
     vector<string> res;
     queue<string> q;
     unordered_set<string> visited;
-    unordered_set<string> existed;
     q.push(s);
     bool found = false;
     while(!q.empty()){
@@ -80,13 +79,17 @@ vector<string> removeInvalidParentheses(string s) {
             found = true;
         }
         if(found) continue;
+        int open = 0;
         for(int i=0; i<temp.length(); i++){
             if(temp[i] != '(' && temp[i] != ')') continue;
             string temp_n = temp.substr(0, i) + temp.substr(i+1, temp.length()-i-1);
             if(visited.find(temp_n) == visited.end()){
                 q.push(temp_n);
                 visited.insert(temp_n);
+                if(open ==0 && temp[i]==')') break;
             }
+            if(temp[i] == '(') open++;
+            else open--;
         }
     }
     return res;
