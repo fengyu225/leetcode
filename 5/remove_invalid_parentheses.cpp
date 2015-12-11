@@ -55,6 +55,18 @@ Examples:
 //    return res;
 //}
 
+long get_time(){
+    namespace sc = std::chrono;
+    auto time = sc::system_clock::now(); // get the current time
+    auto since_epoch = time.time_since_epoch(); // get the duration since epoch
+    // I don't know what system_clock returns
+    // I think it's uint64_t nanoseconds since epoch
+    // Either way this duration_cast will do the right thing
+    auto millis = sc::duration_cast<sc::milliseconds>(since_epoch);
+    long now = millis.count(); // just like java (new Date()).getTime();
+    return now;
+}
+
 bool is_valid(string& s){
     int open = 0;
     for(int i=0; i<s.length(); i++){
@@ -82,6 +94,11 @@ vector<string> removeInvalidParentheses(string s) {
         int open = 0;
         for(int i=0; i<temp.length(); i++){
             if(temp[i] != '(' && temp[i] != ')') continue;
+            if(i>0 && temp[i]==temp[i-1]){
+                if(temp[i] == '(') open++;
+                else open--;
+                continue;
+            }
             string temp_n = temp.substr(0, i) + temp.substr(i+1, temp.length()-i-1);
             if(visited.find(temp_n) == visited.end()){
                 q.push(temp_n);
