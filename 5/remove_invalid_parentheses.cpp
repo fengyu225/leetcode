@@ -67,9 +67,11 @@ bool is_valid(string& s){
 
 class Node{
     public:
-        Node(string s, int last_index):s(s),last_index(last_index){}
+        Node(string s, int last_index):s(s),last_index(last_index),met_left(false){}
+        Node(string s, int last_index, bool met_left):s(s),last_index(last_index),met_left(met_left){}
         string s;
         int last_index;
+        bool met_left;
 };
 
 /*
@@ -115,9 +117,10 @@ vector<string> removeInvalidParentheses(string s) {
         int temp_sz = temp->s.length();
         for(int i=temp->last_index; i<temp_sz; i++){
             if(temp->s[i] != '(' && temp->s[i] != ')') continue;
+            if(temp->met_left && temp->s[i] == ')') continue;
             if(!(i>temp->last_index && temp->s[i] == temp->s[i-1])){
                 string temp_n = temp->s.substr(0, i) + temp->s.substr(i+1, temp_sz-i-1);
-                qs[(curr+1)%2].push(new Node(temp_n, i));
+                qs[(curr+1)%2].push(new Node(temp_n, i, temp->s[i] == '('));
             }
         }
         if(qs[curr%2].empty()) curr++;
