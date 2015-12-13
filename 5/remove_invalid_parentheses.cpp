@@ -46,7 +46,6 @@ Examples:
 //
 
 void search(string& s, unordered_set<string>& res_set, string& temp, int curr, int open, int s_sz, int& max_valid_len, bool left_deleted){
-    //(()()))q(l)()o)(z)
     // dfs
     if(s_sz-curr<open) return;
     if(curr == s_sz){
@@ -77,7 +76,6 @@ void search(string& s, unordered_set<string>& res_set, string& temp, int curr, i
         if(!left_deleted){
             search(s, res_set, temp, curr+1, open, s_sz, max_valid_len, left_deleted);
         }
-        //cout<<temp<<" "<<left_deleted<<endl;
     }
 }
 
@@ -207,7 +205,11 @@ int main(){
 //    vector<string> res = removeInvalidParentheses(")()");
 //    vector<string> res = removeInvalidParentheses("(");
 //    vector<string> res = removeInvalidParentheses(")");
-    vector<string> res = removeInvalidParentheses("(()()))q(l)()o)(z");
+//    vector<string> res = removeInvalidParentheses("(()()))q(l)()o)(z");
+    string x = "";
+    for(int i=0; i<100; i++) x+="(";
+    for(int i=0; i<99; i++) x+=")";
+    vector<string> res = removeInvalidParentheses(x);
     cout<<res.size()<<endl;
     for(string temp:res){
         cout<<temp<<endl;
