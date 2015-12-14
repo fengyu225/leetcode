@@ -15,9 +15,14 @@ Return 6.
 
 #include "header.h"
 
+int search(vector<vector<int> >& image, bool horizontal, bool neg, int x, int y){
+
+}
+
 int minArea(vector<vector<char> >& image, int x, int y){
     if(image.size() == 0 || image[0].size() == 0) return 0;
     int row = image.size(), col = image[0].size();
+    int a = search(image, )
 }
 
 /*
