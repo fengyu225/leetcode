@@ -37,6 +37,7 @@ int minArea(vector<vector<char> >& image, int x, int y){
             }
         }
     }
+    cout<<lengthX<<" "<<lengthY<<endl;
     return lengthX * lengthY;
 }
 
@@ -87,9 +88,10 @@ int minArea(vector<vector<char> >& image, int x, int y){
 
 int main(){
     vector<vector<char> > image = {
-        {'0', '0', '1', '0'},
-        {'0', '1', '1', '0'},
-        {'0', '1', '0', '0'}
+        {'0', '0', '0', '0'},
+        {'0', '1', '0', '0'},
+        {'0', '1', '1', '1'},
+        {'0', '0', '1', '0'}
     };
     cout<<minArea(image, 0, 2)<<endl;
     return 0;
