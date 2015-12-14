@@ -15,52 +15,12 @@ Return 6.
 
 #include "header.h"
 
-//void update(pair<int,int>& p, int& left, int& right, int& top, int& bottom){
-//    //cout<<left<<" "<<right<<" "<<p.second<<endl;
-//    left = p.second<left?p.second:left;
-//    right = p.second>right?p.second:right;
-//    top = p.first<top?p.first:top;
-//    bottom = p.first>bottom?p.first:bottom;
-//}
-//
-//int minArea(vector<vector<char> >& image, int x, int y){
-//    int r = image.size();
-//    if(r == 0) return 0;
-//    int c = image[0].size();
-//    if(c == 0) return 0;
-//    queue<pair<int,int> > q;
-//    q.push(make_pair(x, y));
-//    int left=c, right=-1, top=r, bottom=-1;
-//    while(!q.empty()){
-//        pair<int,int> p = q.front();
-//        q.pop();
-//        update(p, left, right, top, bottom);
-//        image[p.first][p.second]='2';
-//        int move[4][2] = {
-//            {-1, 0},
-//            {1, 0},
-//            {0, -1},
-//            {0, 1}
-//        };
-//        for(int i=0; i<4; i++){
-//            int new_x = p.first+move[i][0];
-//            int new_y = p.second+move[i][1];
-////                cout<<p.first<<" "<<p.second<<" "<<new_x<<" "<<new_y<<" "<<endl;
-//            if(new_x>=0 && new_x<r && new_y>=0 && new_y<c && image[new_x][new_y] == '1'){
-//                q.push(make_pair(new_x, new_y));
-//            }
-//        }
-//    }
-//    if(right>=left && bottom>=top)
-//        return (right-left+1)*(bottom-top+1);
-//    return 0;
-//}
-
-void update(int x, int y, int& left, int& right, int& top, int& bottom){
-    left = y<left?y:left;
-    right = y>right?y:right;
-    top = x<top?x:top;
-    bottom = x>bottom?x:bottom;
+void update(pair<int,int>& p, int& left, int& right, int& top, int& bottom){
+    //cout<<left<<" "<<right<<" "<<p.second<<endl;
+    left = p.second<left?p.second:left;
+    right = p.second>right?p.second:right;
+    top = p.first<top?p.first:top;
+    bottom = p.first>bottom?p.first:bottom;
 }
 
 int minArea(vector<vector<char> >& image, int x, int y){
@@ -68,16 +28,57 @@ int minArea(vector<vector<char> >& image, int x, int y){
     if(r == 0) return 0;
     int c = image[0].size();
     if(c == 0) return 0;
-    int left = c, right=-1, top=r, bottom=-1;
-    for(int i=0; i<r; i++){
-        for(int j=0; j<c; j++){
-            if(image[i][j] == '1')
-            update(i, j, left, right, top, bottom);
+    queue<pair<int,int> > q;
+    q.push(make_pair(x, y));
+    image[x][y]='2';
+    int left=c, right=-1, top=r, bottom=-1;
+    while(!q.empty()){
+        pair<int,int> p = q.front();
+        q.pop();
+        update(p, left, right, top, bottom);
+        int move[4][2] = {
+            {-1, 0},
+            {1, 0},
+            {0, -1},
+            {0, 1}
+        };
+        for(int i=0; i<4; i++){
+            int new_x = p.first+move[i][0];
+            int new_y = p.second+move[i][1];
+//                cout<<p.first<<" "<<p.second<<" "<<new_x<<" "<<new_y<<" "<<endl;
+            if(new_x>=0 && new_x<r && new_y>=0 && new_y<c && image[new_x][new_y] == '1'){
+                q.push(make_pair(new_x, new_y));
+                image[new_x][new_y] = '2';
+            }
         }
     }
-//    cout<<left<<" "<<right<<" "<<bottom<<" "<<top<<endl;
-    return (right-left+1)*(bottom-top+1);
+    if(right>=left && bottom>=top)
+        return (right-left+1)*(bottom-top+1);
+    return 0;
 }
+
+//void update(int x, int y, int& left, int& right, int& top, int& bottom){
+//    left = y<left?y:left;
+//    right = y>right?y:right;
+//    top = x<top?x:top;
+//    bottom = x>bottom?x:bottom;
+//}
+//
+//int minArea(vector<vector<char> >& image, int x, int y){
+//    int r = image.size();
+//    if(r == 0) return 0;
+//    int c = image[0].size();
+//    if(c == 0) return 0;
+//    int left = c, right=-1, top=r, bottom=-1;
+//    for(int i=0; i<r; i++){
+//        for(int j=0; j<c; j++){
+//            if(image[i][j] == '1')
+//            update(i, j, left, right, top, bottom);
+//        }
+//    }
+////    cout<<left<<" "<<right<<" "<<bottom<<" "<<top<<endl;
+//    return (right-left+1)*(bottom-top+1);
+//}
 
 /*
 "000000000000000000000010000000000000000000000000000000000000000000000000000",
