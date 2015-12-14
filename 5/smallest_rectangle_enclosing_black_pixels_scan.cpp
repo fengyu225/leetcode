@@ -16,14 +16,12 @@ Return 6.
 #include "header.h"
 
 int minArea(vector<vector<char> >& image, int x, int y){
-    if (image.size() == 0 || image[0].size() == 0) {
-        return 0;
-    }
-    int n = image.size();
-    int m = image[0].size();
+    if (image.size() == 0 || image[0].size() == 0) return 0;
+    int row = image.size();
+    int col = image[0].size();
     int lengthX = 0;
-    for (int j = 0; j < m; ++j) {
-        for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < col; ++j) {
+        for (int i = 0; i < row; ++i) {
             if (image[i][j] != '0') {
                 lengthX++;
                 break;
@@ -31,8 +29,8 @@ int minArea(vector<vector<char> >& image, int x, int y){
         }
     }
     int lengthY = 0;
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < m; ++j) {
+    for (int i = 0; i < row; ++i) {
+        for (int j = 0; j < col; ++j) {
             if (image[i][j] != '0') {
                 lengthY++;
                 break;
@@ -61,7 +59,6 @@ int minArea(vector<vector<char> >& image, int x, int y){
 //            update(i, j, left, right, top, bottom);
 //        }
 //    }
-////    cout<<left<<" "<<right<<" "<<bottom<<" "<<top<<endl;
 //    return (right-left+1)*(bottom-top+1);
 //}
 
