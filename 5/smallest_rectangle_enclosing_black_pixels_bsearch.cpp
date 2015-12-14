@@ -16,9 +16,8 @@ Return 6.
 #include "header.h"
 
 int minArea(vector<vector<char> >& image, int x, int y){
-    if(image.size() == 0 || image[0].size()==0) return 0;
+    if(image.size() == 0 || image[0].size() == 0) return 0;
     int row = image.size(), col = image[0].size();
-    
 }
 
 /*
@@ -44,12 +43,11 @@ int minArea(vector<vector<char> >& image, int x, int y){
 63
 */
 
-int main(){    
+int main(){
     vector<vector<char> > image = {
-        {'0', '0', '0', '0'},
-        {'0', '1', '0', '0'},
-        {'0', '1', '1', '1'},
-        {'0', '0', '1', '0'}
+        {'0', '0', '1', '0'},
+        {'0', '1', '1', '0'},
+        {'0', '1', '0', '0'}
     };
     cout<<minArea(image, 0, 2)<<endl;
     return 0;
