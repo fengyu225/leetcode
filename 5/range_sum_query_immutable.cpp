@@ -18,47 +18,25 @@ Show Similar Problems
 
 #include "header.h"
 
-/* naive approach 
 class NumArray {
-    vector<vector<int> >* sums;
+    vector<int> sums;
     int arr_sz = 0;
 public:
     NumArray(vector<int> &nums) {
         arr_sz = nums.size();
-        sums = new vector<vector<int> >(arr_sz, vector<int>(arr_sz, 0));
+        sums.resize(arr_sz);
         if(arr_sz>0){
-            for(int i=0;i<arr_sz; i++){
-                (*sums)[i][i] = nums[i];
-                for(int j=i+1; j<arr_sz; j++) (*sums)[i][j] = (*sums)[i][j-1]+nums[j];
-            }
+            sums[0] = nums[0];
+            for(int i=1; i<arr_sz; i++) sums[i] = sums[i-1]+nums[i];
         }
+        for(int i=0; i<arr_sz; i++) cout<<sums[i]<<" ";
+        cout<<endl;
     }
 
     int sumRange(int i, int j) {
         if(arr_sz == 0) return 0;        
-        return (*sums)[i][j];
-    }
-};
-*/
-
-class NumArray {
-    vector<vector<int> >* sums;
-    int arr_sz = 0;
-public:
-    NumArray(vector<int> &nums) {
-        arr_sz = nums.size();
-        sums = new vector<vector<int> >(arr_sz, vector<int>(arr_sz, 0));
-        if(arr_sz>0){
-            for(int i=0;i<arr_sz; i++){
-                (*sums)[i][i] = nums[i];
-                for(int j=i+1; j<arr_sz; j++) (*sums)[i][j] = (*sums)[i][j-1]+nums[j];
-            }
-        }
-    }
-
-    int sumRange(int i, int j) {
-        if(arr_sz == 0) return 0;        
-        return (*sums)[i][j];
+        cout<<sums[i]<<" "<<sums[j]<<endl;
+        return sums[j]-(i == 0?0:sums[i-1]);
     }
 };
 
@@ -68,12 +46,10 @@ public:
 // numArray.sumRange(1, 2);
 
 int main(){
-    //vector<int> num = {-2, 0, 3, -5, 2, -1};
-    vector<int> num = {-2};
+    vector<int> num = {-2, 0, 3, -5, 2, -1};
     NumArray NumArray(num);
-    cout<<NumArray.sumRange(0, 0)<<endl;
     //cout<<NumArray.sumRange(0, 2)<<endl;
-    //cout<<NumArray.sumRange(2, 5)<<endl;
+    cout<<NumArray.sumRange(2, 5)<<endl;
     //cout<<NumArray.sumRange(0, 5)<<endl;
     return 0;
 }
