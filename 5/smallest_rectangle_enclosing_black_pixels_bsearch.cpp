@@ -15,14 +15,48 @@ Return 6.
 
 #include "header.h"
 
-int search(vector<vector<int> >& image, bool horizontal, bool neg, int x, int y){
+bool check(vector<vector<char> >& image, bool horizontal, int m){
+    //return true if all 0
+    if(horizontal){
+        for(int i=0; i<image.size(); i++)
+            if(image[i][m] == '1') return false;
+        return true;
+    } 
+    else{
+        for(int i=0; i<image[0].size(); i++)
+            if(image[m][i] == '1') return false;
+        return true;
+    }
+}   
 
+int search(vector<vector<char> >& image, bool horizontal, bool neg, int x, int y){
+    int b = horizontal?y:x;
+    int small=neg?b:0, large=neg?(horizontal?image[0].size():image.size())-1:b;
+    int l = small, r = large;
+    if(small == large) return 0;
+    while(l+1<r){
+        int m = (l+r)/2;
+        if(check(image, horizontal, m)){
+            if(neg) r=m-1;
+            else l=m+1;
+        }
+        else{
+            if(neg) l=m;
+            else r=m;
+        }
+    }
+    int temp = check(image, horizontal, l)?r:check(image, horizontal, r)?l:neg?r:l;
+    return neg?(horizontal?image[0].size():image.size())-temp-1:temp;
 }
 
 int minArea(vector<vector<char> >& image, int x, int y){
     if(image.size() == 0 || image[0].size() == 0) return 0;
-    int row = image.size(), col = image[0].size();
-    int a = search(image, )
+    int a = search(image, true, false, x, y);
+    int b = search(image, true, true, x, y);
+    int c = search(image, false, false, x, y);
+    int d = search(image, false, true, x, y);
+    cout<<a<<" "<<b<<" "<<c<<" "<<d<<endl;
+    return (image[0].size()-a-b)*(image.size()-c-d);
 }
 
 /*
