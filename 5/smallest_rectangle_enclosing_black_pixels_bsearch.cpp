@@ -55,7 +55,6 @@ int minArea(vector<vector<char> >& image, int x, int y){
     int b = search(image, true, true, x, y);
     int c = search(image, false, false, x, y);
     int d = search(image, false, true, x, y);
-    cout<<a<<" "<<b<<" "<<c<<" "<<d<<endl;
     return (image[0].size()-a-b)*(image.size()-c-d);
 }
 
