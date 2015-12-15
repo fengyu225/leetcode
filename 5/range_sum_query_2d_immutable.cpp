@@ -22,34 +22,28 @@ You may assume that row1 ≤ row2 and col1 ≤ col2.
 #include "header.h"
 
 class NumMatrix {
-    vector<vector<pair<int,int> > > one_d_sum;
-    vector<vector<int> > two_d_sum;
-    vector<vector<int> >* m;
+    vector<vector<int> > sums;
 public:
     NumMatrix(vector<vector<int> > &matrix) {
-        m = &matrix;
         if(!(matrix.size() == 0 || matrix[0].size() == 0)){
             int row = matrix.size(), col = matrix[0].size();
-            one_d_sum.resize(row);
-            two_d_sum.resize(row);
+            sums = vector<vector<int> >(row, vector<int>(col, 0));
             for(int i=0; i<row; i++){
                 for(int j=0; j<col; j++){
-                    one_d_sum[i].push_back(make_pair(0, 0));
-                    one_d_sum[i][j].first = (j==0?matrix[i][0]:(one_d_sum[i][j-1].first+matrix[i][j]));
-                    one_d_sum[i][j].second = i==0?matrix[i][j]:(one_d_sum[i-1][j].second+matrix[i][j]);
-                    if(i == 0) two_d_sum[i].push_back(one_d_sum[i][j].first);
-                    else if(j == 0) two_d_sum[i].push_back(one_d_sum[i][j].second);
-                    else two_d_sum[i].push_back(two_d_sum[i-1][j-1]+one_d_sum[i][j].first+one_d_sum[i][j].second-matrix[i][j]);
+                    if(i == 0 && j == 0) sums[i][j] = matrix[i][j];
+                    else if(i == 0) sums[i][j] = sums[i][j-1]+matrix[i][j];
+                    else if(j == 0) sums[i][j] = sums[i-1][j]+matrix[i][j];
+                    else sums[i][j] = sums[i-1][j]+sums[i][j-1]-sums[i-1][j-1]+matrix[i][j];
                 }
             }
         }
     }
 
     int sumRegion(int row1, int col1, int row2, int col2) {
-        if(row1 == 0 && col1 == 0) return two_d_sum[row2][col2];
-        else if(row1 == 0) return two_d_sum[row2][col2]-two_d_sum[row2][col1-1];
-        else if(col1 == 0) return two_d_sum[row2][col2]-two_d_sum[row1-1][col2];
-        else return two_d_sum[row2][col2]-two_d_sum[row1-1][col2]-two_d_sum[row2][col1-1]+two_d_sum[row1-1][col1-1];
+        if(row1 == 0 && col1 == 0) return sums[row2][col2];
+        else if(row1 == 0) return sums[row2][col2]-sums[row2][col1-1];
+        else if(col1 == 0) return sums[row2][col2]-sums[row1-1][col2];
+        else return sums[row2][col2]-sums[row1-1][col2]-sums[row2][col1-1]+sums[row1-1][col1-1];
     }
 };
 
