@@ -37,8 +37,8 @@ Can you do it in time complexity O(k log mn), where k is the length of the posit
 #include "header.h"
 
 int f(unordered_map<int,int>& mp, int x){
-    if(mp[x] < 0) return x;
-    return f(mp, mp[x]);
+    while(mp[x]>=0) x = mp[x];
+    return x; 
 }
 
 vector<int> numIslands2(int m, int n, vector<pair<int, int> >& positions) {
