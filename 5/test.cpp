@@ -1,65 +1,25 @@
-/*
-Validate if a given string is numeric.
+#include<vector>
+#include<iostream>
 
-Some examples:
-"0" => true
-" 0.1 " => true
-"abc" => false
-"1 a" => false
-"2e10" => true
-Note: It is intended for the problem statement to be ambiguous. You should gather all requirements up front before implementing one.
+using namespace std;
 
-Update (2015-02-10):
-The signature of the C++ function had been updated. If you still see your function signature accepts a const char * argument, please click the reload button  to reset your code definition.
-*/
-
-#include "header.h"
-
-bool isNumber(string s){
-    int i=0;
-    int sz = s.size();
-    while(s[0]==' ') s.erase(0, 1);
-    while(s[s.size()-1]==' ') s.erase(s.size()-1,1);
-    bool seen_num = false, seen_e=false, seen_dot=false, seen_coma=false, num_after_e=false;
-    bool seen_flag = false;
-    if(s[0]=='-'||s[0]=='+'){
-        s.erase(0,1);
-        seen_flag = true; 
-    }
-    sz = s.size();
-    if(sz == 0) return false;
+int make_change(vector<int>& coins, int amount){
+    int sz = coins.size();
+    if(sz == 0) return 0;
+    vector<vector<int> > arr(sz, vector<int>(amount+1, 1));
     for(int i=0; i<sz; i++){
-        if(s[i]<='9' && s[i]>='0'){
-            seen_num = true;
-            if(seen_e) num_after_e=true;
-            continue;
+        for(int j=1; j<=amount; j++){
+            arr[i][j] = 
+                (i<1?0:arr[i-1][j])
+                +
+                (j<coins[i]?0:arr[i][j-coins[i]]);
         }
-        if(s[i] == 'e'){
-            if(!seen_num || seen_e || seen_coma) return false;
-            seen_e = true;
-            if(i+1<sz && (s[i+1]=='-' || s[i+1]=='+')) i++;
-            continue;
-        }
-        if(s[i] == '.'){
-            if(seen_dot || seen_e) return false;
-            seen_dot = true;
-            continue;
-        }
-        if(s[i] == ','){
-            if(!seen_num) return false;
-            seen_coma=true;
-            continue;
-        }
-        return false;
     }
-    return seen_dot&&!seen_num||seen_e&&!num_after_e?false:true;
+    return arr[sz-1][amount];
 }
 
 int main(){
-//    cout<<isNumber("0")<<endl;
-    cout<<isNumber("1  ")<<endl;
-//    cout<<isNumber("abc")<<endl;
-//    cout<<isNumber("1 a")<<endl;
-//    cout<<isNumber("2e10")<<endl;
+    vector<int> coins = {1, 5, 10, 25, 50};
+    cout<<make_change(coins, 0)<<endl;
     return 0;
 }
