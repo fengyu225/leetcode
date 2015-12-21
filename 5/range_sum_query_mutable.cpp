@@ -18,17 +18,41 @@ You may assume the number of calls to update and sumRange function is distribute
 #include "header.h"
 
 class NumArray {
+    int sz;
+    vector<int> sums;
+    vector<int>* nums_ptr;
 public:
     NumArray(vector<int> &nums) {
-        
+        sz = nums.size();
+        nums_ptr = &nums;
+        sums = vector<int>(sz+1, 0);
+        for(int i=1; i<=sz; i++){
+            _update(i, nums[i-1]); 
+        }
     }
 
-    void update(int i, int val) {
-        
+    void _update(int i, int val) {
+        while(i<=sz){
+            sums[i] += val;
+            i += (i^(i-1));
+        } 
     }
 
-    int sumRange(int i, int j) {
-        
+    void update(int i, int val){
+        _update(i+1, val-(*nums_ptr)[i]);
+    }
+
+    int _sumRange(int i) {
+        int res = 0;
+        while(i>0){
+            res += sums[i];
+            i -= (i^(i-1));
+        } 
+        return res;
+    }
+
+    int sumRange(int i, int j){
+        return _sumRange(j+1)-_sumRange(i);
     }
 };
 
