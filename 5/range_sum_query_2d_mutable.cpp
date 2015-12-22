@@ -91,7 +91,7 @@ int main(){
     };
     NumMatrix numMatrix(matrix);
     cout<<numMatrix.sumRegion(2, 1, 4, 3)<<endl;
-    numMatrix.update(3, 2, 2);
-    cout<<numMatrix.sumRegion(2, 1, 4, 3)<<endl;
+//    numMatrix.update(3, 2, 2);
+//    cout<<numMatrix.sumRegion(2, 1, 4, 3)<<endl;
     return 0;
 }
