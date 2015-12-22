@@ -42,7 +42,7 @@ class NumMatrix {
         while(row>0){
             for(int col_temp=col; col_temp>0; col_temp -= (col_temp & -col_temp))
                 res += sums[row][col_temp];
-            row += (row & -row);
+            row -= (row & -row);
         }
         return res;
     }
@@ -50,20 +50,24 @@ public:
     NumMatrix(vector<vector<int> > &matrix) {
         m = matrix;
         r = matrix.size();
-        c = matrix[0].size();
-        sums = vector<vector<int> >(r+1, vector<int>(c+1, 0));
-        for(int i=0; i<r; i++){
-            for(int j=0; j<c; j++)
-                _update(i, j, m[i][j]);
+        if(r>0){
+            c = matrix[0].size();
+            sums = vector<vector<int> >(r+1, vector<int>(c+1, 0));
+            for(int i=0; i<r; i++){
+                for(int j=0; j<c; j++)
+                    _update(i, j, m[i][j]);
+            }
         }
     }
 
     void update(int row, int col, int val) {
+        if(r == 0) return;
         _update(row, col, val-m[row][col]);
         m[row][col] = val;
     }
 
     int sumRegion(int row1, int col1, int row2, int col2) {
+        if(r == 0) return 0;
         if(row1==row2 && col1 == col2)
             return m[row1][col1];
         return 
@@ -91,7 +95,7 @@ int main(){
     };
     NumMatrix numMatrix(matrix);
     cout<<numMatrix.sumRegion(2, 1, 4, 3)<<endl;
-//    numMatrix.update(3, 2, 2);
-//    cout<<numMatrix.sumRegion(2, 1, 4, 3)<<endl;
+    numMatrix.update(3, 2, 2);
+    cout<<numMatrix.sumRegion(2, 1, 4, 3)<<endl;
     return 0;
 }
