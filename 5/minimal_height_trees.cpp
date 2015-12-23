@@ -63,10 +63,8 @@ vector<int> findMinHeightTrees(int n, vector<pair<int, int> >& edges) {
             remains--;
             for(int i:graph[temp]){
                 degree[i]--;
-                graph[i].erase(graph[i].find(temp));
-                if(degree[i] == 1){
-                    qs[(curr+1)%2].push(i);
-                }
+                graph[i].erase(temp);
+                if(degree[i] == 1) qs[(curr+1)%2].push(i);
             }
         }
         curr++;
