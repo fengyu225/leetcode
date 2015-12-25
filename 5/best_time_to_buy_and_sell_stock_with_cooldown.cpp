@@ -15,17 +15,22 @@ transactions = [buy, sell, cooldown, buy, sell]
 
 #include "header.h"
 
+//int maxProfit(vector<int>& prices) {
+//    int sz = prices.size();
+//    vector<int> global(sz+1, 0);
+//    vector<int> local(sz+1, 0);
+//    for(int i=2; i<=sz; i++){
+//        for(int j=0; j<i-1; j++){
+//            local[i] = max(local[i], prices[i-1]-prices[j]+(j-1>=0?global[j-1]:0));
+//        }
+//        global[i] = max(global[i-1], local[i]);
+//    }
+//    return global[sz];
+//}
+
+//https://leetcode.com/discuss/72030/share-my-dp-solution-by-state-machine-thinking
 int maxProfit(vector<int>& prices) {
     int sz = prices.size();
-    vector<int> global(sz+1, 0);
-    vector<int> local(sz+1, 0);
-    for(int i=2; i<=sz; i++){
-        for(int j=0; j<i-1; j++){
-            local[i] = max(local[i], prices[i-1]-prices[j]+(j-1>=0?global[j-1]:0));
-        }        
-        global[i] = max(global[i-1], local[i]);
-    }
-    return global[sz];
 }
 
 int main(){
