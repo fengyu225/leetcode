@@ -39,8 +39,11 @@ int maxProfit(vector<int>& prices) {
     s1[0] = -1*prices[0];
     s2[0] = 0;
     for(int i=1; i<sz; i++){
-        s0[i] = 
+        s0[i] = max(s0[i-1], s2[i-1]);
+        s1[i] = max(s0[i-1]-prices[i], s1[i-1]);
+        s2[i] = s1[i-1]+prices[i];
     }
+    return max(s0[sz-1], s2[sz-1]);
 }
 
 int main(){
