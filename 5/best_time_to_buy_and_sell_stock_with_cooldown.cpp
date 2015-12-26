@@ -31,6 +31,16 @@ transactions = [buy, sell, cooldown, buy, sell]
 //https://leetcode.com/discuss/72030/share-my-dp-solution-by-state-machine-thinking
 int maxProfit(vector<int>& prices) {
     int sz = prices.size();
+    if(sz<=1) return 0;
+    vector<int> s0(sz, 0);
+    vector<int> s1(sz, 0);
+    vector<int> s2(sz, 0);
+    s0[0] = 0;
+    s1[0] = -1*prices[0];
+    s2[0] = 0;
+    for(int i=1; i<sz; i++){
+        s0[i] = 
+    }
 }
 
 int main(){
