@@ -17,10 +17,23 @@ You may assume that you have an infinite number of each kind of coin.
 
 int coinChange(vector<int>& coins, int amount) {
     int sz = coins.size();
+    if(sz == 0) return -1;
+    vector<int> arr(amount+1, -1);
+    arr[0] = 0;
+    for(int i=1; i<amount+1; i++){
+        int temp = INT_MAX;
+        for(int c:coins){
+            if(i-c<0 || arr[i-c] == -1) continue;
+            temp = min(temp, arr[i-c]+1);
+        }
+        if(temp<INT_MAX) arr[i] = temp;
+    }
+    return arr[amount];
 }
 
 int main(){
-    vector<int> coins = {1, 2, 5};
-    cout<<coinChange(coins, 11)<<endl;
+    //vector<int> coins = {1, 2, 5};
+    vector<int> coins = {2};
+    cout<<coinChange(coins, 1)<<endl;
     return 0;
 }
