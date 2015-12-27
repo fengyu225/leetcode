@@ -1,25 +1,26 @@
-#include<vector>
-#include<iostream>
+/*
+You are given coins of different denominations and a total amount of money amount. Write a function to compute the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.
 
-using namespace std;
+Example 1:
+coins = [1, 2, 5], amount = 11
+return 3 (11 = 5 + 5 + 1)
 
-int make_change(vector<int>& coins, int amount){
+Example 2:
+coins = [2], amount = 3
+return -1.
+
+Note:
+You may assume that you have an infinite number of each kind of coin.
+*/
+
+#include "header.h"
+
+int coinChange(vector<int>& coins, int amount) {
     int sz = coins.size();
-    if(sz == 0) return 0;
-    vector<vector<int> > arr(sz, vector<int>(amount+1, 1));
-    for(int i=0; i<sz; i++){
-        for(int j=1; j<=amount; j++){
-            arr[i][j] = 
-                (i<1?0:arr[i-1][j])
-                +
-                (j<coins[i]?0:arr[i][j-coins[i]]);
-        }
-    }
-    return arr[sz-1][amount];
 }
 
 int main(){
-    vector<int> coins = {1, 5, 10, 25, 50};
-    cout<<make_change(coins, 0)<<endl;
+    vector<int> coins = {1, 2, 5};
+    cout<<coinChange(coins, 11)<<endl;
     return 0;
 }
