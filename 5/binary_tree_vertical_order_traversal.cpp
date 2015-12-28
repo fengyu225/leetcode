@@ -56,18 +56,12 @@ vector<vector<int> > verticalOrder(TreeNode* root) {
     int l_max = INT_MAX, r_max = INT_MIN;
     while(!q.empty()){
         pair<int, TreeNode*> curr = q.front();
-        add_node_to_map(m, curr);
+        m[curr.first].push_back(curr.second->val);
         l_max = min(l_max, curr.first);
         r_max = max(r_max, curr.first);
         q.pop();
-        if(curr.second->left){
-            pair<int, TreeNode*> l = make_pair(curr.first-1, curr.second->left);
-            q.push(l);
-        }
-        if(curr.second->right){
-            pair<int, TreeNode*> r = make_pair(curr.first+1, curr.second->right);
-            q.push(r);
-        }
+        if(curr.second->left) q.push(make_pair(curr.first-1, curr.second->left));
+        if(curr.second->right) q.push(make_pair(curr.first+1, curr.second->right));
     }
     for(int i=l_max; i<=r_max; i++)
         if(m.find(i) != m.end()) res.push_back(m[i]);
