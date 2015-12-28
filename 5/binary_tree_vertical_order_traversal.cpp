@@ -42,7 +42,7 @@ return its vertical order traversal as:
 
 #include "header.h"
 
-void add_node_to_map(map<int, vector<int> >& m, pair<int, TreeNode*>& p){
+void add_node_to_map(unordered_map<int, vector<int> >& m, pair<int, TreeNode*>& p){
     if(m.find(p.first) == m.end()) m[p.first] = vector<int>();
     m[p.first].push_back(p.second->val);
 }
@@ -50,12 +50,15 @@ void add_node_to_map(map<int, vector<int> >& m, pair<int, TreeNode*>& p){
 vector<vector<int> > verticalOrder(TreeNode* root) {
     vector<vector<int> > res;
     if(!root) return res;
-    map<int, vector<int> > m;
+    unordered_map<int, vector<int> > m;
     queue<pair<int, TreeNode*> > q;
     q.push(make_pair(0, root));
+    int l_max = INT_MAX, r_max = INT_MIN;
     while(!q.empty()){
         pair<int, TreeNode*> curr = q.front();
         add_node_to_map(m, curr);
+        l_max = min(l_max, curr.first);
+        r_max = max(r_max, curr.first);
         q.pop();
         if(curr.second->left){
             pair<int, TreeNode*> l = make_pair(curr.first-1, curr.second->left);
@@ -66,7 +69,8 @@ vector<vector<int> > verticalOrder(TreeNode* root) {
             q.push(r);
         }
     }
-    for(auto x: m) res.push_back(x.second);
+    for(int i=l_max; i<=r_max; i++)
+        if(m.find(i) != m.end()) res.push_back(m[i]);
     return res;
 }
 
