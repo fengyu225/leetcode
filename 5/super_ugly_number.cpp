@@ -12,12 +12,19 @@ Note:
 #include "header.h"
 
 int nthSuperUglyNumber(int n, vector<int>& primes) {
+    //see ugly number ii
     int sz = primes.size();
     if(n == 1) return 1;
-    vector<int> arr(sz, 1);
-    for(int i=2; i<=n; i++){
-        
+    vector<int> index(sz, 0);
+    vector<int> arr(n, 1);
+    for(int i=1; i<n; i++){
+        int temp = INT_MAX;
+        for(int j=0; j<sz; j++) temp = min(temp, arr[index[j]]*primes[j]);
+        arr[i] = temp;
+        for(int j=0; j<sz; j++)
+            if(arr[i]%primes[j] == 0) index[j]++;
     }
+    return arr[n-1];
 }
 
 int main(){
