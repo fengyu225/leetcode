@@ -42,11 +42,6 @@ return its vertical order traversal as:
 
 #include "header.h"
 
-void add_node_to_map(unordered_map<int, vector<int> >& m, pair<int, TreeNode*>& p){
-    if(m.find(p.first) == m.end()) m[p.first] = vector<int>();
-    m[p.first].push_back(p.second->val);
-}
-
 vector<vector<int> > verticalOrder(TreeNode* root) {
     vector<vector<int> > res;
     if(!root) return res;
