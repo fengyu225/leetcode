@@ -17,6 +17,8 @@ Return the array [2, 1, 1, 0].
 
 vector<int> countSmaller(vector<int>& nums) {
     int sz = nums.size();
+    vecotr<int> res;
+    return res;
 }
 
 int main(){
