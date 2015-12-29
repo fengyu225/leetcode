@@ -52,11 +52,8 @@ vector<int> countSmaller(vector<int>& nums) {
     int sz = nums.size();
     if(sz == 0) return vector<int>();
     vector<int> res(sz, 0);
-    int min_val = INT_MAX, max_val = INT_MIN;
-    for(int x:nums){
-        min_val = min(min_val,x);
-        max_val = max(max_val,x);
-    }
+    int min_val = std::min_element(nums.begin(), nums.end());
+    int max_val = std::max_element(nums.begin(), nums.end());
     S_Node* root = build_tree(min_val, max_val); 
     for(int i=sz-1; i>=0; i--){
         update(root, nums[i]);
