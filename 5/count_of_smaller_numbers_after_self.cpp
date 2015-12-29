@@ -15,9 +15,53 @@ Return the array [2, 1, 1, 0].
 
 #include "header.h"
 
+class S_Node{
+    public:
+        int l, r, count;
+        S_Node* left, *right;
+        S_Node(int l, int r):l(l),r(r),count(0),left(NULL),right(NULL) {};
+};
+
+S_Node* build_tree(int l, int r){
+    S_Node* root = new S_Node(l, r);
+    if(l == r) return root;
+    int m = l+(r-l)/2;
+    root->left = build_tree(l, m);
+    root->right = build_tree(m+1, r);
+    return root;
+}
+
+void update(S_Node* root, int m){
+    if(root->l == root->r) root->count++;
+    else{
+        int x = root->l+(root->r-root->l)/2;
+        if(m<=x) update(root->left, m);
+        else update(root->right, m);
+        root->count++;
+    }
+}
+
+int count_smaller(S_Node* root, int m){
+    if(!root) return 0;
+    int mid = root->l+(root->r-root->l)/2;
+    if(mid<m) return root->left->count + count_smaller(root->right, m);
+    else return count_smaller(root->left, m);
+}
+
 vector<int> countSmaller(vector<int>& nums) {
     int sz = nums.size();
-    vecotr<int> res;
+    if(sz == 0) return vector<int>();
+    vector<int> res(sz, 0);
+    int min_val = INT_MAX, max_val = INT_MIN;
+    for(int x:nums){
+        min_val = min(min_val,x);
+        max_val = max(max_val,x);
+    }
+    S_Node* root = build_tree(min_val, max_val); 
+    for(int i=sz-1; i>=0; i--){
+        update(root, nums[i]);
+        res[i] = count_smaller(root, nums[i]);
+    }
     return res;
 }
 
