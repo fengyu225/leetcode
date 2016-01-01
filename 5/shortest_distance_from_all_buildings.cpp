@@ -19,16 +19,37 @@ The point (1,2) is an ideal empty land to build a house, as the total travel dis
 
 class Node{
     public:
-        int x,y;
-        unordered_map<int,int> buildings;
-        Node(int x, int y):x(x),y(y){}
+        int x,y,path_sums;
+        vector<int> buildings;
+        Node(int x, int y):x(x),y(y),path_sums(0){}
 };
 
-bool intersect(unordered_map<int,int>& a, unordered_map<int,int>& b){
-    for(auto curr:a){
-        if(b.find(curr.first) != b.end()) return true;
+void search(vector<vector<int> >& grid, vector<vector<Node*> >& nodes, pair<int,int> building, int r, int c){
+    int curr = 0;
+    queue<Node*> qs[2];
+    qs[0].push(nodes[building.first][building.second]);
+    int b = building.first*c+building.second;
+    int move[4][2] = {
+        {0, -1},
+        {-1, 0},
+        {0, 1},
+        {1, 0}
+    };
+    while(!qs[curr%2].empty()){
+        Node* temp = qs[curr%2].front();
+        qs[curr%2].pop();
+        for(int i=0; i<4; i++){
+            int new_x = move[i][0]+temp->x;
+            int new_y = move[i][1]+temp->y;
+            if(new_x<0 || new_x>=r || new_y<0 || new_y>=c || grid[new_x][new_y] != 0) continue;
+            if(!nodes[new_x][new_y] || nodes[new_x][new_y]->buildings.size() != 0 && nodes[new_x][new_y]->buildings.back() == b) continue;
+            Node* new_n = nodes[new_x][new_y];
+            new_n->path_sums += curr+1;
+            new_n->buildings.push_back(b);
+            qs[(curr+1)%2].push(new_n);
+        } 
+        if(qs[curr%2].empty()) curr++;
     }
-    return false;
 }
 
 int shortestDistance(vector<vector<int> >& grid) {
@@ -37,57 +58,26 @@ int shortestDistance(vector<vector<int> >& grid) {
     int c = grid[0].size();
     if(c == 0) return -1;
     int building_cnt = 0;
-    queue<Node*> qs[2];
-    unordered_map<int,Node*> nodes;
-    int path = 0;
+    vector<vector<Node*> > nodes(r, vector<Node*>(c, NULL));
+    for(int i=0; i<r; i++)
+        for(int j=0; j<c; j++)
+            if(grid[i][j] != 2) nodes[i][j] = new Node(i,j);
+    for(int i=0; i<r; i++)
+        for(int j=0; j<c; j++)
+            if(grid[i][j] == 1){
+                search(grid, nodes, make_pair(i,j), r, c);
+                building_cnt++;
+            }
+    int res = -1;
     for(int i=0; i<r; i++){
         for(int j=0; j<c; j++){
-            Node* n = new Node(i,j);
-            nodes[i*c+j] = n;
-            if(grid[i][j]==1){
-                building_cnt++;
-                n->buildings[i*c+j] = 0;
-                qs[path].push(n);
-            }
+            Node* n = nodes[i][j];
+            if(!n || grid[i][j] != 0 || n->buildings.size() != building_cnt) continue;
+            if(res<0) res = n->path_sums;
+            else res = min(res, n->path_sums);
         }
     }
-    int move[4][2] = {
-        {0, -1},
-        {-1, 0},
-        {0, 1},
-        {1, 0}
-    };
-    while(!qs[path%2].empty()){
-        bool found = false;
-        int res = INT_MAX;
-        while(!qs[path%2].empty()){
-            Node* n = qs[path%2].front();
-            cout<<n->x<<" "<<n->y<<endl;
-            //if(n->x == 1 && n->y == 1){
-            //    cout<<"xx"<<endl;
-            //}
-            qs[path%2].pop();
-            for(int i=0; i<4; i++){
-                int new_x = move[i][0]+n->x;
-                int new_y = move[i][1]+n->y;
-                if(new_x<0 || new_x>=r || new_y<0 || new_y>=c || grid[new_x][new_y] != 0) continue;
-                if(intersect(n->buildings, nodes[new_x*c+new_y]->buildings)) continue;
-                Node* temp = nodes[new_x*c+new_y];
-                for(auto bd:n->buildings) temp->buildings[bd.first] = bd.second+1;
-                cout<<temp->x<<" "<<temp->y<<" "<<temp->buildings.size()<<endl;
-                if(temp->buildings.size() == building_cnt){
-                    found = true;
-                    int temp_res = 0;
-                    for(auto bd:temp->buildings) temp_res += bd.second;
-                    res = min(res, temp_res); 
-                }
-                qs[(path+1)%2].push(temp);
-            }
-        }
-        if(found) return res;
-        path++;
-    }
-    return -1;
+    return res;
  }
 
 int main(){
@@ -96,6 +86,59 @@ int main(){
         {0, 0, 0, 0, 0},
         {0, 0, 1, 0, 0}
     };
+//    vector<vector<int> > grid = {
+//{0,0,0,0,2,2,0},
+//{2,0,2,0,0,2,2},
+//{0,2,0,0,0,0,0},
+//{2,2,0,2,0,0,0},
+//{0,0,0,2,2,2,0},
+//{0,0,0,0,2,2,0},
+//{2,0,0,0,0,0,0},
+//{0,0,0,0,2,2,2},
+//{0,2,0,0,0,2,2},
+//{2,2,2,2,0,0,0},
+//{2,0,2,0,2,2,2},
+//{0,2,2,0,0,0,0},
+//{2,2,0,2,0,0,2},
+//{0,2,0,0,0,0,2},
+//{0,2,0,0,0,0,2},
+//{0,0,2,0,2,0,0},
+//{2,2,2,0,2,0,0},
+//{2,0,0,2,2,2,0},
+//{0,0,0,0,2,1,0},
+//{2,0,0,0,0,0,2},
+//{0,0,2,0,0,0,2},
+//{0,0,0,0,0,0,0},
+//{2,0,0,0,0,2,0},
+//{2,2,0,0,2,2,0},
+//{2,0,0,2,2,2,0},
+//{0,0,0,0,2,0,0},
+//{0,0,0,2,1,0,0},
+//{0,0,0,0,0,2,0},
+//{0,2,2,0,1,2,0},
+//{1,0,0,2,2,0,0},
+//{0,2,2,2,1,2,0},
+//{2,0,0,0,2,2,2},
+//{0,2,2,2,2,2,0},
+//{0,2,2,2,0,2,2},
+//{2,0,0,0,0,2,0},
+//{0,2,1,0,0,0,2},
+//{0,2,0,0,2,2,0},
+//{0,2,2,0,0,0,2},
+//{0,0,0,0,2,0,0},
+//{0,0,0,0,0,0,0},
+//{2,0,0,2,0,0,2},
+//{2,2,2,0,2,1,0},
+//{0,2,0,0,2,0,0},
+//{0,2,0,0,2,2,0},
+//{2,0,0,0,0,2,0},
+//{2,0,0,0,2,0,2},
+//{2,2,0,2,2,0,2},
+//{2,2,0,1,0,0,1},
+//{0,0,0,0,0,2,2},
+//{0,0,2,0,0,0,1},
+//{2,2,0,2,2,0,2}
+//    };
     cout<<shortestDistance(grid)<<endl;
     return 0;
 }
