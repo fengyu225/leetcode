@@ -24,7 +24,7 @@ class Node{
         Node(int x, int y):x(x),y(y),path_sums(0){}
 };
 
-void search(vector<vector<int> >& grid, vector<vector<Node*> >& nodes, pair<int,int> building, int r, int c){
+void search(vector<vector<int> >& grid, vector<vector<Node*> >& nodes, pair<int,int> building, int r, int c, int curr_building){
     int curr = 0;
     queue<Node*> qs[2];
     qs[0].push(nodes[building.first][building.second]);
@@ -42,7 +42,7 @@ void search(vector<vector<int> >& grid, vector<vector<Node*> >& nodes, pair<int,
             int new_x = move[i][0]+temp->x;
             int new_y = move[i][1]+temp->y;
             if(new_x<0 || new_x>=r || new_y<0 || new_y>=c || grid[new_x][new_y] != 0) continue;
-            if(!nodes[new_x][new_y] || nodes[new_x][new_y]->buildings.size() != 0 && nodes[new_x][new_y]->buildings.back() == b) continue;
+            if(!nodes[new_x][new_y] || nodes[new_x][new_y]->buildings.size() != curr_building ||nodes[new_x][new_y]->buildings.size() != 0 && nodes[new_x][new_y]->buildings.back() == b) continue;
             Node* new_n = nodes[new_x][new_y];
             new_n->path_sums += curr+1;
             new_n->buildings.push_back(b);
@@ -65,7 +65,7 @@ int shortestDistance(vector<vector<int> >& grid) {
     for(int i=0; i<r; i++)
         for(int j=0; j<c; j++)
             if(grid[i][j] == 1){
-                search(grid, nodes, make_pair(i,j), r, c);
+                search(grid, nodes, make_pair(i,j), r, c, building_cnt);
                 building_cnt++;
             }
     int res = -1;
