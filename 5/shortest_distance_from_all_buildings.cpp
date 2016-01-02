@@ -20,15 +20,14 @@ The point (1,2) is an ideal empty land to build a house, as the total travel dis
 class Node{
     public:
         int x,y,path_sums;
-        vector<int> buildings;
-        Node(int x, int y):x(x),y(y),path_sums(0){}
+        int buildings;
+        Node(int x, int y):x(x),y(y),path_sums(0),buildings(0){}
 };
 
 void search(vector<vector<int> >& grid, vector<vector<Node*> >& nodes, pair<int,int> building, int r, int c, int curr_building_cnt){
     int curr = 0;
     queue<Node*> qs[2];
     qs[0].push(nodes[building.first][building.second]);
-    int b = building.first*c+building.second;
     int move[4][2] = {
         {0, -1},
         {-1, 0},
@@ -42,10 +41,10 @@ void search(vector<vector<int> >& grid, vector<vector<Node*> >& nodes, pair<int,
             int new_x = move[i][0]+temp->x;
             int new_y = move[i][1]+temp->y;
             if(new_x<0 || new_x>=r || new_y<0 || new_y>=c || grid[new_x][new_y] != 0) continue;
-            if(!nodes[new_x][new_y] || nodes[new_x][new_y]->buildings.size() != curr_building_cnt || (nodes[new_x][new_y]->buildings.size() != 0 && nodes[new_x][new_y]->buildings.back() == b)) continue;
+            if(!nodes[new_x][new_y] || nodes[new_x][new_y]->buildings != curr_building_cnt) continue;
             Node* new_n = nodes[new_x][new_y];
             new_n->path_sums += curr+1;
-            new_n->buildings.push_back(b);
+            new_n->buildings++;
             qs[(curr+1)%2].push(new_n);
         } 
         if(qs[curr%2].empty()) curr++;
@@ -72,7 +71,7 @@ int shortestDistance(vector<vector<int> >& grid) {
     for(int i=0; i<r; i++){
         for(int j=0; j<c; j++){
             Node* n = nodes[i][j];
-            if(!n || grid[i][j] != 0 || n->buildings.size() != building_cnt) continue;
+            if(!n || grid[i][j] != 0 || n->buildings != building_cnt) continue;
             if(res<0) res = n->path_sums;
             else res = min(res, n->path_sums);
         }
