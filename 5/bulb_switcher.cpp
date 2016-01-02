@@ -39,7 +39,6 @@ int bulbSwitch(int n) {
 //on off off off on on off 
 //on off off off on on on 
 //on off off off on on off 
-//on off off off on on on 
 int main(){
     cout<<bulbSwitch(1)<<endl;
     cout<<bulbSwitch(3)<<endl;
@@ -47,5 +46,6 @@ int main(){
     cout<<bulbSwitch(5)<<endl;
     cout<<bulbSwitch(6)<<endl;
     cout<<bulbSwitch(7)<<endl;
+    cout<<bulbSwitch(12)<<endl;
     return 0;
 }
