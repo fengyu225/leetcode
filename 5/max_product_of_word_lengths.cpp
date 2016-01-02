@@ -26,18 +26,33 @@ int string_bits(string& s){
     }
     return res;
 }
+//
+//int maxProduct(vector<string>& words) {
+//    int sz = words.size();
+//    unordered_map<string,int> m;
+//    for(string s:words) m[s] = string_bits(s);
+//    int res = 0;
+//    for(int i=0; i<sz; i++){
+//        for(int j=i+1; j<sz; j++)
+//            if((m[words[i]] & m[words[j]]) == 0){
+//                int temp = words[i].length()*words[j].length();
+//                res = max(res, temp);
+//            }
+//    }
+//    return res;
+//}
 
 int maxProduct(vector<string>& words) {
-    int sz = words.size();
-    unordered_map<string,int> m;
-    for(string s:words) m[s] = string_bits(s);
+    unordered_map<int,int> m;
+    for(string s:words){
+        int temp = string_bits(s);
+        m[temp] = max(m[temp],(int)s.length());
+    }        
     int res = 0;
-    for(int i=0; i<sz; i++){
-        for(int j=i+1; j<sz; j++)
-            if((m[words[i]] & m[words[j]]) == 0){
-                int temp = words[i].length()*words[j].length();
-                res = max(res, temp);
-            }
+    for(auto a:m){
+        for(auto b:m){
+            if((a.first & b.first) == 0) res = max(res, a.second*b.second);
+        }
     }
     return res;
 }
