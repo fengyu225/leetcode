@@ -21,7 +21,7 @@ void search(string& word, int curr, int max_n, string& temp, vector<string>& res
     temp = a;
     if(!char_only){
         for(int i=1; i<=max_n; i++){
-            string a = temp;
+            a = temp;
             temp += to_string(i);
             search(word, curr+i, max_n-i, temp, res, true);
             temp = a;
