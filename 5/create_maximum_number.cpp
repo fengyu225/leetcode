@@ -23,6 +23,7 @@ return [9, 8, 9]
 
 #include "header.h"
 
+/* dp o(m*n*k)
 bool comp(vector<int>& a, vector<int>& b){
     // return true if a<=b
     int a_sz = a.size(), b_sz = b.size();
@@ -79,11 +80,53 @@ vector<int> maxNumber(vector<int>& nums1, vector<int>& nums2, int k) {
     }
     return arr[n1_sz][n2_sz][k];
 }
+*/
+
+//https://leetcode.com/discuss/75756/share-my-greedy-solution
+vector<int> find_max(vector<int>& arr, int len){
+    vector<int> res(len, 0); 
+    int sz = arr.size();
+    int j = 0;
+    for(int i=0; i<sz; i++){
+        while(sz-i+j>len && j>0 && res[j-1]<arr[i]) j--;
+        if(j<len) res[j++] = arr[i];
+    }
+    return res;
+}
+
+bool geq(vector<int>& a, int a_idx, vector<int>& b, int b_idx){
+    while(a_idx<a.size() && b_idx<b.size() && a[a_idx] == b[b_idx]){
+        a_idx++;
+        b_idx++;
+    }
+    return b_idx == b.size() || (a_idx != a.size() && a[a_idx]>b[b_idx]);
+}
+
+vector<int> merge(vector<int>& a, vector<int>& b, int k){
+    vector<int> res(k, 0);
+    for(int i=0, j=0, l=0; l<k; l++){
+        // if a[i] == b[j], then need to compare following. For example 61 and 67
+        res[l] = geq(a, i, b, j)?a[i++]:b[j++]; 
+    }
+    return res;
+}
+
+vector<int> maxNumber(vector<int>& nums1, vector<int>& nums2, int k) {
+    int m = nums1.size(), n = nums2.size();
+    vector<int> res;
+    for(int i=max(0,k-n); i<=m && i<=k; i++){
+        vector<int> l = find_max(nums1, i);
+        vector<int> r = find_max(nums2, k-i);
+        vector<int> temp = merge(l, r, k);
+        if(!geq(res, 0, temp, 0)) res = temp;
+    }
+    return res;
+}
 
 int main(){
-    //vector<int> nums1 = {3, 4, 6, 5};
-    //vector<int> nums2 = {9, 1, 2, 5, 8, 3};
-    //vector<int> res = maxNumber(nums1, nums2, 5);
+//    vector<int> nums1 = {3, 4, 6, 5};
+//    vector<int> nums2 = {9, 1, 2, 5, 8, 3};
+//    vector<int> res = maxNumber(nums1, nums2, 5);
     vector<int> nums1 = {1,5,8,1,4,0,8,5,0,7,0,5,7,6,0,5,5,2,4,3,6,4,6,6,3,8,1,1,3,1,3,5,4,3,9,5,0,3,8,1,4,9,8,8,3,4,6,2,5,4,1,1,4,6,5,2,3,6,3,5,4,3,0,7,2,5,1,5,3,3,8,2,2,7,6,7,5,9,1,2};
     vector<int> nums2 = {7,8,5,8,0,1,1,6,1,7,6,9,6,6,0,8,5,8,6,3,4,0,4,6,7,8,7,7,7,5,7,2,5,2,1,9,5,9,3,7,3,9,9,3,1,4,3,3,9,7,1,4,4,1,4,0,2,3,1,3,2,0,2,4,0,9,2,0,1,3,9,1,2,2,6,6,9,3,6,0};
     vector<int> res = maxNumber(nums1, nums2, 80);
