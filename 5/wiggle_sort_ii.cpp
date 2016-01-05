@@ -32,7 +32,8 @@ int main(){
     vector<int> nums = {1,3,2,2,2,1,1,3,1,1,2};
     wiggleSort(nums);
     print_vector<int>(nums);
-    vector<int> nums_1 = {1, 5, 1, 1, 6, 4};
+    //vector<int> nums_1 = {1, 5, 1, 1, 6, 4};
+    vector<int> nums_1 = {4, 5, 5, 6};
     wiggleSort(nums_1);
     print_vector<int>(nums_1);
     return 0;
