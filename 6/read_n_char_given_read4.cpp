@@ -30,6 +30,14 @@ int read(char *buf, int n) {
         buf += temp;
         if(temp<4) break;
     }
+//    if(res <= n){
+//        *(buf) = '\0';
+//        return res;
+//    }
+//    else{
+//        *(buf-(res-n)) = '\0';
+//        return n;
+//    }
     *(buf-max(res-n, 0)) = '\0';
     return min(res,n);
 }
