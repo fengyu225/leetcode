@@ -22,20 +22,24 @@ int read4(char *buf){
     return 4;
 }
 
-int read(char *buf, int n) {
+char temp_buf[4];
+char* temp_buf_curr = temp_buf;
+int temp_buf_size = 0;
 
+int read(char *buf, int n) {
+    
 }
 
 int main(){
     for(int i=0; i<2; i++){
-    int n = 5;
-    char buf[n];
-    int res = read(buf, n);  
-    cout<<"buf: "<<buf<<endl;
-    cout<<"temp_buf_size: "<<temp_buf_size<<endl;
-    for(int k=0; k<temp_buf_size; k++) cout<<temp_buf[k]<<" ";
-    cout<<endl;
-    cout<<"res: "<<res<<endl;
+        int n = 5
+        char buf[n];
+        int res = read(buf, n);  
+        cout<<"buf: "<<buf<<endl;
+        cout<<"temp_buf_size: "<<temp_buf_size<<endl;
+        for(int k=0; k<temp_buf_size; k++) cout<<temp_buf[k]<<" ";
+        cout<<endl;
+        cout<<"res: "<<res<<endl;
     }
     return 0;
 }
