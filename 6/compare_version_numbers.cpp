@@ -12,24 +12,35 @@ Here is an example of version numbers ordering:
 
 #include "header.h"
 
-int comp(string a, string b){
-    int a_val = stoi(a);
-    int b_val = stoi(b);
-    return a_val == b_val?0:a_val<b_val?-1:1;
+void getNum(string& s, vector<int>& res){
+    int curr = 0, sz = s.length();
+    string temp = "";
+    while(curr<sz){
+        if(s[curr] == '.'){
+            res.push_back(stoi(temp));
+            temp = "";
+        }
+        else{
+            temp += s[curr];
+        }
+        curr++;
+    }
+    if(temp.length()>0) res.push_back(stoi(temp));
 }
 
-int compareVersion(string version1, string version2) {
-    int sz1 = version1.length(), sz2 = version2.length();
-    int a=-1, b=-1;
-    while(a<sz1 && b<sz2){
-        int temp_a = a+1, temp_b = b+1;
-        while(temp_a<sz1 && version1[temp_a] != '.') temp_a++;
-        while(temp_b<sz2 && version2[temp_b] != '.') temp_b++;
-        int temp_res = comp(version1.substr(a+1,temp_a-a-1), version2.substr(b+1,temp_b-b-1));
-        if(temp_res != 0) return temp_res;
-        a = temp_a; b=temp_b;
+int compareVersion(string version1, string version2){
+    vector<int> v1_arr, v2_arr;
+    getNum(version1, v1_arr);
+    getNum(version2, v2_arr);
+    int curr = 0;
+    while(curr<v1_arr.size() || curr<v2_arr.size()){
+        int temp_1 = curr<v1_arr.size()?v1_arr[curr]:0;
+        int temp_2 = curr<v2_arr.size()?v2_arr[curr]:0;
+        if(temp_1>temp_2) return 1;
+        if(temp_1<temp_2) return -1;
+        curr++;
     }
-    return a<sz1?1:b<sz2?-1:0;
+    return 0;
 }
 
 int main(){
