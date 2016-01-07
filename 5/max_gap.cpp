@@ -13,7 +13,7 @@ You may assume all elements in the array are non-negative integers and fit in th
 int maximumGap(vector<int>& nums) {
     int sz = nums.size();
     if(sz<2) return 0;
-    if(sz == 2) return nums[1]-nums[0];
+    if(sz == 2) return abs(nums[1]-nums[0]);
     int small = -1, large = -1;
     for(int i=0; i<sz; i++){
         if(small == -1 || nums[small]>nums[i]) small = i;
