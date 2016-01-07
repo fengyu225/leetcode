@@ -39,8 +39,8 @@ string fractionToDecimal(int numerator, int denominator){
 
 int main(){
 //    cout<<fractionToDecimal(1,2)<<endl;
-//    cout<<fractionToDecimal(1,1001)<<endl;
-    cout<<fractionToDecimal(-50,8)<<endl;
+    cout<<fractionToDecimal(11,1001)<<endl;
+//    cout<<fractionToDecimal(-50,8)<<endl;
 //    cout<<fractionToDecimal(2,1)<<endl;
 //    cout<<fractionToDecimal(2,3)<<endl;
 //    cout<<fractionToDecimal(12,14)<<endl;
