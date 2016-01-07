@@ -15,16 +15,10 @@ Special thanks to @Shangrila for adding this problem and creating all test cases
 #include "header.h"
 
 string fractionToDecimal(int numerator, int denominator){
-    string flag = "";
-    if(numerator*denominator<0){
-        numerator = abs(numerator);
-        denominator = abs(denominator);
-        flag = "-";
-    }
-    int x = numerator/denominator;
-    long n = (long)numerator;
-    long d = (long)denominator;
-    if(n%d == 0) return flag+to_string(x);
+    string flag = numerator<=0&&denominator<0 || numerator>=0&&denominator>0?"":"-";
+    long n = abs((long)numerator);
+    long d = abs((long)denominator);
+    if(n%d == 0) return flag+to_string(n/d);
     if(d == 0) return "inf";
     string res = flag;
     res += to_string(n/d)+".";
