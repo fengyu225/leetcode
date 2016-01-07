@@ -12,8 +12,24 @@ Here is an example of version numbers ordering:
 
 #include "header.h"
 
-int compareVersion(string version1, string version2) {
+int comp(string a, string b){
+    int a_val = stoi(a);
+    int b_val = stoi(b);
+    return a_val == b_val?0:a_val<b_val?-1:1;
+}
 
+int compareVersion(string version1, string version2) {
+    int sz1 = version1.length(), sz2 = version2.length();
+    int a=-1, b=-1;
+    while(a<sz1 && b<sz2){
+        int temp_a = a+1, temp_b = b+1;
+        while(temp_a<sz1 && version1[temp_a] != '.') temp_a++;
+        while(temp_b<sz2 && version2[temp_b] != '.') temp_b++;
+        int temp_res = comp(version1.substr(a+1,temp_a-a-1), version2.substr(b+1,temp_b-b-1));
+        if(temp_res != 0) return temp_res;
+        a = temp_a; b=temp_b;
+    }
+    return a<sz1?1:b<sz2?-1:0;
 }
 
 int main(){
