@@ -22,6 +22,7 @@ The input prerequisites is a graph represented by a list of edges, not adjacency
 
 #include "header.h"
 
+/* dfs
 bool search(int curr, unordered_map<int,vector<int> >& graph, unordered_map<int,int>& m){
     for(int i:graph[curr]){
         if(m[i] == 1) return false;
@@ -47,6 +48,12 @@ bool canFinish(int numCourses, vector<pair<int, int> >& prerequisites) {
         }
     }
     return true;
+}
+*/
+
+/* bfs */
+bool canFinish(int numCourses, vector<pair<int, int> >& prerequisites) {
+    unordered_map<int,int> m; 
 }
 
 int main(){
