@@ -19,14 +19,40 @@ Any room can contain threats or power-ups, even the first room the knight enters
 
 #include "header.h"
 
+int get_val(int curr, int req){
+    if(curr>=0) return max(1, req-curr);
+    return max(1, -curr+req);
+}
+
 int calculateMinimumHP(vector<vector<int> >& dungeon) {
+    if(dungeon.size() == 0 || dungeon[0].size() == 0) return 0;
+    int m = dungeon.size(), n = dungeon[0].size();
+    vector<vector<int> > arr(m, vector<int>(n, 0));
+    // arr[i][j] min hp before enter (i,j)
+    arr[m-1][n-1] = 1-min(0, dungeon[m-1][n-1]); 
+    cout<<arr[m-1][n-1]<<" ";
+    for(int i=m-1; i>=0; i--){
+        for(int j=n-1; j>=0; j--){
+            if(i == m-1 && j==n-1) continue;
+            if(i == m-1) arr[i][j] = get_val(dungeon[i][j], arr[i][j+1]);
+            else if(j==n-1) arr[i][j] = get_val(dungeon[i][j], arr[i+1][j]);
+//            else arr[i][j] = max(get_val(dungeon[i][j], arr[i][j+1]), get_val(dungeon[i][j], arr[i+1][j]));
+            else arr[i][j] = get_val(dungeon[i][j], min(arr[i][j+1], arr[i+1][j]));
+        }
+    }
+    return arr[0][0];
 }
 
 int main(){
+//    vector<vector<int> > dungeon = {
+//        {1, -3, 3},
+//        {0, -2, 0},
+//        {-3, -3, -3}
+//    };
     vector<vector<int> > dungeon = {
-        {1, -3, 3},
-        {0, -2, 0},
-        {-3, -3, -3}
+        {-2, -3, 3},
+        {-5, -10, 1},
+        {10, 30, -5}
     };
     cout<<calculateMinimumHP(dungeon)<<endl;
     return 0;
