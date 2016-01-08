@@ -21,7 +21,16 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 //    reverse(nums.begin()+k, nums.end());
 //}
 
+/* solution 2
+ *
+Sample [1,2,3,4,5,6,7,8,9] 3    
+The replacing process is as follow:
+1) 1->4->7->1
+2) 2->5->8->2
+3) 3->6->9->3
+*/
 void rotate(vector<int>& nums, int k) {
+    int sz = nums.size();
 
 }
 
