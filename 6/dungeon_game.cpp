@@ -20,8 +20,9 @@ Any room can contain threats or power-ups, even the first room the knight enters
 #include "header.h"
 
 int get_val(int curr, int req){
-    if(curr>=0) return max(1, req-curr);
-    return max(1, -curr+req);
+    return max(1, req-curr);
+//    if(curr>=0) return max(1, req-curr);
+//    return max(1, -curr+req);
 }
 
 int calculateMinimumHP(vector<vector<int> >& dungeon) {
