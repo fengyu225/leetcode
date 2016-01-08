@@ -13,6 +13,7 @@ Return:
 #include "header.h"
 
 vector<string> findRepeatedDnaSequences(string s){
+    int sz = s.length();
 }
 
 int main(){
