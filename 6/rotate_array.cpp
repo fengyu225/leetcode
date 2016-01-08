@@ -29,9 +29,28 @@ The replacing process is as follow:
 2) 2->5->8->2
 3) 3->6->9->3
 */
+
+int gcd(int a, int b){
+    if(a<b) return gcd(b,a);
+    if(b == 0) return a;
+    return gcd(b, a%b);
+}
+
 void rotate(vector<int>& nums, int k) {
     int sz = nums.size();
-
+    k=k%sz;
+    int m = gcd(k,sz);
+    for(int i=0; i<m; i++){
+        int temp = nums[i], curr = i, next = (i+k)%sz;
+        while(next != i){
+            int x = nums[next];
+            nums[next] = temp;
+            temp = x;
+            curr = next;
+            next = (curr+k)%sz;
+        }
+        nums[i] = temp;
+    }
 }
 
 int main(){
