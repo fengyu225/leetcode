@@ -13,11 +13,16 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 //[-100,3,99,-1]
 //[3,99,-1,-100]
 
+//first solution
+//void rotate(vector<int>& nums, int k) {
+//    k = k%nums.size();
+//    reverse(nums.begin(),nums.end());
+//    reverse(nums.begin(), nums.begin()+k);
+//    reverse(nums.begin()+k, nums.end());
+//}
+
 void rotate(vector<int>& nums, int k) {
-    k = k%nums.size();
-    reverse(nums.begin(),nums.end());
-    reverse(nums.begin(), nums.begin()+k);
-    reverse(nums.begin()+k, nums.end());
+
 }
 
 int main(){
