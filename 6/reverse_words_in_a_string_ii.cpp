@@ -14,7 +14,21 @@ Related problem: Rotate Array
 
 #include "header.h"
 
+void reverse(string& s, int i, int j){
+    for(;i<j;swap(s[i++], s[j--]));
+}
+
 void reverseWords(string &s) {
+    int sz = s.length();
+    reverse(s, 0, sz-1);
+    int begin = 0, curr = 0;
+    while(begin<sz){
+        if(curr == sz || s[curr] == ' '){
+            reverse(s, begin, curr-1);
+            begin = curr+1;
+        }
+        curr++;
+    }
 }
 
 int main(){
