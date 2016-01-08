@@ -19,7 +19,7 @@ int countPrimes(int n) {
     for(int i=2; i*i<n; i++){
         if(!arr[i]) continue;
         int temp = i;
-        for(int j=2; temp*j<n; j++) arr[temp*j]=false;
+        for(int j=temp; temp*j<n; j++) arr[temp*j]=false;
     }
     int res = 0;
     for(int i=2; i<n; i++){
