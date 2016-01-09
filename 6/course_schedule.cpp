@@ -53,7 +53,20 @@ bool canFinish(int numCourses, vector<pair<int, int> >& prerequisites) {
 
 /* bfs */
 bool canFinish(int numCourses, vector<pair<int, int> >& prerequisites) {
-    unordered_map<int,int> m; 
+    vector<unordered_set<int> > graphs(numCourses, unordered_set<int>());
+    vector<int> degrees(numCourses, 0); 
+    for(auto p:prerequisites) graphs[p.second].insert(p.first);
+    for(auto ins:graphs) 
+        for(int i:ins) degrees[i]++;
+    for(int i=0; i<numCourses; i++){
+        int j = 0;
+        for(;j<numCourses;j++)
+            if(degrees[j] == 0) break;
+        if(j == numCourses) return false;
+        degrees[j] = -1;
+        for(auto x:graphs[j]) degrees[x]--;
+    }
+    return true;
 }
 
 int main(){

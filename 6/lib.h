@@ -81,31 +81,31 @@ void print_2d_vector(vector<vector<T> > v){
     }
 }
 
-class TrieNode {
-public:
-    TrieNode(char c):val(c) {} 
-    TrieNode():val(0) {}
-    TrieNode* addChild(char c);
-    bool inChildren(char c);
-    bool isLeaf();
-    TrieNode* getChild(char c);
-private:
-    char val;
-    unordered_map<char,TrieNode*> children;
-};
-
-class Trie {
-public:
-    Trie() {
-        root = new TrieNode();
-    }
-    void insert(string s);
-    bool search(string key);
-    bool startsWith(string prefix);
-    TrieNode* getRoot();
-private:
-    TrieNode* root;
-};
+//class TrieNode {
+//public:
+//    TrieNode(char c):val(c) {} 
+//    TrieNode():val(0) {}
+//    TrieNode* addChild(char c);
+//    bool inChildren(char c);
+//    bool isLeaf();
+//    TrieNode* getChild(char c);
+//private:
+//    char val;
+//    unordered_map<char,TrieNode*> children;
+//};
+//
+//class Trie {
+//public:
+//    Trie() {
+//        root = new TrieNode();
+//    }
+//    void insert(string s);
+//    bool search(string key);
+//    bool startsWith(string prefix);
+//    TrieNode* getRoot();
+//private:
+//    TrieNode* root;
+//};
 
 void print_arr(vector<int>& nums, int l, int r);
 
