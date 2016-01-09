@@ -81,31 +81,71 @@ void print_2d_vector(vector<vector<T> > v){
     }
 }
 
-class TrieNode {
-public:
-    TrieNode(char c):val(c) {} 
-    TrieNode():val(0) {}
-    TrieNode* addChild(char c);
-    bool inChildren(char c);
-    bool isLeaf();
-    TrieNode* getChild(char c);
-private:
-    char val;
-    unordered_map<char,TrieNode*> children;
-};
-
-class Trie {
-public:
-    Trie() {
-        root = new TrieNode();
-    }
-    void insert(string s);
-    bool search(string key);
-    bool startsWith(string prefix);
-    TrieNode* getRoot();
-private:
-    TrieNode* root;
-};
+//class TrieNode {
+//public:
+//    unordered_map<char,TrieNode*> children;
+//    char val;
+//    // Initialize your data structure here.
+//    TrieNode(char c) {
+//        val = c;
+//    }
+//    TrieNode* addChild(char c){
+//        TrieNode* res = getChild(c);
+//        if(res != NULL) return res;
+//        res = new TrieNode(c);
+//        this->children[c]=res;
+//        return res;
+//    }
+//    TrieNode* getChild(char c){
+//        return this->children[c];
+//    }
+//};
+//
+//class Trie {
+//public:
+//    Trie() {
+//        this->root = new TrieNode('^');
+//    }
+//
+//    // Inserts a word into the trie.
+//    void insert(string word) {
+//        TrieNode* curr = root, *next;
+//        for(char c:word){
+//            next = curr->addChild(c);
+//            curr = next;
+//        }
+//        curr->addChild('$');
+//    }
+//
+//    // Returns if the word is in the trie.
+//    bool search(string word) {
+//        TrieNode* curr = root;
+//        for(char c:word){
+//            TrieNode* next = curr->getChild(c);
+//            if(!next) return false;
+//            curr = next;
+//        }
+//        return curr->getChild('$') != NULL;
+//    }
+//
+//    // Returns if there is any word in the trie
+//    // that starts with the given prefix.
+//    bool startsWith(string prefix) {
+//        TrieNode* curr = root;
+//        for(char c:prefix){
+//            TrieNode* next = curr->getChild(c);
+//            if(!next) return false;
+//            curr = next;
+//        }
+//        return true;
+//    }
+//    
+//    TrieNode* getRoot(){
+//        return root;
+//    }
+//private:
+//    TrieNode* root;
+//};
 
 void print_arr(vector<int>& nums, int l, int r);
 
@@ -115,3 +155,76 @@ struct Interval {
     Interval() : start(0), end(0) {}
     Interval(int s, int e) : start(s), end(e) {}
 };
+
+class TrieNode {
+public:
+    vector<TrieNode*> children;
+    char val;
+    int count;
+    // Initialize your data structure here.
+    TrieNode(char c) {
+        val = c;
+        count = 0;
+        children = vector<TrieNode*>(28, NULL);
+    }
+    TrieNode* addChild(char c){
+        TrieNode* res = getChild(c);
+        if(res != NULL) return res;
+        res = new TrieNode(c);
+        this->children[c-'a']=res;
+        return res;
+    }
+    TrieNode* getChild(char c){
+        return this->children[c-'a'];
+    }
+};
+
+class Trie {
+public:
+    Trie() {
+        this->root = new TrieNode('a'+26);
+    }
+
+    // Inserts a word into the trie.
+    void insert(string word) {
+        TrieNode* curr = root, *next;
+        for(char c:word){
+            next = curr->addChild(c);
+            curr->count++;
+            curr = next;
+        }
+        curr->addChild('a'+27);
+        curr->count++;
+    }
+
+    // Returns if the word is in the trie.
+    bool search(string word) {
+        TrieNode* curr = root;
+        for(char c:word){
+            TrieNode* next = curr->getChild(c);
+            if(!next) return false;
+            curr = next;
+        }
+        return curr->getChild('a'+27) != NULL;
+    }
+
+    // Returns if there is any word in the trie
+    // that starts with the given prefix.
+    bool startsWith(string prefix) {
+        TrieNode* curr = root;
+        for(char c:prefix){
+            TrieNode* next = curr->getChild(c);
+            if(!next) return false;
+            curr = next;
+        }
+        return true;
+    }
+    
+    TrieNode* getRoot(){
+        return root;
+    }
+private:
+    TrieNode* root;
+};
+
+

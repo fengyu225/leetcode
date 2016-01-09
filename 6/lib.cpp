@@ -161,59 +161,6 @@ void print_list(ListNode* curr){
     cout<<endl;
 }
 
-TrieNode* TrieNode::addChild(char c){
-    TrieNode* n = new TrieNode(c);
-    this->children[c] = n;
-    return n;
-}
-
-
-bool TrieNode::inChildren(char c){
-    return this->children.find(c) != this->children.end();
-}
-
-bool TrieNode::isLeaf(){
-    return this->children.size() == 0; 
-}
-
-TrieNode* TrieNode::getChild(char c){
-    if(!inChildren(c))  return NULL;
-    return this->children[c];
-}
-
-void Trie::insert(string s) {
-    TrieNode* curr = root;
-    for(int i=0; i<s.length(); i++){
-        if(curr->inChildren(s[i])) curr = curr->getChild(s[i]);
-        else curr=curr->addChild(s[i]);
-    }
-    curr->addChild('#');
-}
-
-// Returns if the word is in the trie.
-bool Trie::search(string key) {
-    TrieNode* curr = root;
-    for(int i=0; i<key.length(); i++){
-        if(!curr->inChildren(key[i])) return false;
-        curr = curr->getChild(key[i]);
-    }
-    return curr->inChildren('#');
-}
-
-// Returns if there is any word in the trie
-// that starts with the given prefix.
-bool Trie::startsWith(string prefix) {
-    TrieNode* curr = root;
-    for(int i=0; i<prefix.length(); i++){
-        if(!curr->inChildren(prefix[i])) return false;
-        curr = curr->getChild(prefix[i]);
-    }
-    return true;
-}
-
-TrieNode* Trie::getRoot(){
-    return this->root;
-}
 
 void print_arr(vector<int>& nums, int l, int r){
     for(int i = l; i<=r; i++) cout<<nums[i]<<" ";
