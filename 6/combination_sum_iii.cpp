@@ -23,15 +23,34 @@ Output:
 
 #include "header.h"
 
+void search(int k, int n, int curr, int curr_sum, vector<int>& temp, vector<vector<int> >& res){
+    int sz = temp.size();
+    if(sz == k && curr_sum == n){
+        res.push_back(temp);
+        return;
+    }
+    if(sz>k || curr_sum>n || curr>9) return;
+    temp.push_back(curr);
+    search(k,n,curr+1,curr_sum+curr,temp,res);
+    temp.pop_back();
+    search(k,n,curr+1,curr_sum,temp,res);
+}
+
 vector<vector<int> > combinationSum3(int k, int n){
     vector<vector<int> > res;
     if(k==0 || n==0) return res;
+    int curr_sum = 0, curr = 1;
+    vector<int> temp;
+    search(k, n, curr, curr_sum, temp, res);
     return res;
 }
 
 int main(){
     vector<vector<int> > res = combinationSum3(3,9);
-    for(int i=0; i<res.size(); i++)
-        print_vector<int>(res[i]);
+    for(int i=0; i<res.size(); i++){
+        for(int j=0; j<res[i].size(); j++)
+            cout<<res[i][j]<<" ";
+        cout<<endl;
+    }
     return 0;
 }
