@@ -5,7 +5,37 @@ Given an integer array of size n, find all elements that appear more than ⌊ n/
 #include "header.h"
 
 vector<int> majorityElement(vector<int>& nums){
-
+    int sz = nums.size();
+    if(sz == 0) return vector<int>();
+    if(sz == 1) return vector<int>(1, nums[0]);
+    int c1_cnt = 0, c2_cnt = 0, c1 = -1, c2 = -1;
+    for(int i=0; i<sz; i++){
+        if(c1>=0 && nums[c1] == nums[i]) c1_cnt++;
+        else if(c2>=0 && nums[c2] == nums[i]) c2_cnt++;
+        else{
+            if(c1_cnt == 0){
+                c1 = i;
+                c1_cnt++;
+            }
+            else if(c2_cnt == 0){
+                c2 = i;
+                c2_cnt++;
+            }
+            else{
+                c1_cnt--;
+                c2_cnt--;
+            }
+        }
+    }
+    c1_cnt = c2_cnt = 0;
+    for(int i:nums){
+        if(c1>=0 && nums[c1] == i) c1_cnt++;
+        if(c2>=0 && nums[c2] == i) c2_cnt++;
+    }
+    vector<int> res;
+    if(c1_cnt>sz/3) res.push_back(nums[c1]);
+    if(c2_cnt>sz/3) res.push_back(nums[c2]);
+    return res;
 }
 
 int main(){
