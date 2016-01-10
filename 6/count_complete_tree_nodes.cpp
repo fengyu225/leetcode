@@ -7,8 +7,28 @@ In a complete binary tree every level, except possibly the last, is completely f
 
 #include "header.h"
 
-int countNodes(TreeNode* root) {
+int getHeight(TreeNode* root){
+    int res = 0;
+    for(TreeNode* curr = root; curr; curr = curr->left, res++);
+    return res;
+}
 
+int countNodes(TreeNode* root) {
+    TreeNode* curr = root;
+    int res = 0;
+    while(curr){
+        int l_h = getHeight(curr->left);
+        int r_h = getHeight(curr->right);
+        if(l_h == r_h){
+            res += l_h>0?2<<(l_h-1):1;
+            curr = curr->right;
+        }
+        else{
+            res += r_h>0?2<<(r_h-1):1;
+            curr = curr->left;
+        }
+    }
+    return res;
 }
 
 int main(){
