@@ -14,25 +14,34 @@ You may assume that all operations are valid (for example, no pop or peek operat
 #include "header.h"
 
 class Queue {
+    stack<int> st1, st2;
 public:
     // Push element x to the back of queue.
     void push(int x) {
-        
+        st1.push(x);
     }
 
     // Removes the element from in front of queue.
     void pop(void) {
-        
+        peek();
+        st2.pop();
     }
 
     // Get the front element.
     int peek(void) {
-        
+        if(st2.empty()){
+            while(!st1.empty()){
+                st2.push(st1.top());
+                st1.pop();
+            }
+        }
+        int res = st2.top();
+        return res; 
     }
 
     // Return whether the queue is empty.
     bool empty(void) {
-        
+        return st1.empty() && st2.empty();    
     }
 };
 
