@@ -18,6 +18,17 @@ A solution set is:
 #include "header.h"
 
 void search(vector<int>& candidates,int curr_idx, int target,int curr_sum, vector<int>& temp, vector<vector<int> >& res){
+    if(curr_sum == target){
+        res.push_back(temp);
+        return;
+    }
+    if(curr_idx == candidates.size() || curr_sum > target) return;
+    temp.push_back(candidates[curr_idx]);
+    search(candidates, curr_idx+1, target, curr_sum+candidates[curr_idx], temp, res);
+    temp.pop_back();
+    curr_idx++;
+    while(curr_idx<candidates.size() && candidates[curr_idx] == candidates[curr_idx-1]) curr_idx++;
+    search(candidates, curr_idx, target, curr_sum, temp, res);
 }
 
 vector<vector<int> > combinationSum2(vector<int>& candidates, int target){
@@ -34,11 +45,11 @@ vector<vector<int> > combinationSum2(vector<int>& candidates, int target){
 int main(){
     //int arr[] = {10,1,2,7,6,1,5};
     //int arr[] = {2,1,3,1,4};
-    int arr[] = {1,1,2,5,6,7,10};
-    //int arr[] = {1,1};
+    //int arr[] = {1,1,2,5,6,7,10};
+    int arr[] = {1};
     vector<int> candidates(arr,arr+sizeof(arr)/sizeof(arr[0]));
-    vector<vector<int> > res = combinationSum2(candidates,10);
-//    vector<vector<int> > res = combinationSum2(candidates,8);
+//    vector<vector<int> > res = combinationSum2(candidates,10);
+    vector<vector<int> > res = combinationSum2(candidates,1);
     for(int i=0; i<res.size(); i++){
         for(int j=0; j<res[i].size(); j++)
             printf("%d ", res[i][j]);
