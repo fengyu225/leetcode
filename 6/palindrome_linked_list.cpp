@@ -7,14 +7,25 @@ Could you do it in O(n) time and O(1) space?
 
 #include "header.h"
 
-bool check(ListNode*& head){
-    
+bool check(ListNode*& head, int l, int r){
+    if(l>r) return true;
+    if(l == r){
+        head = head->next;
+        return true;
+    }
+    ListNode* curr = head, *next = head->next;
+    bool x = check(next, l+1, r-1);
+    bool res = x && curr->val == next->val;
+    head = next->next;
+    return res;
 }
 
 bool isPalindrome(ListNode* head) {
     if(!head || !head->next) return true;
     ListNode* curr = head;
-    return check(curr);
+    int len=0;
+    for(ListNode* temp = head; temp; len++,temp = temp->next);
+    return check(curr, 0, len-1);
 }
 
 int main(){
