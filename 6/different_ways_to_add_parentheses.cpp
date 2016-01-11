@@ -23,8 +23,17 @@ vector<int> diffWaysToCompute(string input){
 }
 
 int main(){
-    vector<int> res = diffWaysToCompute("2*3-4*5");
-    for(int i=0; i<res.size(); i++) cout<<res[i]<<" ";
-    cout<<endl;
+    vector<string> input = {
+		"(2*(3-(4*5)))",
+		"((2*3)-(4*5))",
+		"((2*(3-4))*5)",
+		"(2*((3-4)*5))",
+		"(((2*3)-4)*5)"
+    };
+    for(string s:input){
+        cout<<s<<endl;
+        vector<int> res = diffWaysToCompute(s);
+        print_vector<int>(res);
+    }
     return 0;
 }
