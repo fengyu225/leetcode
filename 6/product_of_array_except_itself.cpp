@@ -12,7 +12,16 @@ Could you solve it with constant space complexity? (Note: The output array does 
 #include "header.h"
 
 vector<int> productExceptSelf(vector<int>& nums) {
-
+    int sz = nums.size();
+    vector<int> res(sz, 1);
+    int l = 1, r = 1;
+    for(int i=0; i<sz; i++){
+        res[i] *= l;
+        res[sz-1-i] *= r;
+        l *= nums[i];
+        r *= nums[sz-1-i];
+    }
+    return res;
 }
 
 int main(){
