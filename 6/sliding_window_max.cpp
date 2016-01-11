@@ -22,6 +22,7 @@ Could you solve it in linear time?
 
 #include "header.h"
 
+// using deque to maintain a non-increasing seq 
 vector<int> maxSlidingWindow(vector<int>& nums, int k) {
     int sz = nums.size();
     if(sz == 0) return vector<int>();
