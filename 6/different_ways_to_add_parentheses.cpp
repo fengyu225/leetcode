@@ -20,6 +20,8 @@ Output: [-34, -14, -10, -10, 10]
 #include "header.h"
 
 vector<int> diffWaysToCompute(string input){
+    vector<int> res;
+    return res;
 }
 
 int main(){
