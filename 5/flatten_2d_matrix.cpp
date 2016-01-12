@@ -15,45 +15,40 @@ As an added challenge, try to code it using only iterators in C++ or iterators i
 #include "header.h"
 
 class Vector2D {
+    int curr_r, curr_c, sz;
+    bool move_next;
+    vector<vector<int> > v;
 public:
     Vector2D(vector<vector<int> >& vec2d) {
+        this->v = vec2d;
+        move_next = true;
         curr_r = 0;
-        row = vec2d.size();
         curr_c = -1;
-        this->vec2d = vec2d;
-        next_r = next_c = 0;
+        sz = vec2d.size();
     }
 
     int next() {
-        curr_r = next_r;
-        curr_c = next_c;
-        return this->vec2d[curr_r][curr_c];
+        int res = v[curr_r][curr_c];
+        move_next = true;
+        return res;
     }
 
     bool hasNext() {
-        if(row == 0) return false;
-        int old_r = curr_r, old_c = curr_c;
+        if(!move_next) return true; //move_next is false iff (curr_r,curr_c) is valid
+        if(sz == curr_r) return false;
         curr_c++;
-        if(curr_c == vec2d[curr_r].size()){
-            do{
+        while(curr_r<sz){
+            if(curr_c == v[curr_r].size()){
                 curr_r++;
-                curr_c=0;
-            }while(curr_r<row && vec2d[curr_r].size() == 0);
-            if(curr_r == row) return false;
+                curr_c = 0;
+            }
+            else{
+                move_next = false;
+                return true;
+            }
         }
-        next_c = curr_c;
-        next_r = curr_r;
-        curr_c = old_c;
-        curr_r = old_r;
-        return true;
+        return false;
     }
-private:
-    int row;
-    int curr_r;
-    int curr_c;
-    int next_r;
-    int next_c;
-    vector<vector<int> > vec2d;
 };
 
 int main(){

@@ -15,20 +15,41 @@ As an added challenge, try to code it using only iterators in C++ or iterators i
 #include "header.h"
 
 class Vector2D {
+    int curr_r, curr_c, sz;
+    bool move_next;
+    vector<vector<int> > v;
 public:
-    Vector2D(vector<vector<int>>& vec2d) {
-        
+    Vector2D(vector<vector<int> >& vec2d) {
+        this->v = vec2d;
+        move_next = true;
+        curr_r = 0;
+        curr_c = -1;
+        sz = vec2d.size();
     }
 
     int next() {
-        
+        int res = v[curr_r][curr_c];
+        move_next = true;
+        return res;
     }
 
     bool hasNext() {
-        
+        if(!move_next) return true; //move_next is false iff (curr_r,curr_c) is valid
+        if(sz == curr_r) return false;
+        curr_c++;
+        while(curr_r<sz){
+            if(curr_c == v[curr_r].size()){
+                curr_r++;
+                curr_c = 0;
+            }
+            else{
+                move_next = false;
+                return true;
+            }
+        }
+        return false;
     }
 };
-
 /**
  * Your Vector2D object will be instantiated and called as such:
  * Vector2D i(vec2d);
