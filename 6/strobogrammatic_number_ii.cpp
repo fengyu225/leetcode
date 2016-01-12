@@ -9,8 +9,24 @@ Given n = 2, return ["11","69","88","96"].
 
 #include "header.h"
 
-vector<string> findStrobogrammatic(int n) {
+unordered_map<char,char> m = {
+    {'0', '0'},
+    {'1', '1'},
+    {'6', '9'},
+    {'8', '8'},
+    {'9', '6'}
+};
 
+vector<string> findStrobogrammatic(int n, int curr_l){
+    if(n == 0) return vector<string>();
+    if(n == 1){
+        vector<string> res = {"1", "8"};
+        return res;
+    }
+}
+
+vector<string> findStrobogrammatic(int n) {
+    return findStrobogrammatic(n, n)
 }
 
 int main(){
