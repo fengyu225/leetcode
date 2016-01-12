@@ -15,8 +15,24 @@ return 4.
 
 #include "header.h"
 
-int countUnivalSubtrees(TreeNode* root) {
+bool search(TreeNode* root, int& count){
+    if(!root){
+        count = 0;
+        return true;
+    }
+    int l_cnt = 0, r_cnt = 0;
+    bool l_res = search(root->left, l_cnt);
+    bool r_res = search(root->right, r_cnt);
+    bool t = (!root->left || root->left->val == root->val) && (!root->right || root->right->val == root->val);
+    count = l_cnt+r_cnt+(l_res && r_res && t);
+    return l_res && r_res && t;
+}
 
+int countUnivalSubtrees(TreeNode* root) {
+    if(!root) return 0;
+    int count = 0;
+    search(root, count);
+    return count;
 }
 
 int main(){
