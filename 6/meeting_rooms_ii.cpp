@@ -16,7 +16,8 @@ class comp{
 };
 
 int minMeetingRooms(vector<Interval>& intervals) {
-
+    int sz = intervals.size();
+    sort(intervals.begin(), intervals.end(), comp());
 }
 
 int main(){
