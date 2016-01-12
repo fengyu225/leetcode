@@ -44,12 +44,10 @@ int main(){
 //    vector<int> v_arr2(arr2, arr2+sizeof(arr2)/sizeof(arr2[0]));
 //    vector<vector<int> > vec2d = {v_arr0, v_arr1, v_arr2};
 //
-    int arr0[] = {1};
-    int arr1[] = {};
-    vector<int> v_arr0(arr0, arr0+sizeof(arr0)/sizeof(arr0[0]));
-    vector<int> v_arr1(arr1, arr1);
-    vector<vector<int> > vec2d = {v_arr0, v_arr1};
-
+    vector<vector<int> > vec2d = {
+        {1},
+        {}
+    };
     Vector2D vec(vec2d);
     while(vec.hasNext()){
         cout<<vec.next()<<endl;    
