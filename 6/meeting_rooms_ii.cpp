@@ -18,6 +18,7 @@ class comp{
 class q_comp{
     public:
         bool operator() (Interval& a, Interval& b){
+            //interval with small end get higher priority
             return b.end<a.end;
         }
 };
@@ -33,6 +34,9 @@ int minMeetingRooms(vector<Interval>& intervals) {
     for(int i=1; i<sz; i++){
         Interval temp = q.top();
         if(intervals[i].start<temp.end){
+            //intervals[i].start no less than start of all intervals in q
+            //intervals[i].end is less than end of all intervals in q
+            //so need a new room
             q.push(intervals[i]);
             res++;
         }
