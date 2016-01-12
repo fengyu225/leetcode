@@ -15,9 +15,34 @@ class comp{
         }
 };
 
+class q_comp{
+    public:
+        bool operator() (Interval& a, Interval& b){
+            return b.end<a.end;
+        }
+};
+
+// using heap
 int minMeetingRooms(vector<Interval>& intervals) {
     int sz = intervals.size();
+    if(sz<2) return sz;
     sort(intervals.begin(), intervals.end(), comp());
+    priority_queue<Interval,vector<Interval>,q_comp> q; 
+    q.push(intervals[0]);
+    int res = 1;
+    for(int i=1; i<sz; i++){
+        Interval temp = q.top();
+        if(intervals[i].start<temp.end){
+            q.push(intervals[i]);
+            res++;
+        }
+        else{
+            q.pop();
+            temp.end = max(intervals[i].end, temp.end);
+            q.push(temp);
+        }
+    }
+    return res;
 }
 
 int main(){
