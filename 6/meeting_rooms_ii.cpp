@@ -8,35 +8,15 @@ return 2.
 
 #include "header.h"
 
-class interval_cmp{
+class comp{
     public:
-        bool operator () (const Interval& a, const Interval& b){
-            return a.start<b.start;
+        bool operator() (Interval& a, Interval& b){
+            return a.start<b.start || a.start == b.start && a.end<b.end;          
         }
 };
 
 int minMeetingRooms(vector<Interval>& intervals) {
-    int sz = intervals.size();
-    if(sz<2) return sz;
-    vector<vector<Interval> > rooms;
-    sort(intervals.begin(), intervals.end(), interval_cmp());
-    for(Interval i:intervals){
-        int k = -1;
-        int diff = INT_MAX;
-        for(int j=0;j<rooms.size(); j++){
-            int last = rooms[j].size()-1;
-            if(rooms[j][last].end>i.start) continue;
-            if(i.start-rooms[j][last].end<diff){
-                k = j;
-                diff = i.start-rooms[j][last].end;
-            }
-        }
-        if(k == -1)
-            rooms.push_back(vector<Interval>(1,i));
-        else
-            rooms[k].push_back(i);
-    }
-    return rooms.size();
+
 }
 
 int main(){
