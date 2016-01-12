@@ -34,7 +34,7 @@ public:
     }
 
     bool hasNext() {
-        if(!move_next) return true; //move_next is false iff (curr_r,curr_c) is valid
+        if(!move_next) return true; //move_next is false iff (curr_r,curr_c) is valid & hasn't been used yet
         if(sz == curr_r) return false;
         curr_c++;
         while(curr_r<sz){
