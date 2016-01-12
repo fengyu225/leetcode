@@ -36,14 +36,11 @@ public:
  */
 
 int main(){
-//    int arr0[] = {1, 2};
-//    int arr1[] = {3};
-//    int arr2[] = {4,5,6};
-//    vector<int> v_arr0(arr0, arr0+sizeof(arr0)/sizeof(arr0[0]));
-//    vector<int> v_arr1(arr1, arr1+sizeof(arr1)/sizeof(arr1[0]));
-//    vector<int> v_arr2(arr2, arr2+sizeof(arr2)/sizeof(arr2[0]));
-//    vector<vector<int> > vec2d = {v_arr0, v_arr1, v_arr2};
-//
+//    vector<vector<int> > vec2d = {
+//        {1, 2};
+//        {3};
+//        {4,5,6};
+//    };
     vector<vector<int> > vec2d = {
         {1},
         {}
