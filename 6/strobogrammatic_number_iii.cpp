@@ -13,7 +13,7 @@ Because the range might be a large number, the low and high numbers are represen
 #include "header.h"
 
 int strobogrammaticInRange(string low, string high) {
-
+     
 }
 
 int main(){

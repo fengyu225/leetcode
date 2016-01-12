@@ -20,8 +20,7 @@ unordered_map<char,char> m = {
 vector<string> findStrobogrammatic(int n, bool first){
     if(n == 0) return first?vector<string>():vector<string>(1,"");
     if(n == 1){
-        vector<string> res = {"1", "8"};
-        if(!first) res.push_back("0");
+        vector<string> res = {"0", "1", "8"};
         return res;
     }
     vector<string> temp = findStrobogrammatic(n-2, false);
@@ -38,7 +37,7 @@ vector<string> findStrobogrammatic(int n) {
 }
 
 int main(){
-    vector<string> res = findStrobogrammatic(2);
+    vector<string> res = findStrobogrammatic(1);
     sort(res.begin(), res.end());
     for(auto s:res) cout<<s<<" ";
     cout<<endl;
