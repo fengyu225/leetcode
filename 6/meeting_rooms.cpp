@@ -8,7 +8,21 @@ return false.
 
 #include "header.h"
 
+class comp{
+    public:
+        bool operator() (Interval& a, Interval& b){
+            return a.start<b.start || a.start == b.start && a.end<b.end;          
+        }
+};
+
 bool canAttendMeetings(vector<Interval>& intervals){
+    int sz = intervals.size();
+    if(sz == 1) return true;
+    sort(intervals.begin(), intervals.end(), comp());
+    for(int l=0; l<sz-1; l++){
+        if(intervals[l].end>intervals[l+1].start) return false;
+    }
+    return true;
 }
 
 int main(){
