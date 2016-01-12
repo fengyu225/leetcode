@@ -15,9 +15,29 @@ Return:
 
 #include "header.h"
 
+string findKey(string s){
+    string res = "";
+    if(s.length() == 0) return res;
+    int offset = s[0]-'a';
+    for(char c:s){
+        char t = c-offset>='a'?c-offset:c-offset+26;
+        res.push_back(t);
+    }
+    return res;
+}
+
 vector<vector<string> > groupStrings(vector<string>& strings) {
     vector<vector<string> > res;
-
+    unordered_map<string,vector<string> > m;
+    for(string s:strings){
+        string k = findKey(s);
+        m[k].push_back(s);
+    }
+    for(auto p:m){
+        vector<string> x = p.second;
+        sort(x.begin(), x.end());
+        res.push_back(x);
+    }
     return res;
 }
 
@@ -29,9 +49,10 @@ vector<vector<string> > groupStrings(vector<string>& strings) {
 */
 
 int main(){
-    string arr[] = {
-  "fpbnsbrkbcyzdmmmoisaa", "cpjtwqcdwbldwwrryuclcngw", "a", "fnuqwejouqzrif", "js", "qcpr", "zghmdiaqmfelr", "iedda", "l", "dgwlvcyubde", "lpt", "qzq", "zkddvitlk", "xbogegswmad", "mkndeyrh", "llofdjckor", "lebzshcb", "firomjjlidqpsdeqyn", "dclpiqbypjpfafukqmjnjg", "lbpabjpcmkyivbtgdwhzlxa", "wmalmuanxvjtgmerohskwil", "yxgkdlwtkekavapflheieb", "oraxvssurmzybmnzhw", "ohecvkfe", "kknecibjnq", "wuxnoibr", "gkxpnpbfvjm", "lwpphufxw", "sbs", "txb", "ilbqahdzgij", "i", "zvuur", "yfglchzpledkq", "eqdf", "nw", "aiplrzejplumda", "d", "huoybvhibgqibbwwdzhqhslb", "rbnzendwnoklpyyyauemm"  
-    };
+//    string arr[] = {
+//  "fpbnsbrkbcyzdmmmoisaa", "cpjtwqcdwbldwwrryuclcngw", "a", "fnuqwejouqzrif", "js", "qcpr", "zghmdiaqmfelr", "iedda", "l", "dgwlvcyubde", "lpt", "qzq", "zkddvitlk", "xbogegswmad", "mkndeyrh", "llofdjckor", "lebzshcb", "firomjjlidqpsdeqyn", "dclpiqbypjpfafukqmjnjg", "lbpabjpcmkyivbtgdwhzlxa", "wmalmuanxvjtgmerohskwil", "yxgkdlwtkekavapflheieb", "oraxvssurmzybmnzhw", "ohecvkfe", "kknecibjnq", "wuxnoibr", "gkxpnpbfvjm", "lwpphufxw", "sbs", "txb", "ilbqahdzgij", "i", "zvuur", "yfglchzpledkq", "eqdf", "nw", "aiplrzejplumda", "d", "huoybvhibgqibbwwdzhqhslb", "rbnzendwnoklpyyyauemm"  
+//    };
+    string arr[] = {"abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"};
     vector<string> strings(arr, arr+sizeof(arr)/sizeof(arr[0]));
     vector<vector<string> > res = groupStrings(strings);
     for(int i=0; i<res.size(); i++){
