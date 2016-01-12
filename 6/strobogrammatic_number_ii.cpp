@@ -17,20 +17,28 @@ unordered_map<char,char> m = {
     {'9', '6'}
 };
 
-vector<string> findStrobogrammatic(int n, int curr_l){
-    if(n == 0) return vector<string>();
+vector<string> findStrobogrammatic(int n, bool first){
+    if(n == 0) return first?vector<string>():vector<string>(1,"");
     if(n == 1){
         vector<string> res = {"1", "8"};
+        if(!first) res.push_back("0");
         return res;
     }
+    vector<string> temp = findStrobogrammatic(n-2, false);
+    vector<string> res;
+    for(auto p:m){
+        if(first && p.first == '0') continue;
+        for(string x:temp) res.push_back(string(1,p.first)+x+string(1,p.second)); 
+    }
+    return res;
 }
 
 vector<string> findStrobogrammatic(int n) {
-    return findStrobogrammatic(n, n)
+    return findStrobogrammatic(n, true);
 }
 
 int main(){
-    vector<string> res = findStrobogrammatic(3);
+    vector<string> res = findStrobogrammatic(2);
     sort(res.begin(), res.end());
     for(auto s:res) cout<<s<<" ";
     cout<<endl;
