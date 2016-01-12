@@ -16,42 +16,29 @@ You may assume that word1 does not equal to word2, and word1 and word2 are both 
 #include "header.h"
 
 class WordDistance {
-    public:
-        WordDistance(vector<string>& words) {
-            int sz = words.size();
-            for(int i=0;i<sz; i++){
-                if(map.find(words[i]) == map.end()) map[words[i]] = vector<int>();
-                map[words[i]].push_back(i);
-            }
+    unordered_map<string,vector<int> > pos;
+public:
+    WordDistance(vector<string>& words) {
+        int sz = words.size();
+        for(int i=0; i<sz; i++)
+            pos[words[i]].push_back(i);
+    }
+
+    int shortest(string word1, string word2) {
+        vector<int> w1_pos = pos[word1];
+        vector<int> w2_pos = pos[word2];
+        int l = 0, r = 0, w1_pos_sz = w1_pos.size(), w2_pos_sz = w2_pos.size();
+        int res = INT_MAX;
+        while(l<w1_pos_sz && r<w2_pos_sz){
+            res = min(res, abs(w1_pos[l]-w2_pos[r]));
+            int orig_r = r, orig_l = l;
+            if(w1_pos[orig_l]<=w2_pos[orig_r]) l++;
+            if(w2_pos[orig_r]<=w1_pos[orig_l]) r++;
         }
-        
-        int shortest(string word1, string word2) {
-            vector<int> idx1 = map[word1];
-            vector<int> idx2 = map[word2];
-            int idx1_sz = idx1.size(), idx2_sz = idx2.size();
-            int res = INT_MAX;
-            int curr_1 = 0, curr_2 = 0;
-            while(curr_1<idx1_sz && curr_2<idx2_sz){
-                res = min(res, abs(idx1[curr_1]-idx2[curr_2]));
-                if(idx1[curr_1]<idx2[curr_2]) curr_1++;
-                else curr_2++;
-            }
-            return res;
-        }
-         
-//        int shortest(string word1, string word2) {
-//            vector<int> idx1 = map[word1];
-//            vector<int> idx2 = map[word2];
-//            int res = INT_MAX;
-//            for(int i=0; i<idx1.size(); i++){
-//                for(int j=0; j<idx2.size(); j++)
-//                    res = min(res, abs(idx1[i]-idx2[j]));
-//            }
-//            return res;
-//        }
-    private:
-        unordered_map<string, vector<int> > map;
+        return res;
+    }
 };
+
 
 // Your WordDistance object will be instantiated and called as such:
 // WordDistance wordDistance(words);
@@ -62,7 +49,7 @@ int main(){
     string arr[] = {"practice", "makes", "perfect", "coding", "makes"};
     vector<string> words(arr, arr+sizeof(arr)/sizeof(arr[0]));
     WordDistance wordDistance(words);
-    cout<<wordDistance.shortest("coding", "practice")<<endl;
+//    cout<<wordDistance.shortest("coding", "practice")<<endl;
     cout<<wordDistance.shortest("makes", "coding")<<endl;
     return 0;
 }
