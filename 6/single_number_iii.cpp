@@ -13,7 +13,18 @@ Your algorithm should run in linear runtime complexity. Could you implement it u
 #include "header.h"
 
 vector<int> singleNumber(vector<int>& nums) {
-    
+    vector<int> res;
+    int a_xor_b=0;
+    for(int c:nums) a_xor_b ^= c;
+    int i=1;
+    for(;i<INT_MAX;i<<=1)
+        if(i&a_xor_b) break;
+    int a=0;
+    for(int c:nums) 
+        if(i&c) a^=c;
+    res.push_back(a);
+    res.push_back(a^a_xor_b);
+    return res;
 }
 
 int main(){
