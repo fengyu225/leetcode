@@ -10,18 +10,15 @@ All costs are positive integers.
 #include "header.h"
 
 int minCost(vector<vector<int> >& costs){
-    int t_house = costs.size();
-    if(t_house == 0) return 0;
-    vector<vector<int> > arr(t_house, vector<int>(3, INT_MAX));
-    for(int i=0; i<t_house; i++){
-        for(int j=0; j<3; j++){
-            if(i == 0) arr[i][j] = costs[i][j];
-            else{
-                arr[i][j] = min(arr[i-1][(j+1)%3], arr[i-1][(j+2)%3])+costs[i][j]; 
-            }
-        }
+    if(costs.size() == 0 || costs[0].size() == 0) return 0;
+    int h_cnt = costs.size();
+    vector<vector<int> > arr(h_cnt, vector<int>(3, 0));
+    for(int i=0; i<h_cnt; i++){
+        arr[i][0] = costs[i][0]+min(i==0?0:arr[i-1][1], i==0?0:arr[i-1][2]);
+        arr[i][1] = costs[i][1]+min(i==0?0:arr[i-1][0], i==0?0:arr[i-1][2]);
+        arr[i][2] = costs[i][2]+min(i==0?0:arr[i-1][0], i==0?0:arr[i-1][1]);
     }
-    return min(min(arr[t_house-1][0], arr[t_house-1][1]), arr[t_house-1][2]);
+    return min(arr[h_cnt-1][0], min(arr[h_cnt-1][1], arr[h_cnt-1][2]));
 }
 
 int main(){
