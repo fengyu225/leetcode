@@ -12,9 +12,7 @@ Could you do it without any loop/recursion in O(1) runtime?
 #include "header.h"
 
 int addDigits(int num){
-    //return num-9*((num-1)/9);
-    //If an integer is like 100a+10b+c, then (100a+10b+c)%9=(a+99a+b+9b+c)%9=(a+b+c)%9
-    return num==0?0:(num%9==0)?9:num%9;
+    return ((num%100)/10+num%10+1)%10;
 }
 
 int main(){
