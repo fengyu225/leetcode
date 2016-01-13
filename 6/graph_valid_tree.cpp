@@ -11,17 +11,42 @@ Note: you can assume that no duplicate edges will appear in edges. Since all edg
 
 #include "header.h"
 
-bool validTree(int n, vector<pair<int, int>>& edges) {
+bool search(unordered_map<int,vector<int> >& graph, vector<int>& color, int curr, int from){
+    for(int i:graph[curr]){
+        if(from>=0 && from == i) continue;
+        if(color[i] == 1) return false;
+        if(color[i] == 2) continue;
+        color[i] = 1;
+        bool res = search(graph, color, i, curr);
+        if(!res) return false;
+    }
+    color[curr] = 2;
+    return true;
+}
 
+bool validTree(int n, vector<pair<int, int> >& edges) {
+    //dfs
+    vector<int> color(n, 0);
+    if(edges.size() != n-1) return false;
+    unordered_map<int,vector<int> > m;
+    for(auto p:edges){
+        m[p.first].push_back(p.second);
+        m[p.second].push_back(p.first);
+    }
+    for(int i=0; i<n; i++){
+        if(color[i] != 0) continue;
+        color[i] = 1;
+        bool res = search(m, color, i, -1);
+        if(!res) return false;
+    }
+    return true;
 }
 
 int main(){
     vector<pair<int,int> > edges = {
         {0, 1},
-        {0, 2},
-        {0, 3},
-        {1, 4}
+        {2, 3}
     };
-    cout<<validTree(5, edges)<<endl;
+    cout<<validTree(4, edges)<<endl;
     return 0;
 }
