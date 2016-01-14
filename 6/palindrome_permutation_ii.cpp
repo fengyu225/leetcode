@@ -25,7 +25,7 @@ void search(string& temp, int curr, char c, vector<string>& res){
     for(int i=curr; i<sz; i++){
         if(i>curr && temp[i] == temp[i-1]) continue;
         swap(temp[curr], temp[i]);
-        search(temp, i+1, c, res);
+        search(temp, curr+1, c, res);
         swap(temp[curr], temp[i]);
     }
 }
@@ -57,6 +57,6 @@ int main(){
     //print_vector<string>(generatePalindromes("aaaaaa"));
 //    print_vector<string>(generatePalindromes("aabb"));
 //    print_vector<string>(generatePalindromes("abd"));
-    print_vector<string>(generatePalindromes("aaa"));
+    print_vector<string>(generatePalindromes("abcabc"));
     return 0;
 }
