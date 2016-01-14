@@ -42,14 +42,52 @@ Note: you can assume that no duplicate edges will appear in edges. Since all edg
 //    return true;
 //}
 
-bool validTree(int n, vector<pair<int, int> >& edges) {
+class Node{
+    public:
+        int val, rank;
+        Node* parent;
+        Node(int v):val(v),rank(0),parent(this){};
+};
 
+Node* f(Node* a){
+    if(a->parent == a) return a;
+    a->parent = f(a->parent);
+    return a->parent;
+}
+
+Node* u(Node* a, Node* b){
+    Node* a_p = f(a);
+    Node* b_p = f(b);
+    if(a_p == b_p) return a_p;
+    if(b_p->rank<a_p->rank){
+        b_p->parent = a_p;
+        return a_p;
+    }
+    else{
+        a_p->parent = b_p;
+        if(a_p->rank == b_p->rank) b_p->rank++;
+        return b_p;
+    }
+}
+
+bool validTree(int n, vector<pair<int, int> >& edges) {
+    if(edges.size() != n-1) return false;
+    vector<Node*> nodes;
+    for(int i=0 ;i<n; i++) nodes.push_back(new Node(i));
+    for(auto e:edges){
+        Node* l_p = f(nodes[e.first]);
+        Node* r_p = f(nodes[e.second]);
+        if(l_p == r_p) return false;
+        u(l_p,r_p);
+    }
+    return true;
 }
 
 int main(){
     vector<pair<int,int> > edges = {
         {0, 1},
-        {2, 3}
+        {2, 3},
+        {0, 2}
     };
     cout<<validTree(4, edges)<<endl;
     return 0;
