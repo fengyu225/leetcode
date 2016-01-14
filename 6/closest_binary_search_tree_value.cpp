@@ -8,8 +8,20 @@ You are guaranteed to have only one unique value in the BST that is closest to t
 
 #include "header.h"
 
-int closestValue(TreeNode* root, double target) {
+void closestValue(TreeNode* root, double target, int& res){
+    if(!root) return;
+    double dist = abs((double)res - target);
+    double curr_dist = abs((double)root->val - target);
+    if(curr_dist<dist) res = root->val;
+    if(target<root->val && root->left) closestValue(root->left, target, res);
+    if(target>root->val && root->right) closestValue(root->right, target, res);
+}
 
+int closestValue(TreeNode* root, double target) {
+    if(!root) return 0;
+    int res = root->val;
+    closestValue(root, target, res);
+    return res;
 }
 
 int main(){
