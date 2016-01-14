@@ -70,6 +70,7 @@ Node* u(Node* a, Node* b){
     }
 }
 
+// disjoint set
 bool validTree(int n, vector<pair<int, int> >& edges) {
     if(edges.size() != n-1) return false;
     vector<Node*> nodes;
