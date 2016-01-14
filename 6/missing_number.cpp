@@ -11,6 +11,11 @@ Your algorithm should run in linear runtime complexity. Could you implement it u
 #include "header.h"
 
 int missingNumber(vector<int>& nums){
+    int x = 0;
+    int n = nums.size();
+    for(int i=0; i<=n; i++) x^=i;
+    for(int temp:nums) x^=temp;
+    return x;
 }
 
 int main(){
