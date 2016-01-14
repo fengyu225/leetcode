@@ -26,13 +26,16 @@ int minCostII(vector<vector<int> >& costs) {
     int n = costs.size(), k = costs[0].size();
     vector<vector<int> > arr(n, vector<int>(k,0));
     int small = -1, second_small = -1;
+    int last_small = -1, last_second_small = -1;
     for(int i=0; i<n; i++){
+        small = -1, second_small = -1;
         for(int j=0; j<k; j++){
             if(i == 0) arr[i][j] = costs[i][j];
-            else arr[i][j] = (j==small?arr[i-1][second_small]:arr[i-1][small])+costs[i][j];
+            else arr[i][j] = (j==last_small?arr[i-1][last_second_small]:arr[i-1][last_small])+costs[i][j];
+            update(small, second_small, j, arr[i]);
         }
-        small = -1, second_small = -1;
-        for(int j=0; j<k; j++) update(small, second_small, j, arr[i]);
+        last_small = small;
+        last_second_small = second_small;
     }
     return arr[n-1][small];
 }
