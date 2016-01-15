@@ -28,7 +28,6 @@ int hIndex(vector<int>& citations) {
         if(c>=sz) arr[sz]++;
         else arr[c]++;
     }
-    if(arr[sz] == sz) return sz;
     int x = 0;
     for(int i=sz; i>0; i--){
         x += arr[i];
