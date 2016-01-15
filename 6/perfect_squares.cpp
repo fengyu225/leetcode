@@ -7,21 +7,24 @@ For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return
 #include "header.h"
 
 int numSquares(int n) {
-    static vector<int> arr(n+1, 0);
+    vector<int> arr(n+1, 0);
     for(int i=1; i<=n; i++){
         int temp = n+1;
-        for(int j=1; j*j<i; j++){
-            
+        for(int j=1; j*j<=i; j++){
+            temp = min(temp, arr[i-j*j]+1); 
         }
+        arr[i] = temp;
     }
+    return arr[n];
 }
 
 int main(){
-    cout<<numSquares(100000)<<endl;
-//    cout<<numSquares(12)<<endl;
+//    cout<<numSquares(100000)<<endl;
+//   cout<<numSquares(12)<<endl;
 //    cout<<numSquares(100000)<<endl;
 //    cout<<numSquares(13)<<endl;
 //    cout<<numSquares(1)<<endl;
 //    cout<<numSquares(4)<<endl;
+    cout<<numSquares(6)<<endl;
     return 0;
 }
