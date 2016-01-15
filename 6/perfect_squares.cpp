@@ -7,7 +7,13 @@ For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return
 #include "header.h"
 
 int numSquares(int n) {
-
+    static vector<int> arr(n+1, 0);
+    for(int i=1; i<=n; i++){
+        int temp = n+1;
+        for(int j=1; j*j<i; j++){
+            
+        }
+    }
 }
 
 int main(){
