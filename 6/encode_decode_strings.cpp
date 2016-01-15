@@ -40,12 +40,25 @@ public:
 
     // Encodes a list of strings to a single string.
     string encode(vector<string>& strs) {
-        
+        string res = "";
+        for(string s:strs) res+=to_string(s.length())+"|"+s;
+        return res; 
     }
 
     // Decodes a single string to a list of strings.
     vector<string> decode(string s) {
-        
+        vector<string> res;
+        int curr = 0, sz = s.length();
+        while(curr<sz){
+            string cnt = "";
+            for(;s[curr]!= '|';cnt.push_back(s[curr]),curr++); 
+            curr++;
+            string temp = "";
+            int c = stoi(cnt);
+            for(int i=0; i<c; i++) temp.push_back(s[curr++]);
+            res.push_back(temp);
+        }
+        return res;
     }
 };
 
@@ -56,6 +69,7 @@ public:
 int main(){
     Codec codec;
     vector<string> strs = {"a2", "", "ccc4"};
+    cout<<codec.encode(strs)<<endl;
     vector<string> res = codec.decode(codec.encode(strs));
     cout<<res.size()<<endl;
     for(string s:res) cout<<s<<" ";
