@@ -10,18 +10,30 @@ Note: There will be exactly one celebrity if he/she is in the party. Return the 
 
 #include "header.h"
 
+vector<vector<bool> > arr = {
+    {1, 1, 1},
+    {0, 1, 1},
+    {0, 0, 1}
+};
+
 bool knows(int a, int b){
-    vector<vector<bool> > arr = {
-        {1, 1, 1},
-        {0, 1, 1},
-        {0, 0, 1}
-    };
     return arr[a][b];
 }
 
 class Solution {
 public:
     int findCelebrity(int n) {
+        if(n == 0) return 0;
+        if(n == 1) return 1;
+        int candidate = 0;
+        for(int i=1; i<n; i++){
+            if(knows(candidate, i) || !knows(i,candidate)) candidate = i;
+        }
+        for(int i=0; i<n; i++){
+            if(i == candidate) continue;
+            if(!knows(i,candidate) || knows(candidate, i)) return -1;
+        }
+        return candidate;
     }
 };
 
