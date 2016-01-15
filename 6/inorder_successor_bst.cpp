@@ -8,7 +8,7 @@ Note: If the given node has no in-order successor in the tree, return null.
 
 TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
     if(!root || !p) return NULL;
-    TreeNode* res = p;
+    TreeNode* res = NULL;
     if(p->right){
         TreeNode* curr = p->right;
         while(curr->left) curr = curr->left;
