@@ -7,7 +7,24 @@ Note: If the given node has no in-order successor in the tree, return null.
 #include "header.h"
 
 TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
-
+    if(!root || !p) return NULL;
+    TreeNode* res = p;
+    if(p->right){
+        TreeNode* curr = p->right;
+        while(curr->left) curr = curr->left;
+        res = curr;
+    }
+    else{
+        TreeNode* curr = root;
+        while(curr){
+            if(p->val<curr->val){
+                res = curr;
+                curr = curr->left;
+            }
+            else curr = curr->right;
+        }
+    }
+    return res;
 }
 
 int main(){
