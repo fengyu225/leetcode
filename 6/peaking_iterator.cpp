@@ -29,27 +29,40 @@ public:
 
 
 class PeekingIterator : public Iterator {
+    int next_val;
+    bool check;
 public:
 	PeekingIterator(const vector<int>& nums) : Iterator(nums) {
 	    // Initialize any member here.
 	    // **DO NOT** save a copy of nums and manipulate it directly.
 	    // You should only use the Iterator interface methods.
-	    
+        next_val = 0;
+        check = true;
 	}
 
     // Returns the next element in the iteration without advancing the iterator.
 	int peek() {
-        
+        if(!check) return next_val;
+        next_val = Iterator::next();
+        check = false;
+        return next_val;
 	}
 
 	// hasNext() and next() should behave the same as in the Iterator interface.
 	// Override them if needed.
 	int next() {
-	    
+	    if(!check){
+            check = true;
+            return next_val;
+        }
+        int res = peek();
+        check = true;
+        return res;
 	}
 
 	bool hasNext() const {
-	    
+	    if(!check) return true;
+        return Iterator::hasNext();
 	}
 };
 
