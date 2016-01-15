@@ -11,8 +11,14 @@ Note: If there are several possible values for h, the maximum one is taken as th
 #include "header.h"
 
 int hIndex(vector<int>& citations) {
+    //O(nlogn) solution
+    int sz = citations.size();
+    if(sz == 0) return 0;
+    sort(citations.begin(), citations.end());
+    for(int i=0; i<sz; i++)
+        if(citations[i]>=sz-i) return sz-i;
+    return 0;
 }
-
 int main(){
     //vector<int> citations = {3, 0, 6, 1, 5};
     //vector<int> citations = {1};
