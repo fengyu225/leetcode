@@ -27,7 +27,8 @@ public:
         if(n == 1) return 1;
         int candidate = 0;
         for(int i=1; i<n; i++){
-            if(knows(candidate, i) || !knows(i,candidate)) candidate = i;
+            //if(knows(candidate, i) || !knows(i,candidate)) candidate = i;
+            if(knows(candidate, i)) candidate = i;
         }
         for(int i=0; i<n; i++){
             if(i == candidate) continue;
