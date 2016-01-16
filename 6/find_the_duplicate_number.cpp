@@ -9,6 +9,7 @@ Your runtime complexity should be less than O(n2).
 
 #include "header.h"
 
+// O(nlogn)
 void search(vector<int>& nums, int& lt, int& gt, int& eq, int m){
     for(int c:nums){
         if(c == m) eq++;

@@ -42,6 +42,30 @@ Your runtime complexity should be less than O(n2).
 //    return search(nums, l, r);
 //}
 
+// O(nlogn)
+//void search(vector<int>& nums, int& lt, int& gt, int& eq, int m){
+//    for(int c:nums){
+//        if(c == m) eq++;
+//        else if(c<m) lt++;
+//        else gt++;
+//    }
+//}
+//
+//int findDuplicate(vector<int>& nums) {
+//    int n = nums.size();    
+//    n-=1;
+//    int l = 1, r = n;
+//    while(l<r){
+//        int m = l+(r-l)/2;
+//        int lt = 0, gt=0, eq = 0;
+//        search(nums, lt, gt, eq, m);
+//        if(eq>1) return m;
+//        if(lt>m-1) r=m-1;
+//        else l=m+1;
+//    }
+//    return l;
+//}
+
 int findDuplicate(vector<int>& nums) {
     print_vector<int>(nums);
     int n = nums.size()-1;
