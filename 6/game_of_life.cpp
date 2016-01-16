@@ -39,10 +39,8 @@ void gameOfLife(vector<vector<int> >& board) {
                 if(new_x>=0 && new_x<m && new_y>=0 && new_y<n && board[new_x][new_y]&1)
                     live_cnt++;
             }
-            if(board[i][j]&1){
-                if(live_cnt == 2 || live_cnt == 3) board[i][j]|=2;
-            }
-            else if(live_cnt == 3) board[i][j]|=2;
+            if(board[i][j]&1 && (live_cnt == 2 || live_cnt == 3) ||
+                    !board[i][j]&1 && live_cnt == 3 ) board[i][j]|=2;
         }
     }
     for(int i=0; i<m; i++){
