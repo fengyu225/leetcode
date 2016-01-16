@@ -15,6 +15,18 @@ If there is no valid move, return an empty list [].
 #include "header.h"
 
 vector<string> generatePossibleNextMoves(string s) {
+    vector<string> res;
+    int sz = s.length();
+    if(sz<2) return res;
+    for(int i=0; i<sz-1; i++){
+        if(s[i] == '+' && s[i+1] == '+'){
+            string temp = s;
+            temp[i] = '-';
+            temp[i+1] = '-';
+            res.push_back(temp);
+        }
+    }
+    return res;
 }
 
 int main(){
