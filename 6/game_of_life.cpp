@@ -16,8 +16,38 @@ In this question, we represent the board using a 2D array. In principle, the boa
 
 #include "header.h"
 
+int directions[8][2] = {
+    {-1, -1},
+    {-1, 0},
+    {-1, 1},
+    {0, 1},
+    {1, 1},
+    {1, 0},
+    {1, -1},
+    {0, -1}
+};
+
 void gameOfLife(vector<vector<int> >& board) {
-    
+    if(board.size() == 0 || board[0].size() == 0) return;
+    int m = board.size(), n = board[0].size();
+    for(int i=0; i<m; i++){
+        for(int j=0; j<n; j++){
+            int live_cnt = 0;
+            for(int d=0; d<8; d++){
+                int new_x = directions[d][0]+i;
+                int new_y = directions[d][1]+j;
+                if(new_x>=0 && new_x<m && new_y>=0 && new_y<n && board[new_x][new_y]&1)
+                    live_cnt++;
+            }
+            if(board[i][j]&1){
+                if(live_cnt == 2 || live_cnt == 3) board[i][j]|=2;
+            }
+            else if(live_cnt == 3) board[i][j]|=2;
+        }
+    }
+    for(int i=0; i<m; i++){
+        for(int j=0; j<n; j++) board[i][j]>>=1;
+    }
 }
 
 int main(){
