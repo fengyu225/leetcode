@@ -29,28 +29,32 @@ isUnique("make") -> true
 #include "header.h"
 
 class ValidWordAbbr {
-    unordered_map<string, unordered_set<string> > m;
+    unordered_map<string,unordered_set<string> > abbr;
+    string getAbbr(string s){
+        int sz = s.length();
+        if(sz<=2) return s;
+        return string(1,s[0])+s.substr(1, sz-2)+string(1,s[sz-1]);
+    }
 public:
     ValidWordAbbr(vector<string> &dictionary) {
         for(string s:dictionary){
-            string abbrev = getAbbrev(s);
-            if(m.find(abbrev) == m.end()) m[abbrev] = unordered_set<string>();
-            m[abbrev].insert(s);
-        }     
+            string ab = getAbbr(s);
+            if(abbr.find(ab) == abbr.end()) abbr[ab] = unordered_set<string>();
+            abbr[getAbbr(s)].insert(s);
+        }
     }
 
     bool isUnique(string word) {
-        string abbrev = getAbbrev(word);
-        return m.find(abbrev) == m.end() || m[abbrev].size() == 1 && *(m[abbrev].begin()) == word;
+        string ab = getAbbr(word);
+        return abbr.find(ab) == abbr.end() || abbr[ab].size() == 1 && *(abbr[ab].begin()) == word;    
     }
-
-    string getAbbrev(string& s){
+    string getAbbr(string s){
         int sz = s.length();
         if(sz<=2) return s;
-        return s.substr(0, 1)+to_string(sz-2)+s.substr(sz-1, 1);
+        return string(1,s[0])+s.substr(1, sz-2)+string(1,s[sz-1]);
     }
-};
 
+};
 
 // Your ValidWordAbbr object will be instantiated and called as such:
 // ValidWordAbbr vwa(dictionary);

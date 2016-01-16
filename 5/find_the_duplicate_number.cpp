@@ -66,22 +66,40 @@ Your runtime complexity should be less than O(n2).
 //    return l;
 //}
 
-int findDuplicate(vector<int>& nums) {
-    print_vector<int>(nums);
-    int n = nums.size()-1;
-    int l = 1, r = n;
-    while(l<r){
-        int m = l+(r-l)/2;
-        int count = 0;
-        for(int i=0; i<n+1; i++){
-            if(nums[i]<=m) count++;
-        }
-        cout<<l<<" "<<" "<<m<<" "<<r<<" : "<<count<<endl;
-        if(count<=m) l=m+1;
-        //if(m-l+1>count) l=m;
-        else r=m;
+//int findDuplicate(vector<int>& nums) {
+//    print_vector<int>(nums);
+//    int n = nums.size()-1;
+//    int l = 1, r = n;
+//    while(l<r){
+//        int m = l+(r-l)/2;
+//        int count = 0;
+//        for(int i=0; i<n+1; i++){
+//            if(nums[i]<=m) count++;
+//        }
+//        cout<<l<<" "<<" "<<m<<" "<<r<<" : "<<count<<endl;
+//        if(count<=m) l=m+1;
+//        //if(m-l+1>count) l=m;
+//        else r=m;
+//    }
+//    return nums[l];
+//}
+
+//http://www.keithschwarz.com/interesting/code/?dir=find-duplicate
+int findDuplicate(vector<int>& nums){
+    int sz = nums.size();
+    int slow = 0, fast = 0;
+    while(1){
+        slow = nums[slow];
+        fast = nums[nums[fast]];
+        if(slow == fast) break;
     }
-    return nums[l];
+    fast = 0;
+    while(1){
+        slow = nums[slow];
+        fast = nums[fast];
+        if(slow == fast) break;
+    }
+    return slow;
 }
 
 int main(){
