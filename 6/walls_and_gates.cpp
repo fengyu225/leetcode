@@ -26,8 +26,36 @@ After running your function, the 2D grid should be:
 
 #define INF 2147483647
 
-void wallsAndGates(vector<vector<int>>& rooms) {
 
+
+void wallsAndGates(vector<vector<int> >& rooms) {
+    if(rooms.size() == 0 || rooms[0].size() == 0) return;
+    int r = rooms.size(), c = rooms[0].size(); 
+    queue<pair<int,int> > q;
+    for(int i=0; i<r; i++){
+        for(int j=0;j<c;j++)
+            if(rooms[i][j] == 0) q.push(make_pair(i,j));
+    }
+    int move[4][2] = {
+        {0, 1},
+        {0, -1},
+        {1, 0},
+        {-1, 0}
+    };
+    while(!q.empty()){
+        pair<int,int> curr = q.front();
+        q.pop();
+        int dist = rooms[curr.first][curr.second];
+        for(int i=0; i<4; i++){
+            int new_x = move[i][0]+curr.first;
+            int new_y = move[i][1]+curr.second;
+            if(new_x<0 || new_x>=r || new_y<0 || new_y>=c || rooms[new_x][new_y]<=0) continue;
+            if(dist+1<rooms[new_x][new_y]){
+                rooms[new_x][new_y] = dist+1;
+                q.push(make_pair(new_x, new_y));
+            }
+        }
+    }
 }
 
 int main(){
