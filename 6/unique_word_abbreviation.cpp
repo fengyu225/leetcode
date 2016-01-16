@@ -30,11 +30,6 @@ isUnique("make") -> true
 
 class ValidWordAbbr {
     unordered_map<string,unordered_set<string> > abbr;
-    string getAbbr(string s){
-        int sz = s.length();
-        if(sz<=2) return s;
-        return string(1,s[0])+s.substr(1, sz-2)+string(1,s[sz-1]);
-    }
 public:
     ValidWordAbbr(vector<string> &dictionary) {
         for(string s:dictionary){
