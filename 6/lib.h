@@ -14,6 +14,7 @@ class ListNode {
 }; 
 
 ListNode* create_list(int arr[], int n);
+ListNode* create_list(vector<int> arr);
 
 class TreeNode {
     public:

@@ -23,6 +23,25 @@ ListNode* create_list(int arr[], int n){
     return result;
 }
 
+ListNode* create_list(vector<int> arr){
+    cout<<"======================"<<endl;
+    ListNode* result = NULL;
+    ListNode* curr = NULL;
+    int n = (int)arr.size();
+    for(int i=0; i<n; i++){
+        ListNode* x = new ListNode(arr[i]);
+        if(!result)
+            result = curr = x;
+        else{
+            cout<<curr->val<<"->"<<x->val<<endl;
+            curr->next = x;
+            curr = curr->next;
+        }
+    }
+    cout<<"======================"<<endl;
+    return result;
+}
+
 ListNode* create_list(int arr[], int n, int s){
     ListNode* result = NULL;
     ListNode* curr = NULL;
