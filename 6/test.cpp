@@ -1,14 +1,11 @@
 #include "header.h"
 
-
-string findKey(string s){
-    string res = "";
-    if(s.length() == 0) return res;
-    int offset = s[0]-'a';
-    for(char c:s) res.push_back((c-offset-'a')%26+'a');
-    return res;
-}
 int main(){
-    cout<<findKey("abc")<<endl;
+    cout<<"hello"<<endl;
+    priority_queue<int,vector<int> > q;
+    q.push(1);
+    q.push(2);
+    q.push(3);
+    cout<<q.top()<<endl;
     return 0;
 }

@@ -21,17 +21,46 @@ findMedian() -> 2
 
 #include "header.h"
 
-class MedianFinder {
-public:
+class comp{
+    public:
+        bool operator() (int a, int b){
+            return b<a;
+        }
+};
 
+class MedianFinder {
+    bool even;
+    priority_queue<int,vector<int> > small;
+    priority_queue<int,vector<int>,comp> large;
+public:
+    MedianFinder(){
+        even = true;
+    }
     // Adds a number into the data structure.
     void addNum(int num) {
-        
+        if(even){
+            if(!large.empty() && large.top()<num){
+                small.push(large.top());
+                large.pop();
+                large.push(num);
+            }
+            else small.push(num);
+        }
+        else{
+            if(small.top()>num){
+                large.push(small.top());
+                small.pop();
+                small.push(num); 
+            }
+            else large.push(num);
+        }
+        even = !even;
     }
 
     // Returns the median of current data stream
     double findMedian() {
-        
+        if(even) return ((double)small.top()+(double)large.top())*0.5;
+        return (double)small.top();
     }
 };
 
@@ -42,15 +71,18 @@ public:
 
 int main(){
     MedianFinder mf;
-    mf.addNum(-1);
+    mf.addNum(0);
+    mf.addNum(0);
     cout<<mf.findMedian()<<endl;
-    mf.addNum(-2);
-    cout<<mf.findMedian()<<endl;
-    mf.addNum(-3);
-    cout<<mf.findMedian()<<endl;
-    mf.addNum(-4);
-    cout<<mf.findMedian()<<endl;
-    mf.addNum(-5);
-    cout<<mf.findMedian()<<endl;
+//    mf.addNum(-1);
+//    cout<<mf.findMedian()<<endl;
+//    mf.addNum(-2);
+//    cout<<mf.findMedian()<<endl;
+//    mf.addNum(-3);
+//    cout<<mf.findMedian()<<endl;
+//    mf.addNum(-4);
+//    cout<<mf.findMedian()<<endl;
+//    mf.addNum(-5);
+//    cout<<mf.findMedian()<<endl;
     return 0;
 }
