@@ -16,6 +16,31 @@ This is because the new interval [4,9] overlaps with [3,5],[6,7],[8,10].
 
 vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
     int sz = intervals.size();
+    if(sz == 0) return vector<Interval>(1, newInterval);
+    vector<Interval> res;
+    int curr = 0, next;
+    while(curr<sz && newInterval.start>intervals[curr].end){
+        res.push_back(intervals[curr]);
+        curr++;
+    }
+    if(curr == sz){
+        res.push_back(newInterval);
+        return res;
+    }
+    intervals[curr].end = max(intervals[curr].end, newInterval.end);
+    next = curr+1;
+    while(next<sz){
+        if(intervals[next].start<=intervals[curr].end){
+            intervals[curr].end = max(intervals[curr].end, intervals[next].end);
+            next++;
+        }
+        else{
+            res.push_back(intervals[curr]);
+            curr = next++;
+        }
+    }
+    res.push_back(intervals[curr]);
+    return res;
 }
 
 int main(){
