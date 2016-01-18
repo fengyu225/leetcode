@@ -48,7 +48,6 @@ int maxPoints(vector<Point>& points) {
             else{
                 int g = gcd(abs(points[i].y-points[j].y), abs(points[i].x-points[j].x));
                 pair<int,int> temp_p = make_pair((points[i].y-points[j].y)/g, (points[i].x-points[j].x)/g);
-                //cout<<temp_p.first<<" "<<temp_p.second<<endl;
                 if(temp_p.first<0){
                     temp_p.first = -temp_p.first;
                     temp_p.second = -temp_p.second;
@@ -58,14 +57,15 @@ int maxPoints(vector<Point>& points) {
             }
         }
         for(auto p:slops) cnt = max(cnt, p.second);
-        res = max(res, same+cnt+same_x+same_y);
+        res = max(res, max(max(same_x, same_y)+same, same+cnt));
     }
     return res;
 }
 
 int main(){
     //vector<Point> points = {{84,250},{0,0},{1,0},{0,-70},{0,-70},{1,-1},{21,10},{42,90},{-42,-230}}; 
-    vector<Point> points = {{0,0},{-1,-1},{2,2}}; 
+    vector<Point> points = {{2, 3},{3, 3},{-5, 3}}; 
+    //vector<Point> points = {{0,-12},{5,2},{2,5},{0,-5},{1,5},{2,-2},{5,-4},{3,4},{-2,4},{-1,4},{0,-5},{0,-8},{-2,-1},{0,-11},{0,-9}}; 
     cout<<maxPoints(points)<<endl;
     return 0;
 }
