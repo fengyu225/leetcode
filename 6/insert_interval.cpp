@@ -15,31 +15,19 @@ This is because the new interval [4,9] overlaps with [3,5],[6,7],[8,10].
 #include "header.h"
 
 vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
-    int sz = intervals.size();
-    if(sz == 0) return vector<Interval>(1, newInterval);
     vector<Interval> res;
-    int curr = 0, next;
-    while(curr<sz && newInterval.start>intervals[curr].end){
-        res.push_back(intervals[curr]);
-        curr++;
-    }
-    if(curr == sz){
-        res.push_back(newInterval);
-        return res;
-    }
-    intervals[curr].end = max(intervals[curr].end, newInterval.end);
-    next = curr+1;
-    while(next<sz){
-        if(intervals[next].start<=intervals[curr].end){
-            intervals[curr].end = max(intervals[curr].end, intervals[next].end);
-            next++;
-        }
+    int i = 0, sz = intervals.size();
+    for(; i<sz; i++){
+        if(newInterval.start>intervals[i].end)
+            res.push_back(intervals[i]);
+        else if(newInterval.end<intervals[i].start) break;
         else{
-            res.push_back(intervals[curr]);
-            curr = next++;
+            newInterval.start = min(newInterval.start, intervals[i].start);
+            newInterval.end = max(newInterval.end, intervals[i].end);
         }
     }
-    res.push_back(intervals[curr]);
+    res.push_back(newInterval);
+    for(;i<sz; i++) res.push_back(intervals[i]);
     return res;
 }
 
