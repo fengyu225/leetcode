@@ -10,41 +10,26 @@ Some examples:
 
 #include "header.h"
 
+int calc(int l, int r, string op){
+    if(op == "+") return l+r;
+    if(op == "-") return l-r;
+    if(op == "*") return l*r;
+    if(op == "/") return l/r;
+}
+
 int evalRPN(vector<string>& tokens) {
-    int sz = tokens.size();
-    stack<int> s;
-    for(int i=0; i<sz; i++){
-        if(tokens[i] == "+"){
-            int r = s.top();
-            s.pop();
-            int l = s.top();
-            s.pop();
-            s.push(l+r);
+    stack<int> st;
+    for(string s:tokens){
+        if(s == "+" || s == "-" || s == "*" || s == "/"){
+            int r = st.top();
+            st.pop();
+            int l = st.top();
+            st.pop();
+            st.push(calc(l, r, s));
         }
-        else if(tokens[i] == "-"){
-            int r = s.top();
-            s.pop();
-            int l = s.top();
-            s.pop();
-            s.push(l-r);
-        }
-        else if(tokens[i] == "*"){
-            int r = s.top();
-            s.pop();
-            int l = s.top();
-            s.pop();
-            s.push(l*r);
-        }
-        else if(tokens[i] == "/"){
-            int r = s.top();
-            s.pop();
-            int l = s.top();
-            s.pop();
-            s.push(l/r);
-        }
-        else s.push(stoi(tokens[i]));
+        else st.push(stoi(s));
     }
-    return s.top();
+    return st.top();
 }
 
 int main(){
