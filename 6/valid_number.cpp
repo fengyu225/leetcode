@@ -40,8 +40,8 @@ bool isNumber(string s) {
         }
         else return false;
     }
+    if(!num && (dot || e)) return false;
     if(e && !num_after_e) return false;
-    if(dot && !num_after_dot) return false;
     return true;
 }
 
