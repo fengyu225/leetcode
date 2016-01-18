@@ -56,5 +56,6 @@ int main(){
     cout<<isNumber("abc")<<endl;
     cout<<isNumber("1 a")<<endl;
     cout<<isNumber("2e10")<<endl;
+    cout<<isNumber("2e1.23")<<endl;
     return 0;
 }
