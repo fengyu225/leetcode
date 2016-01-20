@@ -35,35 +35,30 @@ output:
 
 #include "header.h"
 
-void search(int n, int curr, vector<int>& temp, vector<vector<int> >& res){
-    for(;curr<=n/curr;curr++){
-        if(n%curr != 0) continue;
-        temp.push_back(curr);
-        temp.push_back(n/curr);
+void search(int n, int curr, int curr_res, vector<int>& temp, vector<vector<int> >& res){
+    if(n%curr_res != 0 || curr_res>n) return;
+    if(curr_res == n){
         res.push_back(temp);
-        temp.pop_back();
-        search(n/curr, curr, temp, res);
+        return;
+    }
+    for(int i=curr; i<n; i++){
+        if((n/curr_res)%curr != 0) continue;
+        temp.push_back(i);
+        search(n, i, curr_res*i, temp, res);
         temp.pop_back();
     }
 }
 
-//void search(int n, int curr, vector<int>& temp, vector<vector<int> >& res){
-//    if(n == 1){
-//        if(temp.size()>1) res.push_back(temp);
-//        return;
-//    } 
-//    for(int i=curr; i<=n; i++){
-//        if(n%i != 0) continue;
-//        temp.push_back(i);
-//        search(n/i, i, temp, res);
-//        temp.pop_back();
-//    }
-//}
-
 vector<vector<int> > getFactors(int n) {
-    vector<int> temp;
     vector<vector<int> > res;
-    search(n, 2, temp, res);
+    vector<int> temp;
+    if(n<=2) return res;
+    for(int i=2; i<sqrt(n); i++){
+        if(n%i != 0) continue;
+        temp.push_back(i);
+        search(n, i, i, temp, res);
+        temp.pop_back();
+    }
     return res;
 }
 
