@@ -25,6 +25,6 @@ string intToRoman(int num){
 }
 
 int main(){
-    cout<<intToRoman(123)<<endl;
+    cout<<intToRoman(47)<<endl;
     return 0;
 }
