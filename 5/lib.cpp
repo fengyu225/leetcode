@@ -23,6 +23,25 @@ ListNode* create_list(int arr[], int n){
     return result;
 }
 
+ListNode* create_list(vector<int> arr){
+    int n = arr.size();
+    cout<<"======================"<<endl;
+    ListNode* result = NULL;
+    ListNode* curr = NULL;
+    for(int i=0; i<n; i++){
+        ListNode* x = new ListNode(arr[i]);
+        if(!result)
+            result = curr = x;
+        else{
+            cout<<curr->val<<"->"<<x->val<<endl;
+            curr->next = x;
+            curr = curr->next;
+        }
+    }
+    cout<<"======================"<<endl;
+    return result;
+}
+
 ListNode* create_list(int arr[], int n, int s){
     ListNode* result = NULL;
     ListNode* curr = NULL;
@@ -42,6 +61,7 @@ ListNode* create_list(int arr[], int n, int s){
     end->next = start;
     return result;
 }
+
 TreeNode* create_tree(string v){
     cout<<"======================"<<endl;
     if(v[0] == '#') return NULL;

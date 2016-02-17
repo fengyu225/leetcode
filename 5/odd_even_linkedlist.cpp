@@ -14,11 +14,32 @@ The first node is considered odd, the second node even and so on ...
 
 #include "header.h"
 
+void addNode(ListNode*& head, ListNode*& curr, ListNode* x){
+    if(!head) head = x;
+    else curr->next = x;
+    curr = x;
+    curr->next = NULL;
+}
+
 ListNode* oddEvenList(ListNode* head) {
-    
+    if(!head || !head->next) return head;
+    bool even = false;
+    ListNode* odd_head = NULL, *odd_curr = NULL, *even_head = NULL, *even_curr = NULL;
+    while(head){
+        ListNode* temp = head->next;
+        if(even) addNode(even_head, even_curr, head);
+        else addNode(odd_head, odd_curr, head);
+        head = temp;
+        even = !even;
+    }
+    odd_curr->next = even_head;
+    return odd_head;
 }
 
 int main(){
-
+    vector<int> nums = {1, 2, 3, 4, 5};
+    ListNode* head = create_list(nums);
+    ListNode* res = oddEvenList(head);
+    print_list(res);
     return 0;
 }
