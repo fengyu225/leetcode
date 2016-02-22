@@ -31,6 +31,7 @@ The longest increasing path is [3, 4, 5, 6]. Moving diagonally is not allowed.
 int longestIncreasingPath(vector<vector<int> >& matrix) {
     if(matrix.size() == 0 || matrix[0].size() == 0) return 0;
     int r = matrix.size(), c = matrix[0].size();
+    vector<vector<int> > arr(r, vector<int>(c, -1));
 }
 
 int main(){
