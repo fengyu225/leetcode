@@ -21,28 +21,28 @@ All words contain only lowercase alphabetic characters.
 #include "header.h"
 
 int ladderLength(string beginWord, string endWord, unordered_set<string>& wordList) {
-    if(beginWord == endWord) return 0;
+    int w_len = beginWord.size(), res = 0;
+    if(wordList.size() == 0) return 0;
+    if(beginWord == endWord) return 1;
     queue<string> qs[2];
-    int curr = 0;
-    qs[curr%2].push(beginWord);
-    while(!qs[curr%2].empty()){
-        string temp = qs[curr%2].front();
-        qs[curr%2].pop();
-        for(int i=0; i<temp.length(); i++){
-            char orig = temp[i];
-            for(int j='a'; j<='z'; j++){
-                temp[i] = j;
-                if(j == orig) continue;
-                if(temp == endWord) return curr+2;
-                if(wordList.find(temp) == wordList.end()) continue;
-                qs[(curr+1)%2].push(temp);
-                string mm = temp;
-                mm[i] = orig;
-                wordList.erase(wordList.find(temp));
+    qs[0].push(beginWord);
+    while(!qs[res%2].empty()){
+        string temp = qs[res%2].front();
+        qs[res%2].pop();
+        string x = temp;
+        for(int i=0; i<w_len; i++){
+            for(char c = 'a'; c<='z'; c++){
+                if(temp[i] == c) continue;
+                if(x == endWord) return res+2;
+                x = temp;
+                x[i] = c;
+                if(wordList.find(x) != wordList.end()){
+                    wordList.erase(wordList.find(x));
+                    qs[(res+1)%2].push(x);
+                }
             }
-            temp[i] = orig;
         }
-        if(qs[curr%2].empty()) curr++;
+        if(qs[res%2].empty()) res++;
     }
     return 0;
 }
