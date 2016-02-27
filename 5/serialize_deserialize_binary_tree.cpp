@@ -55,56 +55,53 @@ public:
     }
 };
 
-/* using level order traversal
 class Codec {
 public:
+
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
         if(!root) return "";
+        string res = to_string(root->val)+",";
         queue<TreeNode*> q;
         q.push(root);
-        string res = "";
         while(!q.empty()){
-            TreeNode* temp = q.front();
+            TreeNode* curr = q.front();
             q.pop();
-            if(!temp) res += "#|";
-            else{
-                res += to_string(temp->val)+"|"; 
-                q.push(temp->left);
-                q.push(temp->right);
-            }
+            if(curr->left) q.push(curr->left);
+            if(curr->right) q.push(curr->right);
+            res += curr->left?to_string(curr->left->val):"null";
+            res += ",";
+            res += curr->right?to_string(curr->right->val):"null";
+            res += ",";
         }
-        return res;
+        return res.substr(0, res.length()-1);
     }
 
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
+        int sz = data.length();
+        if(sz == 0) return NULL;
         stringstream ss(data);
+        vector<string> vec;
         string temp;
-        vector<string> v;
-        while(getline(ss, temp, '|')) v.push_back(temp);
+        while(getline(ss, temp, ',')) vec.push_back(temp);
+        TreeNode* root = new TreeNode(stoi(vec[0]));
         queue<TreeNode*> q;
-        if(v.size() == 0 || v[0] == "#") return NULL;
-        TreeNode* root = new TreeNode(stoi(v[0]));
         q.push(root);
-        int curr = 1; 
+        int curr_idx = 1;
         while(!q.empty()){
-            TreeNode* temp = q.front();
+            TreeNode* curr = q.front();
             q.pop();
-            if(v[curr] == "#") temp->left=NULL;
-            else temp->left = new TreeNode(stoi(v[curr]));
-            curr++;
-            if(v[curr] == "#") temp->right = NULL;
-            else temp->right = new TreeNode(stoi(v[curr]));
-            curr++;
-            if(temp->left) q.push(temp->left);
-            if(temp->right) q.push(temp->right);
+            curr->left = vec[curr_idx] == "null"?NULL:new TreeNode(stoi(vec[curr_idx]));
+            curr_idx++;
+            curr->right = vec[curr_idx] == "null"?NULL:new TreeNode(stoi(vec[curr_idx]));
+            curr_idx++;
+            if(curr->left) q.push(curr->left);
+            if(curr->right) q.push(curr->right);
         }
         return root;
     }
 };
-*/
-
 
 // Your Codec object will be instantiated and called as such:
 // Codec codec;

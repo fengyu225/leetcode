@@ -30,12 +30,46 @@ public:
 
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
-        
+        if(!root) return "";
+        string res = to_string(root->val)+",";
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            TreeNode* curr = q.front();
+            q.pop();
+            if(curr->left) q.push(curr->left);
+            if(curr->right) q.push(curr->right);
+            res += curr->left?to_string(curr->left->val):"null";
+            res += ",";
+            res += curr->right?to_string(curr->right->val):"null";
+            res += ",";
+        }
+        return res.substr(0, res.length()-1);
     }
 
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
-        
+        int sz = data.length();
+        if(sz == 0) return NULL;
+        stringstream ss(data);
+        vector<string> vec;
+        string temp;
+        while(getline(ss, temp, ',')) vec.push_back(temp);
+        TreeNode* root = new TreeNode(stoi(vec[0]));
+        queue<TreeNode*> q;
+        q.push(root);
+        int curr_idx = 1;
+        while(!q.empty()){
+            TreeNode* curr = q.front();
+            q.pop();
+            curr->left = vec[curr_idx] == "null"?NULL:new TreeNode(stoi(vec[curr_idx]));
+            curr_idx++;
+            curr->right = vec[curr_idx] == "null"?NULL:new TreeNode(stoi(vec[curr_idx]));
+            curr_idx++;
+            if(curr->left) q.push(curr->left);
+            if(curr->right) q.push(curr->right);
+        }
+        return root;
     }
 };
 
