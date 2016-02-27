@@ -18,7 +18,17 @@ You may assume word1 and word2 are both in the list.
 #include "header.h"
 
 int shortestWordDistance(vector<string>& words, string word1, string word2) {
-
+    int sz = words.size();
+    int res = sz+1, last_pos = -1;
+    string last_w;
+    for(int i=0; i<sz; i++){
+        if(words[i] != word1 && words[i] != word2) continue;
+        if(last_pos != -1 && (word1 == word2 || last_w != words[i]))
+            res = min(res, i-last_pos);
+        last_pos = i;
+        last_w = words[i];
+    }
+    return res;
 }
 
 int main(){
