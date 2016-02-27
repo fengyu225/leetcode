@@ -16,13 +16,27 @@ You may assume that word1 does not equal to word2, and word1 and word2 are both 
 #include "header.h"
 
 class WordDistance {
+    unordered_map<string,vector<int> > pos;
+    int sz;
 public:
     WordDistance(vector<string>& words) {
-        
+        for(int i=0; i<words.size(); i++){
+            pos[words[i]].push_back(i);
+        } 
+        sz = words.size();
     }
 
     int shortest(string word1, string word2) {
-        
+        vector<int> word1_pos = pos[word1];
+        vector<int> word2_pos = pos[word2];
+        int a = 0, b = 0, res = sz+1;
+        while(a<word1_pos.size() && b<word2_pos.size()){
+            int diff = word1_pos[a]-word2_pos[b];
+            res = min(res, abs(diff));
+            if(diff<0) a++;
+            else b++;
+        }
+        return res;
     }
 };
 
