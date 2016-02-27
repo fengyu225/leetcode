@@ -30,11 +30,14 @@ public:
         vector<int> word1_pos = pos[word1];
         vector<int> word2_pos = pos[word2];
         int a = 0, b = 0, res = sz+1;
-        while(a<word1_pos.size() && b<word2_pos.size()){
-            int diff = word1_pos[a]-word2_pos[b];
-            res = min(res, abs(diff));
-            if(diff<0) a++;
-            else b++;
+        if(word1 == word2) for(int i=0; i<word1_pos.size()-1; res=min(res, word1_pos[i+1]-word1_pos[i]), i++);
+        else{
+            while(a<word1_pos.size() && b<word2_pos.size()){
+                int diff = word1_pos[a]-word2_pos[b];
+                res = min(res, abs(diff));
+                if(diff<0) a++;
+                else b++;
+            }
         }
         return res;
     }
@@ -46,10 +49,11 @@ public:
 // wordDistance.shortest("anotherWord1", "anotherWord2");
 
 int main(){
-    string arr[] = {"practice", "makes", "perfect", "coding", "makes"};
+    string arr[] = {"practice", "makes", "perfect", "coding", "makes", "makes"};
     vector<string> words(arr, arr+sizeof(arr)/sizeof(arr[0]));
     WordDistance wordDistance(words);
 //    cout<<wordDistance.shortest("coding", "practice")<<endl;
-    cout<<wordDistance.shortest("makes", "coding")<<endl;
+//    cout<<wordDistance.shortest("makes", "coding")<<endl;
+    cout<<wordDistance.shortest("makes", "makes")<<endl;
     return 0;
 }
