@@ -8,36 +8,60 @@ For example,
 
 #include "header.h"
 
-void swap(vector<int>& nums, int i, int j){
-    int temp = nums[i];
-    nums[i] = nums[j];
-    nums[j] = temp;
-}
+//void swap(vector<int>& nums, int i, int j){
+//    int temp = nums[i];
+//    nums[i] = nums[j];
+//    nums[j] = temp;
+//}
+//
+//bool find(vector<int>& nums, int i, int j){
+//    for(int x=i; x<j; x++)
+//        if(nums[x] == nums[j]) return true;
+//    return false;
+//}
+//
+//void search(vector<int>& nums, int curr, vector<vector<int> >& res){
+//    if(curr == nums.size()){
+//        res.push_back(nums);
+//        return;
+//    }
+//    for(int i=curr; i<nums.size(); i++){
+//        if(i!=curr && find(nums, curr, i)) continue;
+//        swap(nums, i, curr);
+//        search(nums, curr+1, res);
+//        swap(nums, i, curr);
+//    }
+//}
+//
+//vector<vector<int> > permuteUnique(vector<int>& nums){
+//    vector<vector<int> > res;
+//    if(nums.size() == 0) return res;
+//    sort(nums.begin(), nums.end());
+//    search(nums, 0, res);
+//    return res;
+//}
 
-bool find(vector<int>& nums, int i, int j){
-    for(int x=i; x<j; x++)
-        if(nums[x] == nums[j]) return true;
-    return false;
-}
-
-void search(vector<int>& nums, int curr, vector<vector<int> >& res){
-    if(curr == nums.size()){
+void search(int curr, int sz, vector<int>& nums, vector<vector<int> >& res){
+    if(curr == sz){
         res.push_back(nums);
         return;
     }
-    for(int i=curr; i<nums.size(); i++){
-        if(i!=curr && find(nums, curr, i)) continue;
-        swap(nums, i, curr);
-        search(nums, curr+1, res);
-        swap(nums, i, curr);
-    }
+    unordered_set<int> st;
+    for(int i=curr; i<sz; i++){
+        if(i>curr && st.find(nums[i]) != st.end()) continue;
+        st.insert(nums[i]);
+        swap(nums[i], nums[curr]);
+        search(curr+1, sz, nums, res);
+        swap(nums[i], nums[curr]);
+    } 
 }
 
-vector<vector<int> > permuteUnique(vector<int>& nums){
+vector<vector<int> > permuteUnique(vector<int>& nums) {
     vector<vector<int> > res;
-    if(nums.size() == 0) return res;
+    int sz = nums.size();
+    if(sz == 0) return res;
     sort(nums.begin(), nums.end());
-    search(nums, 0, res);
+    search(0, sz, nums, res);
     return res;
 }
 

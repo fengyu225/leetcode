@@ -8,37 +8,35 @@ For example,
 
 #include "header.h"
 
-bool find(vector<int>& nums, int i, int j){
-    for(int x=i; x<j; x++)
-        if(nums[x] == nums[j]) return true;
-    return false;
-}
-
-void search(vector<int>& nums, int curr, vector<vector<int> >& res){
-    if(curr == nums.size()){
+void search(int curr, int sz, vector<int>& nums, vector<vector<int> >& res){
+    if(curr == sz){
         res.push_back(nums);
         return;
     }
-    for(int i=curr; i<nums.size(); i++){
-        if(i>curr && find(nums, curr, i)) continue;
-        swap(nums[i],nums[curr]);
-        search(nums, curr+1, res);
-        swap(nums[i],nums[curr]);
-    }
+    unordered_set<int> st;
+    for(int i=curr; i<sz; i++){
+        if(i>curr && st.find(nums[i]) != st.end()) continue;
+        st.insert(nums[i]);
+        swap(nums[i], nums[curr]);
+        search(curr+1, sz, nums, res);
+        swap(nums[i], nums[curr]);
+    } 
 }
 
 vector<vector<int> > permuteUnique(vector<int>& nums) {
     vector<vector<int> > res;
+    int sz = nums.size();
+    if(sz == 0) return res;
     sort(nums.begin(), nums.end());
-    search(nums, 0, res);
+    search(0, sz, nums, res);
     return res;
 }
 
 int main(){
-    //int arr[] = {1, 1, 2};
+    vector<int> arr = {1, 1, 2};
     //int arr[] = {1, 2, 3};
 //    int arr[] = {1, 2, 1, 2};
-    vector<int> arr = {0, 1, 0, 0, 9};
+//    vector<int> arr = {0, 1, 0, 0, 9};
     vector<vector<int> > res = permuteUnique(arr);
     for(auto i:res) print_vector<int>(i);
     return 0;
