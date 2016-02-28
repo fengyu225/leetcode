@@ -17,8 +17,8 @@ int search(vector<int>& nums, int target) {
         m = l+(r-l)/2;
         if(target == nums[m]) return m;
         if(nums[0]<nums[m]){
-            if(target>nums[m] || target<nums[0]) l = m+1;
-            else r = m-1;
+            if(target<nums[m] && target>=nums[0]) r = m-1;
+            else l = m+1;
         }
         else{
             if(target>nums[m] && target<nums[0]) l = m+1;
