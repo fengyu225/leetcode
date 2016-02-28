@@ -8,8 +8,29 @@ return [1,6],[8,10],[15,18].
 
 #include "header.h"
 
-vector<Interval> merge(vector<Interval>& intervals) {
+class comp{
+    public:
+        bool operator() (Interval& a, Interval& b){
+            return a.start<b.start;      
+        }
+};
 
+vector<Interval> merge(vector<Interval>& intervals) {
+    int sz = intervals.size();
+    vector<Interval> res;
+    if(sz == 0) return res;
+    sort(intervals.begin(), intervals.end(), comp());
+    res.push_back(intervals[0]);
+    for(int i=1; i<sz; i++){
+        Interval last = res.back();
+        if(intervals[i].start>last.end) res.push_back(intervals[i]);
+        else{
+            last.start = min(last.start, intervals[i].start);
+            last.end = max(last.end, intervals[i].end);
+            res[res.size()-1]=last;
+        }
+    }
+    return res;
 }
 
 int main(){
