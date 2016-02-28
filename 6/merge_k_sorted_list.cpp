@@ -4,8 +4,35 @@ Merge k sorted linked lists and return it as one sorted list. Analyze and descri
 
 #include "header.h"
 
-ListNode* mergeKLists(vector<ListNode*>& lists) {
+class comp{
+    public:
+        bool operator() (ListNode* a, ListNode* b){
+            return b && (!a || b->val<a->val);
+        }
+};
 
+void addToList(ListNode*& head, ListNode*& tail, ListNode* curr){
+    if(!curr) return;
+    if(!head) head = curr;
+    else tail->next = curr;
+    tail = curr;
+    curr->next = NULL;
+}
+
+ListNode* mergeKLists(vector<ListNode*>& lists) {
+    int sz = lists.size();
+    if(sz == 0) return NULL;
+    priority_queue<ListNode*, vector<ListNode*>, comp> q;
+    for(auto l:lists) q.push(l);
+    ListNode* res = NULL, *res_curr = NULL;
+    while(!q.empty() && q.top() != NULL){
+        ListNode* curr = q.top();
+        q.pop();
+        ListNode* temp = curr->next;
+        addToList(res, res_curr, curr);
+        q.push(temp);
+    }
+    return res;
 }
 
 int main(){
