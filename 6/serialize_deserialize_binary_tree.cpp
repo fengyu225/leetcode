@@ -25,51 +25,80 @@ Note: Do not use class member/global/static variables to store states. Your seri
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+//class Codec {
+//public:
+//
+//    // Encodes a tree to a single string.
+//    string serialize(TreeNode* root) {
+//        if(!root) return "";
+//        string res = to_string(root->val)+",";
+//        queue<TreeNode*> q;
+//        q.push(root);
+//        while(!q.empty()){
+//            TreeNode* curr = q.front();
+//            q.pop();
+//            if(curr->left) q.push(curr->left);
+//            if(curr->right) q.push(curr->right);
+//            res += curr->left?to_string(curr->left->val):"null";
+//            res += ",";
+//            res += curr->right?to_string(curr->right->val):"null";
+//            res += ",";
+//        }
+//        return res.substr(0, res.length()-1);
+//    }
+//
+//    // Decodes your encoded data to tree.
+//    TreeNode* deserialize(string data) {
+//        int sz = data.length();
+//        if(sz == 0) return NULL;
+//        stringstream ss(data);
+//        vector<string> vec;
+//        string temp;
+//        while(getline(ss, temp, ',')) vec.push_back(temp);
+//        TreeNode* root = new TreeNode(stoi(vec[0]));
+//        queue<TreeNode*> q;
+//        q.push(root);
+//        int curr_idx = 1;
+//        while(!q.empty()){
+//            TreeNode* curr = q.front();
+//            q.pop();
+//            curr->left = vec[curr_idx] == "null"?NULL:new TreeNode(stoi(vec[curr_idx]));
+//            curr_idx++;
+//            curr->right = vec[curr_idx] == "null"?NULL:new TreeNode(stoi(vec[curr_idx]));
+//            curr_idx++;
+//            if(curr->left) q.push(curr->left);
+//            if(curr->right) q.push(curr->right);
+//        }
+//        return root;
+//    }
+//};
+
 class Codec {
+    TreeNode* deserialize(vector<string>& v, int curr, int& end){
+        if(curr == v.size()) return NULL;
+        end = curr;
+        if(v[curr] == "null") return NULL;
+        TreeNode* root = new TreeNode(stoi(v[curr]));
+        root->left = deserialize(v, curr+1, end);
+        root->right = deserialize(v, end+1, end);
+        return root;
+    }
 public:
 
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
-        if(!root) return "";
-        string res = to_string(root->val)+",";
-        queue<TreeNode*> q;
-        q.push(root);
-        while(!q.empty()){
-            TreeNode* curr = q.front();
-            q.pop();
-            if(curr->left) q.push(curr->left);
-            if(curr->right) q.push(curr->right);
-            res += curr->left?to_string(curr->left->val):"null";
-            res += ",";
-            res += curr->right?to_string(curr->right->val):"null";
-            res += ",";
-        }
-        return res.substr(0, res.length()-1);
+        if(!root) return "null,";
+        return to_string(root->val)+","+serialize(root->left)+serialize(root->right);
     }
 
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
-        int sz = data.length();
-        if(sz == 0) return NULL;
-        stringstream ss(data);
         vector<string> vec;
+        stringstream ss(data);
         string temp;
         while(getline(ss, temp, ',')) vec.push_back(temp);
-        TreeNode* root = new TreeNode(stoi(vec[0]));
-        queue<TreeNode*> q;
-        q.push(root);
-        int curr_idx = 1;
-        while(!q.empty()){
-            TreeNode* curr = q.front();
-            q.pop();
-            curr->left = vec[curr_idx] == "null"?NULL:new TreeNode(stoi(vec[curr_idx]));
-            curr_idx++;
-            curr->right = vec[curr_idx] == "null"?NULL:new TreeNode(stoi(vec[curr_idx]));
-            curr_idx++;
-            if(curr->left) q.push(curr->left);
-            if(curr->right) q.push(curr->right);
-        }
-        return root;
+        int end = 0;
+        return deserialize(vec, 0, end);
     }
 };
 
@@ -80,6 +109,8 @@ public:
 int main(){
     TreeNode* root = create_tree("123##45");
     Codec codec;
-    pre_order(codec.deserialize(codec.serialize(root)));
+    string temp = codec.serialize(root);
+    cout<<temp<<endl;
+    pre_order(codec.deserialize(temp));
     return 0;
 }
