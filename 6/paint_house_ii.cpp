@@ -12,8 +12,38 @@ Could you solve it in O(nk) runtime?
 
 #include "header.h"
 
+void update(int& m, int& second_m, vector<vector<int> >& arr, int i, int j){
+    if(m == -1) m = j;
+    else{
+        if(arr[i][m]>arr[i][j]){
+            second_m = m;
+            m = j;
+        }
+        else if(second_m == -1 || arr[i][second_m]>arr[i][j])
+            second_m = j;
+    }
+}
+
 int minCostII(vector<vector<int> >& costs) {
-    int sz = costs.size(); 
+    if(costs.size() == 0 || costs[0].size() == 0) return 0;
+    int n = costs.size(), k = costs[0].size();
+    vector<vector<int> > arr(n, vector<int>(k, 0));
+    int m = -1, second_m = -1, last_m = -1, last_second_m = -1;
+    for(int i=0; i<n; i++){
+        for(int j=0; j<k; j++){
+            if(i == 0) arr[i][j] = costs[i][j];
+            else{
+                if(last_m != j) arr[i][j] = costs[i][j]+arr[i-1][last_m];
+                else arr[i][j] = costs[i][j]+arr[i-1][last_second_m];
+            }
+            update(m, second_m, arr, i, j);
+        }
+        last_m = m;
+        last_second_m = second_m;
+        m = -1;
+        second_m = -1;
+    }
+    return arr[n-1][last_m];
 }
 
 int main(){
@@ -29,9 +59,14 @@ int main(){
 //        {4, 5, 6},
 //        {7, 8, 9}
 //    };
+//    vector<vector<int> > costs = {
+//        {1, 5, 3},
+//        {2, 9, 4}
+//    };
     vector<vector<int> > costs = {
-        {1, 5, 3},
-        {2, 9, 4}
+        {20,19,11,13,12,16,16,17,15,9,5,18},
+        {3,8,15,17,19,8,18,3,11,6,7,12},
+        {15,4,11,1,18,2,10,9,3,6,4,15}
     };
     cout<<minCostII(costs)<<endl;
     return 0;
