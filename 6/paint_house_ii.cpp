@@ -12,8 +12,8 @@ Could you solve it in O(nk) runtime?
 
 #include "header.h"
 
-int minCostII(vector<vector<int>>& costs) {
-    
+int minCostII(vector<vector<int> >& costs) {
+    int sz = costs.size(); 
 }
 
 int main(){
