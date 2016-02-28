@@ -15,30 +15,33 @@ If there are multiple such windows, you are guaranteed that there will always be
 #include "header.h"
 
 string minWindow(string s, string t) {
-    int sz = s.length();
-    if(sz == 0) return "";
-    vector<int> need_to_find(256, 0);
+    int s_len = s.length(), t_len = t.length();
+    int l = 0, r = 0, cnt = 0;
     vector<int> has_found(256, 0);
+    vector<int> need_to_find(256, 0);
+    int res_start = -1, res_len = s_len+1;
     for(char c:t) need_to_find[c]++;
-    int count = 0;
-    int l = 0, r = 0, t_sz = t.length();
-    int res_start, res_len = sz+1;
-    while(r<sz){
-        has_found[s[r]]++;
-        if(has_found[s[r]]<=need_to_find[s[r]]) count++;
-        r++;
-        while(count == t_sz){
-            if(res_len>r-l){
-                res_len = r-l;
-                res_start = l;
+    for(;r<s_len;r++){
+        char c = s[r];
+        if(need_to_find[c] == 0) continue;
+        has_found[c]++;
+        if(has_found[c]<=need_to_find[c]) cnt++;
+        if(cnt == t_len){
+            while(l<=r && cnt == t_len){
+                if(r-l+1<res_len){
+                    res_len = r-l+1;
+                    res_start = l;
+                }
+                c = s[l];
+                l++;
+                if(need_to_find[c] == 0) continue;
+                has_found[c]--;
+                if(has_found[c]<need_to_find[c]) cnt--;
             }
-            has_found[s[l]]--;
-            if(has_found[s[l]]<need_to_find[s[l]]) count--;
-            l++;
         }
     }
-    if(res_len == sz+1) return "";
-    return s.substr(res_start, res_len);
+    if(res_start == -1) return "";
+    else return s.substr(res_start, res_len);
 }
 
 int main(){
