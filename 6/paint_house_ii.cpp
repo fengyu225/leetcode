@@ -12,29 +12,8 @@ Could you solve it in O(nk) runtime?
 
 #include "header.h"
 
-void update(int& small, int& second_small, int idx, vector<int>& arr){
-    if(small == -1 || arr[small]>arr[idx]){
-        second_small = small;
-        small = idx;
-    }
-    else if(second_small == -1 || arr[second_small]>arr[idx])
-        second_small = idx;
-}
-
-int minCostII(vector<vector<int> >& costs) {
-    if(costs.size()==0 || costs[0].size()==0) return 0;
-    int n = costs.size(), k = costs[0].size();
-    vector<vector<int> > arr(n, vector<int>(k,0));
-    int small = -1, second_small = -1;
-    for(int i=0; i<n; i++){
-        for(int j=0; j<k; j++){
-            if(i == 0) arr[i][j] = costs[i][j];
-            else arr[i][j] = (j==small?arr[i-1][second_small]:arr[i-1][small])+costs[i][j];
-        }
-        small = -1, second_small = -1;
-        for(int j=0; j<k; j++) update(small, second_small, j, arr[i]);
-    }
-    return arr[n-1][small];
+int minCostII(vector<vector<int>>& costs) {
+    
 }
 
 int main(){
