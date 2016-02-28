@@ -14,9 +14,18 @@ bool search(vector<int>& nums, int target) {
     int l = 0, r = sz-1, m;
     while(l+1<r){
         m = l+(r-l)/2;
-        if(target == nums[m]) return m;
-
+        if(target == nums[m]) return true;
+        if(nums[m] == nums[l]) l++;
+        else if(nums[m]<nums[l]){
+            if(target>nums[m] && target<=nums[r]) l = m+1;
+            else r = m-1;
+        }
+        else{
+            if(target<nums[m] && target>=nums[l]) r = m-1;
+            else l = m+1;
+        }
     } 
+    return target == nums[l]?true:(target == nums[r]?true:false);
 }
 
 int main(){
