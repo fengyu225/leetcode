@@ -9,21 +9,36 @@ All costs are positive integers.
 
 #include "header.h"
 
+//int minCost(vector<vector<int> >& costs){
+//    int t_house = costs.size();
+//    if(t_house == 0) return 0;
+//    vector<vector<int> > arr(t_house, vector<int>(3, INT_MAX));
+//    for(int i=0; i<t_house; i++){
+//        for(int j=0; j<3; j++){
+//            if(i == 0) arr[i][j] = costs[i][j];
+//            else{
+//                arr[i][j] = min(arr[i-1][(j+1)%3], arr[i-1][(j+2)%3])+costs[i][j]; 
+//            }
+//        }
+//    }
+//    return min(min(arr[t_house-1][0], arr[t_house-1][1]), arr[t_house-1][2]);
+//}
 int minCost(vector<vector<int> >& costs){
-    int t_house = costs.size();
-    if(t_house == 0) return 0;
-    vector<vector<int> > arr(t_house, vector<int>(3, INT_MAX));
-    for(int i=0; i<t_house; i++){
-        for(int j=0; j<3; j++){
-            if(i == 0) arr[i][j] = costs[i][j];
-            else{
-                arr[i][j] = min(arr[i-1][(j+1)%3], arr[i-1][(j+2)%3])+costs[i][j]; 
-            }
-        }
+    int sz = costs.size();
+    if(sz == 0) return 0;
+    int red = costs[0][0], blue = costs[0][1], green = costs[0][2];
+    int res = min(min(red, blue), green);
+    for(int i=1; i<sz; i++){
+        int temp_red = costs[i][0]+min(blue, green);
+        int temp_blue = costs[i][1]+min(red, green);
+        int temp_green = costs[i][2]+min(red, blue);
+        res = min(temp_red, min(temp_blue, temp_green));
+        red = temp_red;
+        blue = temp_blue;
+        green = temp_green;
     }
-    return min(min(arr[t_house-1][0], arr[t_house-1][1]), arr[t_house-1][2]);
+    return res;
 }
-
 int main(){
     vector<int> costs0 = {1, 2, 3};
     vector<int> costs1 = {4, 5, 6};
