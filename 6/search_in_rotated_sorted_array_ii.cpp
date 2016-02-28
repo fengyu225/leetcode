@@ -12,6 +12,11 @@ Write a function to determine if a given target is in the array.
 bool search(vector<int>& nums, int target) {
     int sz = nums.size();
     int l = 0, r = sz-1, m;
+    while(l+1<r){
+        m = l+(r-l)/2;
+        if(target == nums[m]) return m;
+
+    } 
 }
 
 int main(){
