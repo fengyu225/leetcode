@@ -13,13 +13,14 @@ Could you solve it with constant space complexity? (Note: The output array does 
 
 vector<int> productExceptSelf(vector<int>& nums) {
     int sz = nums.size();
+    int left = 1, right = 1;
     vector<int> res(sz, 1);
-    int l = 1, r = 1;
+    if(sz < 2) return res;
     for(int i=0; i<sz; i++){
-        res[i] *= l;
-        res[sz-1-i] *= r;
-        l *= nums[i];
-        r *= nums[sz-1-i];
+        res[i] *= left;
+        res[sz-1-i] *= right;
+        left *= nums[i];
+        right *= nums[sz-1-i];
     }
     return res;
 }
