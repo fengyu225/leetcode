@@ -10,15 +10,20 @@ All costs are positive integers.
 #include "header.h"
 
 int minCost(vector<vector<int> >& costs){
-    if(costs.size() == 0 || costs[0].size() == 0) return 0;
-    int h_cnt = costs.size();
-    vector<vector<int> > arr(h_cnt, vector<int>(3, 0));
-    for(int i=0; i<h_cnt; i++){
-        arr[i][0] = costs[i][0]+min(i==0?0:arr[i-1][1], i==0?0:arr[i-1][2]);
-        arr[i][1] = costs[i][1]+min(i==0?0:arr[i-1][0], i==0?0:arr[i-1][2]);
-        arr[i][2] = costs[i][2]+min(i==0?0:arr[i-1][0], i==0?0:arr[i-1][1]);
+    int sz = costs.size();
+    if(sz == 0) return 0;
+    int red = costs[0][0], blue = costs[0][1], green = costs[0][2];
+    int res = min(min(red, blue), green);
+    for(int i=1; i<sz; i++){
+        int temp_red = costs[i][0]+min(blue, green);
+        int temp_blue = costs[i][1]+min(red, green);
+        int temp_green = costs[i][2]+min(red, blue);
+        res = min(temp_red, min(temp_blue, temp_green));
+        red = temp_red;
+        blue = temp_blue;
+        green = temp_green;
     }
-    return min(arr[h_cnt-1][0], min(arr[h_cnt-1][1], arr[h_cnt-1][2]));
+    return res;
 }
 
 int main(){
