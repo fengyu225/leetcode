@@ -1,27 +1,39 @@
+/*
+
+Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+
+*/
+
 #include "header.h"
 
-void addToList(ListNode*& head, ListNode*& tail, ListNode* curr){
-    if(!head) head = curr;
-    else tail->next = curr;
-    tail = curr;
-    tail->next = NULL;
+void addToList(ListNode*& res, ListNode*& res_curr, ListNode* l){
+    if(!l) return;
+    l->next = NULL;
+    if(!res) res = l;
+    else res_curr->next = l;
+    res_curr = l;
 }
 
 ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
-    ListNode* res_head = NULL, *res_curr = NULL;
-    while(l1 || l2){
-        if(l1 && (!l2 || l1->val<l2->val)){
-            ListNode* temp = l1->next;
-            addToList(res_head, res_curr, l1);
-            l1 = temp;
+    ListNode* res = NULL, *res_curr = NULL;
+    if(!l1) return l2;
+    if(!l2) return l1;
+    ListNode* l1_curr = l1, *l2_curr = l2;
+    while(l1_curr || l2_curr){
+        int l1_val = l1_curr?l1_curr->val:INT_MAX;
+        int l2_val = l2_curr?l2_curr->val:INT_MAX;
+        if(l1_val<l2_val){
+            ListNode* temp = l1_curr->next;
+            addToList(res, res_curr, l1_curr);
+            l1_curr = temp;
         }
         else{
-            ListNode* temp = l2->next;
-            addToList(res_head, res_curr, l2);
-            l2 = temp;
+            ListNode* temp = l2_curr->next;
+            addToList(res, res_curr, l2_curr);
+            l2_curr = temp;
         }
     }
-    return res_head;
+    return res;
 }
 
 int main(){
