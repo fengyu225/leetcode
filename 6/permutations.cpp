@@ -8,21 +8,23 @@ For example,
 
 #include "header.h"
 
-void search(vector<int>& nums, int curr, vector<vector<int> >& res){
-    if(curr == nums.size()){
+void search(int curr, int sz, vector<int>& nums, vector<vector<int> >& res){
+    if(curr == sz){
         res.push_back(nums);
         return;
     }
-    for(int i=curr; i<nums.size(); i++){
+    for(int i=curr; i<sz; i++){
         swap(nums[i], nums[curr]);
-        search(nums, curr+1, res);
+        search(curr+1, sz, nums, res);
         swap(nums[i], nums[curr]);
     }
 }
 
 vector<vector<int> > permute(vector<int>& nums) {
     vector<vector<int> > res;
-    search(nums, 0, res);
+    int sz = nums.size();
+    if(sz == 0) return res;
+    search(0, sz, nums, res);
     return res;
 }
 
