@@ -9,24 +9,9 @@ Write a function to determine if a given target is in the array.
 
 #include "header.h"
 
-bool search(vector<int>& nums, int target){
+bool search(vector<int>& nums, int target) {
     int sz = nums.size();
-    if(sz == 0) return false;
-    int l = 0, r = sz-1;
-    while(l<r){
-        int m = (l+r)/2;
-        if(nums[m] == target || nums[l] == target) return true;
-        if(nums[m] == nums[l]) l++;
-        else if(nums[m]<nums[l]){
-            if(target<nums[m] || target>nums[l]) r=m-1;
-            else l=m+1;
-        }
-        else{
-            if(target<nums[l] || target>nums[m]) l=m+1;
-            else r=m-1;
-        }
-    }
-    return l>=0 && l<sz && nums[l] == target;
+    int l = 0, r = sz-1, m;
 }
 
 int main(){
