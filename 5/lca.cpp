@@ -24,6 +24,14 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q){
     return l_res?l_res:r_res;
 }
 
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q){
+    if(root == p || root == q || root == NULL) return root;
+    TreeNode* l = lowestCommonAncestor(root->left, p, q);
+    TreeNode* r = lowestCommonAncestor(root->right, p, q);
+    if(l && r) return root;
+    return l?l:r;
+}
+
 int main(){
     TreeNode* root = create_tree("3516208##74");
     TreeNode* res = lowestCommonAncestor(root, root->left, root->left->right->right);
