@@ -18,16 +18,16 @@ You may assume both s and t have the same length.
 #include "header.h"
 
 bool isIsomorphic(string s, string t) {
+    if(s.length() != t.length()) return false;
     int sz = s.length();
-    unordered_map<char,char> from, to;
+    unordered_map<char,char> from;
+    unordered_map<char,char> to;
     for(int i=0; i<sz; i++){
-        auto f_f = from.find(t[i]);
-        auto t_f = to.find(s[i]);
-        if(f_f != from.end() && t_f != to.end() && from[t[i]] == s[i] && to[s[i]] == t[i]) continue;
-        else if(f_f == from.end() && t_f == to.end()){
-            from[t[i]] = s[i];
-            to[s[i]] = t[i];
+        if(from.find(s[i]) == from.end() && to.find(t[i]) == to.end()){
+            from[s[i]] = t[i];
+            to[t[i]] = s[i];
         }
+        else if(from.find(s[i]) != from.end() && to.find(t[i]) != to.end() && from[s[i]] == t[i] && to[t[i]] == s[i]) continue;
         else return false;
     }
     return true;
