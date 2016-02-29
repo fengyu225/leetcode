@@ -15,6 +15,7 @@ For example, the lowest common ancestor (LCA) of nodes 2 and 8 is 6. Another exa
 #include "header.h"
 
 TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q){
+    //recursive
     if(!p || !q) return p?p:q;
     if(!root) return NULL;
     if(root->val==p->val || root->val == q->val) return root;
@@ -23,6 +24,18 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q){
     if(root->val<=large && root->val>=small) return root;
     if(root->val<small) return lowestCommonAncestor(root->right, p, q);
     else return lowestCommonAncestor(root->left, p, q);
+}
+
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q){
+    //iterative
+    if(!root || !p || !q) return NULL;
+    int l = min(p->val, q->val), r = max(p->val, q->val);
+    while(root){
+        if(root->val>=l && root->val<=r) return root;
+        else if(root->val<l) root = root->right;
+        else root = root->left;
+    }
+    return root;
 }
 
 int main(){
