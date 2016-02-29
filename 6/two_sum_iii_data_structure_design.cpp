@@ -15,6 +15,7 @@ find(7) -> false
 class TwoSum {
     unordered_map<int,int> m;
 public:
+
     // Add the number to an internal data structure.
 	void add(int number) {
 	    m[number]++; 
@@ -22,14 +23,12 @@ public:
 
     // Find if there exists any pair of numbers which sum is equal to the value.
 	bool find(int value) {
-	    for(auto p:m){
-            if(m.find(value-p.first) != m.end() && (value-p.first != p.first || p.second>1)) return true;
+	    for(auto x:m){
+            if(m.find(value-x.first) != m.end() && (value-x.first != x.first || x.second>1)) return true;
         }    
         return false;
 	}
 };
-
-
 // Your TwoSum object will be instantiated and called as such:
 // TwoSum twoSum;
 // twoSum.add(number);
