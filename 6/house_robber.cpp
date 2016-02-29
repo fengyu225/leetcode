@@ -8,19 +8,17 @@ Given a list of non-negative integers representing the amount of money of each h
 
 int rob(vector<int>& nums) {
     int sz = nums.size();
-    int res = 0;
     if(sz == 0) return 0;
     if(sz == 1) return nums[0];
-    if(sz == 2) return max(nums[0], nums[1]);
-//    vector<int> arr(sz, 0);
-    int a = nums[0], b = max(nums[0], nums[1]);
+    int before_last_res = nums[0], last_res = nums[1], res = max(before_last_res, last_res);
+    int before_last = nums[0], last = nums[1];
     for(int i=2; i<sz; i++){
-        int temp = a;
-        a = b;
-        b = max(temp+nums[i], a);
-        res = max(b,res);
-//        arr[i] = max(arr[i-2]+nums[i], arr[i-1]);
-//        res = max(arr[i], res);
+        int curr = before_last_res+nums[i];
+        before_last = last;
+        last = curr;
+        before_last_res = max(before_last_res, before_last);
+        last_res = max(last_res,last);
+        res = max(res, last_res);
     }
     return res;
 }
