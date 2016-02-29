@@ -19,30 +19,19 @@ Note: next() and hasNext() should run in average O(1) time and uses O(h) memory,
 #include "header.h"
 
 class BSTIterator {
-    stack<TreeNode*> st;
 public:
     BSTIterator(TreeNode *root) {
-        while(root){
-            st.push(root);
-            root = root->left;
-        }  
+        
     }
 
     /** @return whether we have a next smallest number */
     bool hasNext() {
-        return !st.empty();    
+        
     }
 
     /** @return the next smallest number */
     int next() {
-        int res = st.top()->val;
-        TreeNode* curr = st.top()->right;
-        st.pop();
-        while(curr){
-            st.push(curr);
-            curr = curr->left;
-        } 
-        return res;
+        
     }
 };
 
@@ -51,7 +40,6 @@ public:
  * BSTIterator i = BSTIterator(root);
  * while (i.hasNext()) cout << i.next();
  */
-
 int main(){
     TreeNode* root = create_tree("3150246");
     BSTIterator* i = new BSTIterator(root);
