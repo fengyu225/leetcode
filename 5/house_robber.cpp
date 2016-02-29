@@ -23,6 +23,23 @@ int rob(vector<int>& nums) {
     return res;
 }
 
+int rob(vector<int>& nums) {
+    int sz = nums.size();
+    if(sz == 0) return 0;
+    if(sz == 1) return nums[0];
+    int before_last_res = nums[0], last_res = nums[1], res = max(before_last_res, last_res);
+    int before_last = nums[0], last = nums[1];
+    for(int i=2; i<sz; i++){
+        int curr = before_last_res+nums[i];
+        before_last = last;
+        last = curr;
+        before_last_res = max(before_last_res, before_last);
+        last_res = max(last_res,last);
+        res = max(res, last_res);
+    }
+    return res;
+}
+
 int main(){
     //int arr[] = {1, 2, 3, 4, 5};
     //int arr[] = {2,1,1,2};
