@@ -57,7 +57,7 @@ int maxPoints(vector<Point>& points) {
             }
         }
         for(auto p:slops) cnt = max(cnt, p.second);
-        res = max(res, max(max(same_x, same_y)+same, same+cnt));
+        res = max(res, max(max(same_x, same_y), cnt)+same);
     }
     return res;
 }
