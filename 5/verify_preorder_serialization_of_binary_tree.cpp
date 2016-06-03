@@ -32,6 +32,33 @@ Return false
 */
 #include "header.h"
 
+/*
+The capacity is the number of node that can be put in the tree. The initial value is 1, which means there can be a root.
+
+When adding a node, capacity--;
+
+When adding a non-NULL node, it means we obtains two more leafs, then capacity +=2.
+
+The final capacity should be equal to 0
+*/
+
+/*
+bool isValidSerialization(string preorder) {
+    int degree = 1;
+    string temp;
+    stringstream ss;
+    ss << preorder;
+    while (getline(ss, temp, ',')) {
+        degree--;
+        if (degree < 0)
+            return false;
+        if (temp[0] != '#')
+            degree += 2;
+    }
+    return degree == 0;
+}
+*/
+
 void increase(stack<int>& t){
     if(t.empty()) return;
     int temp = t.top();
