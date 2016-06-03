@@ -20,6 +20,10 @@ All words contain only lowercase alphabetic characters.
 
 #include "header.h"
 
+#include<string>
+#include<vector>
+#include<queue>
+
 int ladderLength(string beginWord, string endWord, unordered_set<string>& wordList) {
     int w_len = beginWord.size(), res = 0;
     if(wordList.size() == 0) return 0;
