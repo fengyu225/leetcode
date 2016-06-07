@@ -23,11 +23,28 @@ Return 0.
 #include "header.h"
 
 int minPatches(vector<int>& nums, int n) {
-    return 0;
+    int sz = nums.size(), curr = 0;
+    long curr_end = 0, res = 0;
+    while(curr_end<n){
+        if(curr>=sz || (curr<sz && curr_end+1<nums[curr])){
+            res++;
+            curr_end = 2*curr_end+1; 
+        }
+        else curr_end += nums[curr++];
+    }
+    return res;
 }
 
 int main(){
-    vector<int> nums = {1, 5, 10};
-    cout<<minPatches(nums, 20)<<endl;
+//    vector<int> nums = {1, 3};
+//    cout<<minPatches(nums, 6)<<endl;
+//    vector<int> nums = {1, 5, 10};
+//    cout<<minPatches(nums, 20)<<endl;
+//    vector<int> nums = {1, 2, 2};
+//    cout<<minPatches(nums, 5)<<endl;
+//    vector<int> nums = {};
+//    cout<<minPatches(nums, 7)<<endl;
+    vector<int> nums = {1, 2, 31, 33};
+    cout<<minPatches(nums, INT_MAX)<<endl;
     return 0;
 }
