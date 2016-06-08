@@ -22,7 +22,8 @@ bool increasingTriplet(vector<int>& nums) {
 }
 
 int main(){
-    vector<int> nums = {1, 2, 3, 4, 5};
+    //vector<int> nums = {1, 2, 3, 4, 5};
+    vector<int> nums = {5, 4, 3, 2, 1};
     cout<<increasingTriplet(nums)<<endl;
     return 0;
 }
