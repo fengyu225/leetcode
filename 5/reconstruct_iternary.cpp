@@ -47,18 +47,18 @@ int main(){
 //        {"SFO", "SJC"},
 //        {"LHR", "SFO"}
 //    };
-//    vector<pair<string,string> > tickets = {
-//        {"JFK","SFO"},
-//        {"JFK","ATL"},
-//        {"SFO","ATL"},
-//        {"ATL","JFK"},
-//        {"ATL","SFO"}
-//    };
     vector<pair<string,string> > tickets = {
-        {"JFK","KUL"},
-        {"JFK","NRT"},
-        {"NRT","JFK"}
+        {"JFK","SFO"},
+        {"JFK","ATL"},
+        {"SFO","ATL"},
+        {"ATL","JFK"},
+        {"ATL","SFO"}
     };
+//    vector<pair<string,string> > tickets = {
+//        {"JFK","KUL"},
+//        {"JFK","NRT"},
+//        {"NRT","JFK"}
+//    };
     vector<string> res = findItinerary(tickets);
     print_vector<string>(res);
     return 0;
