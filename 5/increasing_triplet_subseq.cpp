@@ -19,11 +19,20 @@ return false.
 bool increasingTriplet(vector<int>& nums) {
     int sz = nums.size();
     if(sz<3) return false;
+    int a = INT_MAX, b = INT_MAX, c = INT_MAX;
+    for(int i : nums){
+        if(i<a) a=i;
+        else if(i>a && i<b) b = i;
+        else if(i>b) return true;
+    }
+    return a<b && b<c && c!=INT_MAX;
 }
 
 int main(){
+    vector<int> nums = {1,0,0,2,0,0,-1,-1,-1,-1,3};
+    //vector<int> nums = {1, 1, 1, 1};
     //vector<int> nums = {1, 2, 3, 4, 5};
-    vector<int> nums = {5, 4, 3, 2, 1};
+    //vector<int> nums = {5, 4, 3, 2, 1};
     cout<<increasingTriplet(nums)<<endl;
     return 0;
 }
