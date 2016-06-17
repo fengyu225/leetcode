@@ -12,8 +12,17 @@ Given the list [1,[4,[6]]], return 27. (one 1 at depth 1, one 4 at depth 2, and 
 
 #include "header.h"
 
+int calc(NestedInteger& i, int l){
+    if(i.isInteger()) return l*i.getInteger();
+    int res = 0;
+    for(NestedInteger c : i.getList()) res+=calc(c, l+1);
+    return res;
+}
+
 int depthSum(vector<NestedInteger>& nestedList) {
-    return depthSum(nestedList, 1);
+    int res = 0;
+    for(NestedInteger i : nestedList) res+=calc(i,1);
+    return res;
 }
 
 int main(){
