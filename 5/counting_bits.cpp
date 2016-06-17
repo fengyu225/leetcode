@@ -27,6 +27,19 @@ vector<int> countBits(int num) {
     return res;
 }
 
+
+/* naive way
+vector<int> countBits(int num){
+    vector<int> res;
+    for(int i=0; i<=num; i++){
+        int temp = i, c = 0;
+        for(;temp;c+=(temp&1), temp>>=1);
+        res.push_back(c);
+    }
+    return res;
+}
+*/
+
 int main(){
     vector<int> res = countBits(7);
     print_vector<int>(res);

@@ -239,3 +239,20 @@ void print_arr(vector<int>& nums, int l, int r){
     for(int i = l; i<=r; i++) cout<<nums[i]<<" ";
     cout<<endl;
 }
+
+bool NestedInteger::isInteger() const{
+    return this->is_integer;
+}
+
+int NestedInteger::getInteger() const{
+    return this->val;
+}
+
+vector<NestedInteger>& NestedInteger::getList(){
+    return this->val_list; 
+}
+
+void NestedInteger::addNextedInteger(NestedInteger n){
+    this->is_integer = false;
+    this->val_list.push_back(n);
+}
