@@ -33,6 +33,31 @@ Return true (self crossing)
 
 #include "header.h"
 
+/*
+case 1:
+    
+    --------
+    |      |
+    |      |
+    |------|-----
+           |
+case 2:
+    -------------
+    |           |
+    |          ||
+    |           |
+    |-----------|
+
+case 3:
+    -------------
+    |           |
+    |           |
+    |     --------------|        
+    |           |       |
+    |                   |
+    |--------------------
+*/
+
 bool isSelfCrossing(vector<int>& x) {
     int sz = x.size();
     for(int i=3; i<sz; i++){
