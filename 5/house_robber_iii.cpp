@@ -33,7 +33,7 @@ void rob(TreeNode* root, int& a, int& b){
     rob(root->left, l_a, l_b);
     rob(root->right, r_a, r_b);
     a = l_b+r_b+root->val;
-    b = l_a+r_a;
+    b = max(l_a, l_b)+max(r_a, r_b);
 }
 
 int rob(TreeNode* root) {
@@ -45,7 +45,8 @@ int rob(TreeNode* root) {
 
 int main(){
     //vector<string> tree = {"3", "2", "3", "#", "3", "#", "1"};
-    vector<string> tree = {"3", "4", "5", "1", "3", "#", "1"};
+    //vector<string> tree = {"3", "4", "5", "1", "3", "#", "1"};
+    vector<string> tree = {"4", "1", "#", "2", "#", "3"};
     TreeNode* root = create_tree(tree);
     cout<<rob(root)<<endl;
     return 0;
