@@ -34,11 +34,20 @@ Return true (self crossing)
 #include "header.h"
 
 bool isSelfCrossing(vector<int>& x) {
-    return true;
+    int sz = x.size();
+    for(int i=3; i<sz; i++){
+        if(x[i]>=x[i-2] && x[i-1]<=x[i-3]) return true;
+        if(i>=4 && x[i-1] == x[i-3] && x[i-2]<=x[i]+x[i-4]) return true;
+        if(i>=5 && x[i-2]>=x[i-4] && x[i]+x[i-4]>=x[i-2] && x[i-5]+x[i-1]>=x[i-3] && x[i-1]<=x[i-3]) return true;
+
+    }
+    return false;
 }
 
 int main(){
-    vector<int> x = {2, 1, 1, 2};
+    //vector<int> x = {2, 1, 1, 2};
+    //vector<int> x = {1, 2, 3, 4};
+    vector<int> x = {3, 3, 3, 2, 1, 1};
     cout<<isSelfCrossing(x)<<endl;
     return 0;
 }
