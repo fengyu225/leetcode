@@ -9,11 +9,18 @@ Note: you may assume that n is not less than 2.
 #include "header.h"
 
 int integerBreak(int n) {
-    return 0;
+    vector<int> arr(n+1, 1);
+    for(int i=2; i<=n; i++){
+        int temp = 1;
+        for(int j=1; j<i; j++) temp = max(temp, max(j, arr[j])*(i-j));
+        arr[i] = temp;
+    }
+    return arr[n];
 }
 
 int main(){
-    cout<<integerBreak(2)<<endl;
-    cout<<integerBreak(10)<<endl;
+//    cout<<integerBreak(2)<<endl;
+    //cout<<integerBreak(10)<<endl;
+    cout<<integerBreak(6)<<endl;
     return 0;
 }
