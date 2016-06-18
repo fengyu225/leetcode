@@ -26,12 +26,6 @@ public:
 
     int next() {
         this->hasNext();
-        while(!st.top().isInteger()){
-            vector<NestedInteger> children = st.top().getList();
-            st.pop();
-            int sz = children.size();
-            for(int i=sz-1; i>=0; i--) st.push(children[i]);
-        }
         int res = st.top().getInteger();
         st.pop();
         return res;
