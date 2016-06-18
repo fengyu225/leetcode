@@ -12,16 +12,34 @@ Given the list [1,[4,[6]]], return 27. (one 1 at depth 1, one 4 at depth 2, and 
 
 #include "header.h"
 
-int calc(NestedInteger& i, int l){
-    if(i.isInteger()) return l*i.getInteger();
-    int res = 0;
-    for(NestedInteger c : i.getList()) res+=calc(c, l+1);
-    return res;
-}
+//int calc(NestedInteger& i, int l){
+//    if(i.isInteger()) return l*i.getInteger();
+//    int res = 0;
+//    for(NestedInteger c : i.getList()) res+=calc(c, l+1);
+//    return res;
+//}
+//
+//int depthSum(vector<NestedInteger>& nestedList) {
+//    int res = 0;
+//    for(NestedInteger i : nestedList) res+=calc(i,1);
+//    return res;
+//}
 
 int depthSum(vector<NestedInteger>& nestedList) {
     int res = 0;
-    for(NestedInteger i : nestedList) res+=calc(i,1);
+    queue<NestedInteger> qs[2];
+    for(NestedInteger i : nestedList) qs[0].push(i);
+    int level = 0;
+    while(!qs[level%2].empty()){
+        NestedInteger temp = qs[level%2].front();
+        if(temp.isInteger()) res+=(level+1)*temp.getInteger();
+        else{
+            vector<NestedInteger> children = temp.getList();
+            for(NestedInteger i : children) qs[(level+1)%2].push(i);
+        }
+        qs[level%2].pop();
+        if(qs[level%2].empty()) level++;
+    }
     return res;
 }
 
