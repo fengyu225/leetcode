@@ -10,7 +10,9 @@ Follow up: Could you solve it without loops/recursion?
 #include "header.h"
 
 bool isPowerOfFour(int num) {
-
+    long n = num;
+    int temp = 0x55555555;
+    return n!=0 && (n|temp) == temp && (n&(n-1)) == 0;
 }
 
 int main(){
