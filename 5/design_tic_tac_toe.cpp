@@ -93,7 +93,7 @@ public:
                 2: Player 2 wins. */
     int move(int row, int col, int player) {
         board[row][col] = player;
-        for(auto v : board) print_vector<int>(v);
+//        for(auto v : board) print_vector<int>(v);
         if(
                 check_row(row, player) || 
                 check_col(col, player) || 
