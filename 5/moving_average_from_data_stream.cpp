@@ -13,14 +13,27 @@ m.next(5) = (10 + 3 + 5) / 3
 #include "header.h"
 
 class MovingAverage {
+    queue<int> q;
+    int curr;
+    int cnt;
+    int size;
 public:
     /** Initialize your data structure here. */
     MovingAverage(int size) {
-        
+        cnt = 0;
+        curr = 0;
+        this->size = size;
     }
     
     double next(int val) {
-        
+        q.push(val);
+        curr+=val;
+        if(cnt<size) cnt++;
+        else{
+            curr-=q.front();
+            q.pop();
+        }
+        return (double)curr/(double)(min(cnt,size)); 
     }
 };
 
@@ -31,7 +44,7 @@ public:
  */
 
 int main(){
-    MovingAverage obj = new MovingAverage(3);
+    MovingAverage obj(3);
     cout<<obj.next(1)<<endl;
     cout<<obj.next(10)<<endl;
     cout<<obj.next(3)<<endl;
