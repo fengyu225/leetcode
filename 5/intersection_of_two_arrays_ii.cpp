@@ -16,17 +16,29 @@ What if elements of nums2 are stored on disk, and the memory is limited such tha
 #include "header.h"
 
 vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
-    unordered_map<int,int> s,t;
     vector<int> res;
+    unordered_map<int,int> s,t;
     for(int i : nums1) s[i]++;
-    for(int i : nums2) t[i]++;
-    for(auto p : s)
-        if(t.find(p.first) != t.end()){
-            for(int temp = 0; temp<min(p.second, t[p.first]); temp++)
-            res.push_back(p.first);
-        }
+    for(int i : nums2)
+        if(s.find(i) != s.end()) t[i]++;
+    for(auto p : t){
+        for(int x = 0; x<min(p.second, s[p.first]); x++) res.push_back(p.first);
+    }
     return res;
 }
+
+//vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+//    unordered_map<int,int> s,t;
+//    vector<int> res;
+//    for(int i : nums1) s[i]++;
+//    for(int i : nums2) t[i]++;
+//    for(auto p : s)
+//        if(t.find(p.first) != t.end()){
+//            for(int temp = 0; temp<min(p.second, t[p.first]); temp++)
+//            res.push_back(p.first);
+//        }
+//    return res;
+//}
 
 int main(){
     vector<int> nums1 = {1, 2, 2, 1};
