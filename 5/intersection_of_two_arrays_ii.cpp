@@ -11,14 +11,21 @@ Follow up:
 What if the given array is already sorted? How would you optimize your algorithm?
 What if nums1's size is small compared to nums2's size? Which algorithm is better?
 What if elements of nums2 are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?
-Show Tags
-Show Similar Problems
 */
 
 #include "header.h"
 
 vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
-    return nums1;
+    unordered_map<int,int> s,t;
+    vector<int> res;
+    for(int i : nums1) s[i]++;
+    for(int i : nums2) t[i]++;
+    for(auto p : s)
+        if(t.find(p.first) != t.end()){
+            for(int temp = 0; temp<min(p.second, t[p.first]); temp++)
+            res.push_back(p.first);
+        }
+    return res;
 }
 
 int main(){
