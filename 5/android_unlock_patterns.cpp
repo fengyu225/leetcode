@@ -29,11 +29,56 @@ Given m = 1, n = 1, return 9.
 
 #include "header.h"
 
+bool valid(vector<vector<bool> >& visited, int a, int b, int i, int j){
+    if(a==i && b == j) return false;
+    if(visited[i][j]) return false;
+    if(a == i){
+        for(int temp = min(b, j); temp <= max(b, j); temp++)
+            if(temp != b && temp != j && !visited[a][temp]) return false;
+        return true;
+    } 
+    if(b == j){
+        for(int temp = min(a, i); temp <= max(a, i); temp++)
+            if(temp != a && temp != i && !visited[temp][b]) return false;
+        return true;
+    }
+    if(abs(a-i) != abs(b-j) || abs(a-i) == 1) return true;
+    int x = i>a?1:-1;
+    int y = j>b?1:-1;
+    for(int curr_x=a+x, curr_y=b+y; curr_x<i; curr_x+=x, curr_y+=y){
+        if(!visited[curr_x][curr_y]) return false;
+    }
+    return true;
+}
+
+void calc(int a, int b, vector<vector<bool> >& visited, int& cnt, int m, int n, int curr_len){
+    if(curr_len<=n && curr_len>=m) cnt++;
+    if(curr_len == n) return;
+    for(int i=0; i<3; i++){
+        for(int j=0; j<3; j++){
+            if(valid(visited, a, b, i, j)){
+                visited[i][j] = true;
+                calc(i, j, visited, cnt, m, n, curr_len+1);
+                visited[i][j] = false;
+            }
+        }
+    }
+}
+
 int numberOfPatterns(int m, int n) {
-    return 0;
+    int cnt = 0;
+    vector<vector<bool> > visited(3, vector<bool>(3, false));
+    for(int i=0; i<3; i++){
+        for(int j = 0; j<3; j++){
+            visited[i][j] = true;
+            calc(i, j, visited, cnt, m, n, 1);
+            visited[i][j] = false;
+        }
+    }
+    return cnt;
 }
 
 int main(){
-    cout<<numberOfPatterns(1, 1)<<endl;
+    cout<<numberOfPatterns(1, 2)<<endl;
     return 0;
 }
