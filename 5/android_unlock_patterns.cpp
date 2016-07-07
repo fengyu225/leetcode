@@ -53,6 +53,7 @@ bool valid(vector<vector<bool> >& visited, int a, int b, int i, int j){
 
 void calc(int a, int b, vector<vector<bool> >& visited, int& cnt, int m, int n, int curr_len){
     if(curr_len<=n && curr_len>=m) cnt++;
+    cout<<curr_len<<": "<<a<<" "<<b<<" "<<cnt<<endl;
     if(curr_len == n) return;
     for(int i=0; i<3; i++){
         for(int j=0; j<3; j++){
