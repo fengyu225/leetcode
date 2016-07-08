@@ -7,11 +7,21 @@ Given n = 2, return 91. (The answer should be the total numbers in the range of 
 
 #include "header.h"
 
-int countNumbersWithUniqueDigits(int n) {
-    return 0;
+int countNumbersWithUniqueDigits(int n){
+    if(n == 0) return 1;
+    vector<int> arr(n+1, 0);
+    arr[1] = 10;
+    int last = 9;
+    for(int i=2; i<=n; i++){
+        last *= (9-i+2);
+        arr[i] = arr[i-1]+last;
+    }
+    return arr[n];
 }
 
 int main(){
     cout<<countNumbersWithUniqueDigits(2)<<endl;
+    cout<<countNumbersWithUniqueDigits(3)<<endl;
+    cout<<countNumbersWithUniqueDigits(4)<<endl;
     return 0;
 }
