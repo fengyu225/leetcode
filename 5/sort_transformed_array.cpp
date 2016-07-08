@@ -26,8 +26,8 @@ vector<int> sortTransformedArray(vector<int>& nums, int a, int b, int c) {
     double mid = a!=0?-1*b/(double)a/2.0:(nums[0]+nums[sz-1])/2.0;
     int l = 0, r = sz-1;
     while(l<=r){
-        double l_dis = fabs((double)nums[l]-mid);
-        double r_dis = fabs((double)nums[r]-mid);
+        double l_dis = abs((double)nums[l]-mid);
+        double r_dis = abs((double)nums[r]-mid);
         if((a!= 0 && l_dis>=r_dis) || (a==0 && b>0)){
             res.push_back(a*nums[l]*nums[l]+b*nums[l]+c);
             l++;
