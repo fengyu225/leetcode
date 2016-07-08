@@ -51,6 +51,12 @@ public:
  */
 
 int main(){
-
+    Logger* logger = new Logger();
+    cout<<logger->shouldPrintMessage(1, "foo")<<endl;
+    cout<<logger->shouldPrintMessage(2,"bar")<<endl;
+    cout<<logger->shouldPrintMessage(3,"foo")<<endl;
+    cout<<logger->shouldPrintMessage(8,"bar")<<endl;
+    cout<<logger->shouldPrintMessage(10,"foo")<<endl;
+    cout<<logger->shouldPrintMessage(11,"foo")<<endl;
     return 0;
 }
