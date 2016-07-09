@@ -35,22 +35,33 @@ What if the number of hits per second could be very large? Does your design scal
 #include "header.h"
 
 class HitCounter {
+    deque<int> q;
+    unordered_map<int,int> qm;
+    int count;
 public:
     /** Initialize your data structure here. */
     HitCounter() {
-        
+        this->count = 0; 
     }
     
     /** Record a hit.
         @param timestamp - The current timestamp (in seconds granularity). */
     void hit(int timestamp) {
-        
+        count++;
+        if(qm.find(timestamp) == qm.end())
+            q.push_back(timestamp);
+        qm[timestamp]++;
     }
     
     /** Return the number of hits in the past 5 minutes.
         @param timestamp - The current timestamp (in seconds granularity). */
     int getHits(int timestamp) {
-        
+        while(!q.empty() && timestamp-q.front()>=300){
+            this->count -= qm[q.front()];
+            qm.erase(qm.find(q.front()));
+            q.pop_front();
+        } 
+        return this->count;
     }
 };
 
@@ -62,7 +73,13 @@ public:
  */
 
 int main(){
-    HitCounter* obj = new HitCounter();
-
+    HitCounter* counter = new HitCounter();
+    counter->hit(1);
+    counter->hit(2);
+    counter->hit(3);
+    cout<<counter->getHits(4)<<endl;
+    counter->hit(300);
+    cout<<counter->getHits(300)<<endl;
+    cout<<counter->getHits(301)<<endl; 
     return 0;
 }
