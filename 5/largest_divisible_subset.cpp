@@ -35,15 +35,15 @@ vector<int> largestDivisibleSubset(vector<int>& nums) {
         }
         if(arr[i]>arr[largest_end_index]) largest_end_index = i;
     }
-    res.reserve(arr[largest_end_index]);
-    for(int i=largest_end_index, j=arr[largest_end_index]; i != -1; i=last[i], j--)
-        res[j] = nums[i];
+    res.resize(arr[largest_end_index]);
+    for(int i=largest_end_index, j=arr[largest_end_index]-1; i != -1; i=last[i])
+        res[j--] = nums[i];
     return res;
 }
 
 int main(){
-    //vector<int> nums = {2, 4, 6, 8};
-    vector<int> nums = {1, 2, 4, 8};
+    vector<int> nums = {2, 4, 6, 8};
+//    vector<int> nums = {1, 2, 4, 8};
     vector<int> res = largestDivisibleSubset(nums);
     print_vector<int>(res);
     return 0;
