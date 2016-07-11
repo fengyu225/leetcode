@@ -20,9 +20,23 @@ Output: False
 #include "header.h"
 
 bool canMeasureWater(int x, int y, int z) {
+    if(x+y < z) return false;
+    if(x == z || y == z || x+y == z || z == 0) return true;
+    if(x>y) swap(x,y);
+    if(x == 0) return false;
+    int b = (y/x+1)*x%y; 
+    int curr = b;
+    while(1){
+        if(curr+x == z || curr+y == z || curr == z) return true;
+        int temp = (((y-curr)/x+1)*x+curr)%y;
+        if(temp == b) return false;
+        curr = temp;
+    }
 }
 
 int main(){
-    cout<<canMeasureWater(3, 4, 5)<<endl;
+    cout<<canMeasureWater(13, 11, 1)<<endl;
+//    cout<<canMeasureWater(3, 4, 5)<<endl;
+//    cout<<canMeasureWater(4, 6, 3)<<endl;
     return 0;
 }
