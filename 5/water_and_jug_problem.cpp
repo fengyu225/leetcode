@@ -36,8 +36,13 @@ bool canMeasureWater(int x, int y, int z) {
 }
 
 int main(){
+    cout<<canMeasureWater(0, 0, 0)<<endl;
+    cout<<canMeasureWater(0, 0, 1)<<endl;
+    cout<<canMeasureWater(0, 1, 0)<<endl;
+    cout<<canMeasureWater(0, 1, 2)<<endl;
+    cout<<canMeasureWater(0, 1, 1)<<endl;
     cout<<canMeasureWater(13, 11, 1)<<endl;
-//    cout<<canMeasureWater(3, 4, 5)<<endl;
-//    cout<<canMeasureWater(4, 6, 3)<<endl;
+    cout<<canMeasureWater(3, 4, 5)<<endl;
+    cout<<canMeasureWater(4, 6, 3)<<endl;
     return 0;
 }
