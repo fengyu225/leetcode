@@ -21,7 +21,8 @@ Output: False
 
 bool canMeasureWater(int x, int y, int z) {
     if(x+y < z) return false;
-    if(x == z || y == z || x+y == z || z == 0) return true;
+    if(z == 0) return true;
+    if(x == z || y == z || x+y == z) return true;
     if(x>y) swap(x,y);
     if(x == 0) return false;
     int b = (y/x+1)*x%y; 
