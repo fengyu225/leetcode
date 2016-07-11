@@ -32,14 +32,38 @@ All possible pairs are returned from the sequence:
 
 #include "header.h"
 
+class comp{
+    public:
+        bool operator() (pair<int,int>& a, pair<int,int>& b){
+            return b.first+b.second > a.first+a.second;            
+        }
+};
+
 vector<pair<int, int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
     vector<pair<int,int> > res;
+    int sz1 = nums1.size(), sz2 = nums2.size();
+    if(k == 0) return res;
+    priority_queue<pair<int,int>, vector<pair<int,int> >, comp> q;
+    for(int i=0; i<sz1; i++){
+        for(int j=0; j<sz2; j++){
+            if(q.size()<k) q.push(make_pair(nums1[i], nums2[j]));
+            else if(nums1[i]+nums2[j]<q.top().first+q.top().second){
+                q.pop(); 
+                q.push(make_pair(nums1[i], nums2[j]));
+            }
+        }
+    }
+    for(int i=k-1; i>=0 && q.size() > 0; i--){
+        res.push_back(q.top());
+        q.pop();
+    } 
+    reverse(res.begin(), res.end());
     return res;
 }
 
 int main(){
-    vector<int> nums1 = {1, 7, 11};
-    vector<int> nums2 = {2, 4, 6};
+    vector<int> nums1 = {1, 1, 2};
+    vector<int> nums2 = {1, 2, 3};
     vector<pair<int,int> > res = kSmallestPairs(nums1, nums2, 3);
     for(auto p : res)
         cout<<p.first<<", "<<p.second<<endl;
