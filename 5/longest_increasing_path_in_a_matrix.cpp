@@ -32,7 +32,7 @@ The longest increasing path is [3, 4, 5, 6]. Moving diagonally is not allowed.
 using namespace std;
 
 int search(vector<vector<int> >& matrix, int x, int y, int r, int c, vector<vector<int> >& arr, vector<vector<int> >& move){
-    int count = 0, res = 1;
+    int res = 1;
     for(int i=0; i<4; i++){
         int new_x = move[i][0]+x;
         int new_y = move[i][1]+y;
