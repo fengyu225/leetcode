@@ -26,10 +26,7 @@ Return 4
 The longest increasing path is [3, 4, 5, 6]. Moving diagonally is not allowed.
 */
 
-#include <vector>
-#include <iostream>
-
-using namespace std;
+#include "header.h"
 
 int search(vector<vector<int> >& matrix, int x, int y, int r, int c, vector<vector<int> >& arr, vector<vector<int> >& move){
     int res = 1;
