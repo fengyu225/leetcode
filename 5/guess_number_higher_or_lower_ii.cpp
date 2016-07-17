@@ -27,9 +27,26 @@ Given a particular n ≥ 1, find out how much money you need to have to guarante
 #include "header.h"
 
 int getMoneyAmount(int n) {
-
+    if(n == 1) return 0;
+    vector<vector<int> > arr(n+1, vector<int>(n+1, 0));
+    for(int len = 2; len<=n; len++){
+        for(int i=1; i+len-1<=n; i++){
+            // from i with length len
+            int temp = INT_MAX;
+            for(int j = i; j<=i+len-1; j++){
+                if(j == i) temp = min(temp, j+arr[j+1][i+len-1]);
+                else if(j == i+len-1) temp = min(temp, j+arr[i][j-1]);
+                else temp = min(temp, j+max(
+                                arr[i][j-1], arr[j+1][i+len-1]
+                            ));
+            }
+            arr[i][i+len-1] = temp;
+        }
+    }
+    return arr[1][n];
 }
 
 int main(){
+    cout<<getMoneyAmount(10)<<endl;
     return 0;
 }
