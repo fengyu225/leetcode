@@ -9,75 +9,46 @@ A solution using O(n) space is pretty straight forward. Could you devise a const
 
 #include "header.h"
 
-void inorder(TreeNode* root){
-    if(!root) return;
-    inorder(root->left);
-    printf("%d ", root->val);
-    inorder(root->right);
-}
-
-void check(stack<TreeNode*>& s, TreeNode* pre, TreeNode* curr, TreeNode*& left, TreeNode*& right){
-    if(pre){
-        if(pre->val>curr->val){
-            if(!left) left=pre;
-            right = curr;
-        } 
+void update(TreeNode* prev, TreeNode* curr, TreeNode*& res_l, TreeNode*& res_r){
+    if(!prev || prev->val < curr->val) return;
+    if(!res_l){
+        res_l = prev;
+        res_r = curr;
     }
+    else res_r = curr;
 }
 
 void recoverTree(TreeNode* root) {
-    if(!root) return;
-    stack<TreeNode*> s;
-    s.push(root);
-    TreeNode* left = NULL, *right = NULL;
-    TreeNode* pre = NULL;
-    while(!s.empty()){
-        TreeNode* t = s.top();
-        if(t->left) s.push(t->left);
-        else{
-            while(!s.empty() && !s.top()->right){
-                check(s,pre,s.top(),left,right);
-                pre = s.top();
-                s.pop();
+    TreeNode* curr = root, *prev = NULL, *res_l = NULL, *res_r = NULL;
+    while(curr){
+        TreeNode* curr_l = curr->left;
+        if(curr_l){
+            while(curr_l->right && curr_l->right != curr) curr_l = curr_l->right;
+            if(curr_l->right){
+                update(curr_l, curr, res_l, res_r);
+                prev = curr;
+                curr = curr->right;
+                curr_l->right = NULL;
             }
-            if(!s.empty()){
-                check(s,pre,s.top(),left,right);
-                pre = s.top();
-                s.pop();
-                s.push(pre->right);
+            else{
+                curr_l->right = curr;
+                curr = curr->left;
             }
         }
+        else{
+            update(prev, curr, res_l, res_r);
+            prev = curr;
+            curr = curr->right;
+        }
     }
-    if(left) swap(left->val, right->val);
+    if(res_l && res_r) swap(res_l->val, res_r->val);
 }
 
 int main(){
-//    TreeNode n0(4);
-//    TreeNode n1(3);
-//    TreeNode n2(10);
-//    TreeNode n3(1);
-//    TreeNode n4(6);
-//    TreeNode n5(14);
-//    TreeNode n6(8);
-//    TreeNode n7(7);
-//    TreeNode n8(13);
-//    n0.left = &n1;
-//    n0.right = &n2;
-//    n1.left = &n3;
-//    n1.right = &n4;
-//    n2.right = &n5;
-//    n4.left = &n6;
-//    n4.right = &n7;
-//    n5.left = &n8;
-//    TreeNode n0(2);
-//    TreeNode n1(1);
-//    n0.right = &n1;
-//    recoverTree(&n0);
-//    inorder(&n0);
-//    cout<<endl;
-    TreeNode* root = create_tree("01");
+    vector<string> trees = {"0", "1"};
+    TreeNode* root = create_tree(trees);
     recoverTree(root);
-    inorder(root);
+    in_order(root);
     cout<<endl;
     return 0;
 }
