@@ -28,18 +28,30 @@ int maxSumSubmatrix(vector<vector<int>>& matrix, int k) {
         sums[i][0] = matrix[i][0];
         for(int j = 1; j<c; j++) sums[i][j] = sums[i][j-1]+matrix[i][j];
     }
-    for(int l = 0; l<c; l++){
-        for(int r = l+1; r<c; r++){
-               
+    int res = INT_MIN;
+    for(int _l = 0; _l<c; _l++){
+        for(int _r = _l; _r<c; _r++){
+            set<int> s;
+            int last = 0;
+            for(int i=0; i<r; i++){
+                int curr = last+(sums[i][_r] - (_l>=1?sums[i][_l-1]:0));
+                if(curr<=k) res = max(res, curr);
+                auto iter = s.lower_bound(curr-k);
+                if(iter != s.end()) res = max(res, curr-*iter);
+                s.insert(curr);
+                last = curr;
+            }
         }
     } 
+    return res;
 }
 
 int main(){
     vector<vector<int> > matrix = {
-        {1, 0, 1},
-        {0, -2, 3}
+        {5, -4, -3, 4},
+        {-3, -4, 4, 5},
+        {5, 1, 5, -4}
     };
-    cout<<maxSumSubmatrix(matrix, 2)<<endl;
+    cout<<maxSumSubmatrix(matrix, 9)<<endl;
     return 0;
 }
