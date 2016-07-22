@@ -29,6 +29,10 @@ The same letters are at least distance 2 from each other.
 
 #include "header.h"
 
+// change made to get it runs faster:
+// 1. Not using custom compare function for priority_queue
+// 2. Not making pairs if unnecessary
+
 string rearrangeString(string str, int k) {
     int len = str.length();
     vector<int> last_pos(256, -1);
