@@ -32,6 +32,7 @@ The same letters are at least distance 2 from each other.
 // change made to get it runs faster:
 // 1. Not using custom compare function for priority_queue
 // 2. Not making pairs if unnecessary
+// 3. Using array instead of unordered_map
 
 string rearrangeString(string str, int k) {
     int len = str.length();
