@@ -14,6 +14,7 @@ class ListNode {
 }; 
 
 ListNode* create_list(int arr[], int n);
+ListNode* create_list(vector<int> nums);
 
 class TreeNode {
     public:
@@ -73,6 +74,13 @@ void print_vector(vector<T> v){
 }
 
 
+template<typename T>
+void print_2d_vector(vector<vector<T> > v){
+    for(auto v_t:v){
+        for(auto i:v_t) cout<<i<<"        ";
+        cout<<endl;
+    }
+}
 
 class TrieNode {
 public:
@@ -107,4 +115,22 @@ struct Interval {
     int end;
     Interval() : start(0), end(0) {}
     Interval(int s, int e) : start(s), end(e) {}
+};
+
+class NestedInteger {
+  bool is_integer;
+  int val;
+  vector<NestedInteger> val_list;
+  public:
+    NestedInteger(int v){
+    	val = v;
+	is_integer = true;
+    }
+    NestedInteger(){
+    	is_integer = false;
+    }
+    bool isInteger() const;
+    int getInteger() const;
+    vector<NestedInteger> &getList();
+    void addNextedInteger(NestedInteger n);
 };

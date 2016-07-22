@@ -23,6 +23,25 @@ ListNode* create_list(int arr[], int n){
     return result;
 }
 
+ListNode* create_list(vector<int> arr){
+    int n = arr.size();
+    cout<<"======================"<<endl;
+    ListNode* result = NULL;
+    ListNode* curr = NULL;
+    for(int i=0; i<n; i++){
+        ListNode* x = new ListNode(arr[i]);
+        if(!result)
+            result = curr = x;
+        else{
+            cout<<curr->val<<"->"<<x->val<<endl;
+            curr->next = x;
+            curr = curr->next;
+        }
+    }
+    cout<<"======================"<<endl;
+    return result;
+}
+
 ListNode* create_list(int arr[], int n, int s){
     ListNode* result = NULL;
     ListNode* curr = NULL;
@@ -42,6 +61,7 @@ ListNode* create_list(int arr[], int n, int s){
     end->next = start;
     return result;
 }
+
 TreeNode* create_tree(string v){
     cout<<"======================"<<endl;
     if(v[0] == '#') return NULL;
@@ -218,4 +238,21 @@ TrieNode* Trie::getRoot(){
 void print_arr(vector<int>& nums, int l, int r){
     for(int i = l; i<=r; i++) cout<<nums[i]<<" ";
     cout<<endl;
+}
+
+bool NestedInteger::isInteger() const{
+    return this->is_integer;
+}
+
+int NestedInteger::getInteger() const{
+    return this->val;
+}
+
+vector<NestedInteger>& NestedInteger::getList(){
+    return this->val_list; 
+}
+
+void NestedInteger::addNextedInteger(NestedInteger n){
+    this->is_integer = false;
+    this->val_list.push_back(n);
 }

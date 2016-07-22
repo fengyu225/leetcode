@@ -21,6 +21,7 @@
 #include<iostream>
 #include<math.h>
 #include<assert.h>
+#include<bitset>
 #include "lib.h"
 
 using namespace std;
