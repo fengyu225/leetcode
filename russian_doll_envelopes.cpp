@@ -19,8 +19,7 @@ class comp{
 int maxEnvelopes(vector<pair<int, int> >& envelopes) {
     int sz = envelopes.size();
     if(sz<2) return sz;
-    //sort(envelopes.begin(), envelopes.end(), comp());
-    sort(envelopes.begin(), envelopes.end());
+    sort(envelopes.begin(), envelopes.end(), comp());
     vector<int> arr(sz, 1);
     int res = 1;
     for(int i=1; i<sz; i++){
