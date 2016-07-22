@@ -46,6 +46,7 @@ string rearrangeString(string str, int k) {
         if(m[i]>0) pq.push(make_pair(i, m[i]));
     string res = "";
     for(int i=0; i<len; i++){
+        pair<char,int> t = pq.top();
         if(last_pos[t.first] == -1 || i-last_pos[t.first]>=k){
             res.push_back(t.first);
             pq.pop();
