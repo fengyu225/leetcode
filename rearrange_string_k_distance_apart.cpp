@@ -38,15 +38,16 @@ class comp{
 
 string rearrangeString(string str, int k) {
     int len = str.length();
-    unordered_map<char, int> last_pos;
-    unordered_map<char, int> m;
+    vector<int> last_pos(256, -1);
+    vector<int> m(256, 0); 
     for(char c : str) m[c]++;
     priority_queue<pair<char, int>, vector<pair<char,int> >, comp> pq;
-    for(auto temp : m) pq.push(make_pair(temp.first, temp.second));
+    for(int i=0; i<256; i++)
+        if(m[i]>0) pq.push(make_pair(i, m[i]));
     string res = "";
     for(int i=0; i<len; i++){
         pair<char,int> t = pq.top();
-        if(last_pos.find(t.first) == last_pos.end() || i-last_pos[t.first]>=k){
+        if(last_pos[t.first] == -1 || i-last_pos[t.first]>=k){
             res.push_back(t.first);
             pq.pop();
             if(t.second-1>0) pq.push(make_pair(t.first, t.second-1));
@@ -54,7 +55,7 @@ string rearrangeString(string str, int k) {
         }
         else{
             vector<pair<char,int> > temp_v;
-            while(!pq.empty() && last_pos.find(pq.top().first) != last_pos.end() && i-last_pos[pq.top().first]<k){
+            while(!pq.empty() && last_pos[pq.top().first]>=0 && i-last_pos[pq.top().first]<k){
                 temp_v.push_back(pq.top());
                 pq.pop();
             } 
@@ -74,8 +75,8 @@ string rearrangeString(string str, int k) {
 }
 
 int main(){
-//    cout<<rearrangeString("aabbcc", 3)<<endl;
+    cout<<rearrangeString("aabbcc", 3)<<endl;
     cout<<rearrangeString("aaabc", 3)<<endl;
-//    cout<<rearrangeString("aaadbbcc", 2)<<endl;
+    cout<<rearrangeString("aaadbbcc", 2)<<endl;
     return 0;
 }
