@@ -29,13 +29,53 @@ The same letters are at least distance 2 from each other.
 
 #include "header.h"
 
-string rearrangeString(string str, int k) {
+class comp{
+    public:
+        bool operator() (pair<char,int>& a, pair<char,int>& b){
+            return a.second<b.second;
+        }
+};
 
+string rearrangeString(string str, int k) {
+    int len = str.length();
+    unordered_map<char, int> last_pos;
+    unordered_map<char, int> m;
+    for(char c : str) m[c]++;
+    priority_queue<pair<char, int>, vector<pair<char,int> >, comp> pq;
+    for(auto temp : m) pq.push(make_pair(temp.first, temp.second));
+    string res = "";
+    for(int i=0; i<len; i++){
+        pair<char,int> t = pq.top();
+        if(last_pos.find(t.first) == last_pos.end() || i-last_pos[t.first]>=k){
+            res.push_back(t.first);
+            pq.pop();
+            if(t.second-1>0) pq.push(make_pair(t.first, t.second-1));
+            last_pos[t.first] = i;
+        }
+        else{
+            vector<pair<char,int> > temp_v;
+            while(!pq.empty() && last_pos.find(pq.top().first) != last_pos.end() && i-last_pos[pq.top().first]<k){
+                temp_v.push_back(pq.top());
+                pq.pop();
+            } 
+            if(pq.empty()) return "";
+            res.push_back(pq.top().first);
+            pair<char,int> temp_p = pq.top();
+            pq.pop();
+            if(temp_p.second-1>0) pq.push(make_pair(temp_p.first, temp_p.second-1));
+            last_pos[temp_p.first] = i;
+            while(!temp_v.empty()){
+                pq.push(temp_v.back());
+                temp_v.pop_back();
+            }
+        }
+    }
+    return res;
 }
 
 int main(){
-    cout<<rearrangeString("aabbcc", 3)<<endl;
+//    cout<<rearrangeString("aabbcc", 3)<<endl;
     cout<<rearrangeString("aaabc", 3)<<endl;
-    cout<<rearrangeString("aaadbbcc", 2)<<endl;
+//    cout<<rearrangeString("aaadbbcc", 2)<<endl;
     return 0;
 }
