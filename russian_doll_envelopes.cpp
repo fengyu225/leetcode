@@ -12,7 +12,7 @@ Given envelopes = [[5,4],[6,4],[6,7],[2,3]], the maximum number of envelopes you
 class comp{
     public:
         bool operator() (pair<int,int>& a, pair<int,int>& b){
-            return a.first<b.first || a.first == b.first && a.second<b.second;
+            return a.first<b.first || (a.first == b.first && a.second>b.second);
         }
 };
 
@@ -20,24 +20,23 @@ int maxEnvelopes(vector<pair<int, int> >& envelopes) {
     int sz = envelopes.size();
     if(sz<2) return sz;
     sort(envelopes.begin(), envelopes.end(), comp());
-    vector<int> arr(sz, 1);
-    int res = 1;
-    for(int i=1; i<sz; i++){
-        int m = 1;
-        for(int j=0; j<i; j++)
-            if(envelopes[j].first<envelopes[i].first && envelopes[j].second<envelopes[i].second) m = max(m, arr[j]+1);
-        arr[i] = m;
-        res = max(arr[i], res);
+    vector<int> v;
+    for(int i=0; i<sz; i++){
+        pair<int,int> curr_p = envelopes[i];
+        auto iter = lower_bound(v.begin(), v.end(), curr_p.second);
+        if(iter == v.end()) v.push_back(curr_p.second);
+        else *iter = curr_p.second;
     }
-    return res;
+    return v.size();
 }
 
 int main(){
     vector<pair<int,int> > envelopes = {
-        {5, 4},
-        {6, 4},
+        {4, 5},
+        {4, 6},
         {6, 7},
-        {2, 3}
+        {2, 3},
+        {1, 1}
     };
     cout<<maxEnvelopes(envelopes)<<endl;
     return 0;
