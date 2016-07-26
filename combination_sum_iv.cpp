@@ -27,11 +27,33 @@ What limitation we need to add to the question to allow negative numbers?
 #include "header.h"
 
 int combinationSum4(vector<int>& nums, int target) {
-
+    int sz = nums.size();
+    if(sz == 0 || target == 0 || target<(*min(nums.begin(), nums.end()))) return 0;
+    vector<vector<int> > arr(2, vector<int>(target+1, 0));
+    int res = 0;
+    for(int n : nums){ 
+        if(n<=target) arr[1][n] = 1;
+        if(n == target) res++;
+    }
+    for(int i=2; i<=target; i++){ //length is i
+        for(int j=1; j<=target; j++){ //curr sum is j
+            arr[i%2][j] = 0;
+            for(int k : nums){ //last element is k
+                if(j<k) continue;
+                arr[i%2][j] += arr[(i-1)%2][j-k];
+            } 
+            if(j == target) res += arr[i%2][target]; 
+        }
+    }
+    return res;
 }
 
 int main(){
-    vector<int> nums = {1, 2, 3}
-    cout<<combinationSum4(nums, 4)<<endl;
+//    vector<int> nums = {1, 2, 3};
+//    cout<<combinationSum4(nums, 4)<<endl;
+//    vector<int> nums = {3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
+//    cout<<combinationSum4(nums, 10)<<endl;
+    vector<int> nums = {3, 33, 333};
+    cout<<combinationSum4(nums, 10000)<<endl;
     return 0;
 }
