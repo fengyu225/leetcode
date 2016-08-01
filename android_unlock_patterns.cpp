@@ -57,12 +57,13 @@ int numberOfPatterns(int m, int n) {
     vector<vector<bool> > visited(3, vector<bool>(3, false));
     for(int i=0; i<3; i++){
         for(int j = 0; j<3; j++){
+            if(i == 0 && j == 2 || i == 2 && j == 0 || i == 2 && j == 2) continue;
             visited[i][j] = true;
             search(i, j, m, n, 1, res, visited);
             visited[i][j] = false;
         }
     }
-    return res;
+    return res*4;
 }
 
 int main(){
