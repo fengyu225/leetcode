@@ -36,37 +36,43 @@ bool check(int i, int j, int a, int b, vector<vector<bool> >& visited){
     return true;
 }
 
-void search(int i, int j, int m, int n, int curr_len, int& res, vector<vector<bool> >& visited){
+int search(int i, int j, int m, int n, int curr_len, vector<vector<bool> >& visited){
+    int res = 0;
     if(curr_len>=m && curr_len<=n) res++;
-    if(curr_len == n) return;
+    if(curr_len == n) return res;
     for(int a = 0; a<3; a++){
         for(int b = 0; b<3; b++){
             if(a == i && b == j) continue;
             if(visited[a][b]) continue;
             if(check(i, j, a, b, visited)){
                 visited[a][b] = true;
-                search(a, b, m, n, curr_len+1, res, visited);
+                res+=search(a, b, m, n, curr_len+1, visited);
                 visited[a][b] = false;
             } 
         }
     }
+    return res;
 }
 
 int numberOfPatterns(int m, int n) {
     int res = 0;
     vector<vector<bool> > visited(3, vector<bool>(3, false));
-    for(int i=0; i<3; i++){
-        for(int j = 0; j<3; j++){
-            if(i == 0 && j == 2 || i == 2 && j == 0 || i == 2 && j == 2) continue;
+    for(int i=0; i<2; i++){
+        for(int j = 0; j<2; j++){
             visited[i][j] = true;
-            search(i, j, m, n, 1, res, visited);
+            if(i == 0 && j == 0)
+                res += 4*search(i, j, m, n, 1, visited);
+            else if((i == 0 && j == 1) || (i == 1 && j == 0))
+                res += 2*search(i, j, m, n, 1, visited);
+            else 
+                res += search(i, j, m, n, 1, visited);
             visited[i][j] = false;
         }
     }
-    return res*4;
+    return res;
 }
 
 int main(){
-    cout<<numberOfPatterns(1, 1)<<endl;
+    cout<<numberOfPatterns(1, 2)<<endl;
     return 0;
 }
