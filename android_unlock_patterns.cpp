@@ -29,57 +29,43 @@ Given m = 1, n = 1, return 9.
 
 #include "header.h"
 
-bool valid(vector<vector<bool> >& visited, int a, int b, int i, int j){
-    if(a==i && b == j) return false;
-    if(visited[i][j]) return false;
-    if(a == i){
-        for(int temp = min(b, j); temp <= max(b, j); temp++)
-            if(temp != b && temp != j && !visited[a][temp]) return false;
-        return true;
-    } 
-    if(b == j){
-        for(int temp = min(a, i); temp <= max(a, i); temp++)
-            if(temp != a && temp != i && !visited[temp][b]) return false;
-        return true;
-    }
-    if(abs(a-i) != abs(b-j) || abs(a-i) == 1) return true;
-    int x = i>a?1:-1;
-    int y = j>b?1:-1;
-    for(int curr_x=a+x, curr_y=b+y; curr_x<i; curr_x+=x, curr_y+=y){
-        if(!visited[curr_x][curr_y]) return false;
-    }
+bool check(int i, int j, int a, int b, vector<vector<bool> >& visited){
+    if(i == a && abs(b-j) == 2 && visited[i][(b+j)/2] == false) return false;
+    if(b == j && abs(i-a) == 2 && visited[(i+a)/2][j] == false) return false;
+    if(abs(i-a) == 2 && abs(j-b) == 2 && visited[(i+a)/2][(j+b)/2] == false) return false;
     return true;
 }
 
-void calc(int a, int b, vector<vector<bool> >& visited, int& cnt, int m, int n, int curr_len){
-    if(curr_len<=n && curr_len>=m) cnt++;
-    cout<<curr_len<<": "<<a<<" "<<b<<" "<<cnt<<endl;
+void search(int i, int j, int m, int n, int curr_len, int& res, vector<vector<bool> >& visited){
+    if(curr_len>=m && curr_len<=n) res++;
     if(curr_len == n) return;
-    for(int i=0; i<3; i++){
-        for(int j=0; j<3; j++){
-            if(valid(visited, a, b, i, j)){
-                visited[i][j] = true;
-                calc(i, j, visited, cnt, m, n, curr_len+1);
-                visited[i][j] = false;
-            }
+    for(int a = 0; a<3; a++){
+        for(int b = 0; b<3; b++){
+            if(a == i && b == j) continue;
+            if(visited[a][b]) continue;
+            if(check(i, j, a, b, visited)){
+                visited[a][b] = true;
+                search(a, b, m, n, curr_len+1, res, visited);
+                visited[a][b] = false;
+            } 
         }
     }
 }
 
 int numberOfPatterns(int m, int n) {
-    int cnt = 0;
+    int res = 0;
     vector<vector<bool> > visited(3, vector<bool>(3, false));
     for(int i=0; i<3; i++){
         for(int j = 0; j<3; j++){
             visited[i][j] = true;
-            calc(i, j, visited, cnt, m, n, 1);
+            search(i, j, m, n, 1, res, visited);
             visited[i][j] = false;
         }
     }
-    return cnt;
+    return res;
 }
 
 int main(){
-    cout<<numberOfPatterns(1, 2)<<endl;
+    cout<<numberOfPatterns(1, 1)<<endl;
     return 0;
 }
