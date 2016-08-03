@@ -31,28 +31,40 @@ directory.release(2);
 directory.check(2);
 */
 
+#include "header.h"
+
+
 class PhoneDirectory {
+    unordered_set<int> s;
+    int maxNumbers;
 public:
     /** Initialize your data structure here
         @param maxNumbers - The maximum numbers that can be stored in the phone directory. */
     PhoneDirectory(int maxNumbers) {
-        
+        this->maxNumbers = maxNumbers;
+        for(int i=0; i<maxNumbers; i++) s.insert(i);
     }
     
     /** Provide a number which is not assigned to anyone.
         @return - Return an available number. Return -1 if none is available. */
     int get() {
-        
+        if(s.size() == 0) return -1;
+        int res = *(s.begin());
+        s.erase(s.begin());
+        return res;
     }
     
     /** Check if a number is available or not. */
     bool check(int number) {
-        
+        return s.find(number) != s.end(); 
     }
     
     /** Recycle or release a number. */
     void release(int number) {
-        
+        int sz = s.size();
+        if(sz+1<=this->maxNumbers){
+            s.insert(number);    
+        }
     }
 };
 
@@ -66,12 +78,12 @@ public:
 
 int main(){
     PhoneDirectory* directory = new PhoneDirectory(3);
-    directory->get();
-    directory->get();
-    directory->check(2);
-    directory->get();
-    directory->check(2);
+    cout<<directory->get()<<endl;
+    cout<<directory->get()<<endl;
+    cout<<directory->check(2)<<endl;
+    cout<<directory->get()<<endl;
+    cout<<directory->check(2)<<endl;
     directory->release(2);
-    directory->check(2);
+    cout<<directory->check(2)<<endl;
     return 0;
 }
