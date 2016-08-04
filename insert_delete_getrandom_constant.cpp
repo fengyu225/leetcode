@@ -34,25 +34,47 @@ randomSet.getRandom();
 #include "header.h"
 
 class RandomizedSet {
+    unordered_map<int,int> pos;
+    vector<int> data;
+    int last_index;
+    int count;
 public:
     /** Initialize your data structure here. */
     RandomizedSet() {
-        
+        last_index = -1;
+        count = 0;
     }
     
     /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
     bool insert(int val) {
-        
+        if(pos.find(val) != pos.end()) return false;
+        data.push_back(val);
+        last_index++;
+        pos[val] = last_index;
+        count++;
+        return true;
     }
     
     /** Removes a value from the set. Returns true if the set contained the specified element. */
     bool remove(int val) {
-        
+        if(pos.find(val) == pos.end()) return false;
+        int i = pos[val];
+        int v = data[last_index];
+        if(v != val){
+            swap(data[last_index], data[i]);
+            pos[v] = i;
+        }
+        data.pop_back();
+        pos.erase(pos.find(val));
+        count--;
+        last_index--;
+        return true;
     }
     
     /** Get a random element from the set. */
     int getRandom() {
-        
+        int i = rand() % (last_index+1);
+        return data[i];
     }
 };
 
