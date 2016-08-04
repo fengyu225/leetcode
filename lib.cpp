@@ -5,6 +5,13 @@
 
 using namespace std;
 
+void printSegmentTree(SegmentTreeNode* root){
+    if(!root) return;
+    cout<<"["<<root->start<<" "<<root->end<<"]: "<<root->max<<endl;
+    printSegmentTree(root->left);
+    printSegmentTree(root->right);
+}
+
 ListNode* create_list(int arr[], int n){
     cout<<"======================"<<endl;
     ListNode* result = NULL;

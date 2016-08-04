@@ -13,6 +13,28 @@ class ListNode {
         ListNode(int x) : val(x), next(NULL) {}
 }; 
 
+class SegmentTreeNode {
+    public:
+        int max;
+        int start, end;
+        SegmentTreeNode* left, *right;
+        SegmentTreeNode(int s, int e):max(0),start(s),end(e),left(NULL),right(NULL) {}
+};
+
+struct DirectedGraphNode {
+    int label;
+    vector<DirectedGraphNode *> neighbors;
+    DirectedGraphNode(int x) : label(x) {};
+};
+
+struct UndirectedGraphNode {
+    int label;
+    vector<UndirectedGraphNode *> neighbors;
+    UndirectedGraphNode(int x) : label(x) {};
+};
+
+void printSegmentTree(SegmentTreeNode* root);
+
 ListNode* create_list(int arr[], int n);
 ListNode* create_list(vector<int> nums);
 
