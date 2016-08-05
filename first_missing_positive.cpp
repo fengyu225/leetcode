@@ -12,18 +12,13 @@ Your algorithm should run in O(n) time and uses constant space.
 
 int firstMissingPositive(vector<int>& nums){
     int sz = nums.size();
+    if(sz == 0) return 1;
     for(int i=0; i<sz; i++){
-        int curr = nums[i];
-        if(curr<=0 || curr>sz) continue;
-        do{
-            nums[i] = nums[curr-1];
-            nums[curr-1] = curr;
-            curr = nums[i];
-        }while(curr>0 && curr<=sz && nums[curr-1] != curr);
+        while(nums[i]>=0 && nums[i]<sz && nums[i] != i && nums[i] != nums[nums[i]])
+            swap(nums[i], nums[nums[i]]);
     }
-    for(int i=0; i<sz; i++)
-        if(nums[i] != i+1) return i+1;
-    return sz+1;
+    for(int i=1; i<sz; i++) if(nums[i] != i) return i;
+    return nums[0] == sz?sz+1:sz;
 }
 
 int main(){
