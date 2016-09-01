@@ -27,12 +27,6 @@ struct DirectedGraphNode {
     DirectedGraphNode(int x) : label(x) {};
 };
 
-struct UndirectedGraphNode {
-    int label;
-    vector<UndirectedGraphNode *> neighbors;
-    UndirectedGraphNode(int x) : label(x) {};
-};
-
 void printSegmentTree(SegmentTreeNode* root);
 
 ListNode* create_list(int arr[], int n);
